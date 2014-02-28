@@ -1,0 +1,239 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://www.cantv.com.ve/Portales/Cantv/Plantilla/style.css" type="text/css">
+<title>Envio Mensajes SMS</title>
+<script LANGUAGE="JavaScript">
+
+<!-- Begin
+function NewWindow(mypage, myname, w, h, scroll) {
+var winl = (screen.width - w) / 2;
+var wint = (screen.height - h) / 2;
+winprops = 'height='+h+',width='+w+',top='+wint+',left='+winl+',scrollbars='+scroll+',resizable'
+win = window.open(mypage, myname, winprops)
+if (parseInt(navigator.appVersion) >= 4) { win.window.focus(); }
+}
+//  End -->
+</script>
+</head>
+
+<body>
+
+<form name="sms">
+<table width="151" border="0" cellspacing="1">
+  <tr>
+    <td align="center" bordercolorlight="#6699CC" bgcolor="#6699CC">
+      <b><font color="#FFFFFF">Envía tu mensajes SMS</font></b></td>
+    </tr>
+  <tr>
+    <td align="center" bgcolor="#daebfe">
+      <select name="selectCodigo">
+	  <option value="">----</option>
+	  <option value="158" >0416</option>
+	  <option value="199" >0426</option>
+			<option value="212" >0212</option>
+		
+		
+			<option value="234" >0234</option>
+		
+		
+			<option value="235" >0235</option>
+		
+		
+			<option value="237" >0237</option>
+		
+		
+			<option value="238" >0238</option>
+		
+		
+			<option value="239" >0239</option>
+		
+		
+			<option value="240" >0240</option>
+		
+		
+			<option value="241" >0241</option>
+		
+		
+			<option value="242" >0242</option>
+		
+		
+			<option value="243" >0243</option>
+		
+		
+			<option value="244" >0244</option>
+		
+		
+			<option value="245" >0245</option>
+		
+		
+			<option value="246" >0246</option>
+		
+		
+			<option value="247" >0247</option>
+		
+		
+			<option value="248" >0248</option>
+		
+		
+			<option value="249" >0249</option>
+		
+		
+			<option value="251" >0251</option>
+		
+		
+			<option value="252" >0252</option>
+		
+		
+			<option value="253" >0253</option>
+		
+		
+			<option value="254" >0254</option>
+		
+		
+			<option value="255" >0255</option>
+		
+		
+			<option value="256" >0256</option>
+		
+		
+			<option value="257" >0257</option>
+		
+		
+			<option value="258" >0258</option>
+		
+		
+			<option value="259" >0259</option>
+		
+		
+			<option value="261" >0261</option>
+		
+		
+			<option value="262" >0262</option>
+		
+		
+			<option value="263" >0263</option>
+		
+		
+			<option value="264" >0264</option>
+		
+		
+			<option value="265" >0265</option>
+		
+		
+			<option value="266" >0266</option>
+		
+		
+			<option value="267" >0267</option>
+		
+		
+			<option value="268" >0268</option>
+		
+		
+			<option value="269" >0269</option>
+		
+		
+			<option value="271" >0271</option>
+		
+		
+			<option value="272" >0272</option>
+		
+		
+			<option value="273" >0273</option>
+		
+		
+			<option value="274" >0274</option>
+		
+		
+			<option value="275" >0275</option>
+		
+		
+			<option value="276" >0276</option>
+		
+		
+			<option value="277" >0277</option>
+		
+		
+			<option value="278" >0278</option>
+		
+		
+			<option value="279" >0279</option>
+		
+		
+			<option value="281" >0281</option>
+		
+		
+			<option value="282" >0282</option>
+		
+		
+			<option value="283" >0283</option>
+		
+		
+			<option value="284" >0284</option>
+		
+		
+			<option value="285" >0285</option>
+		
+		
+			<option value="286" >0286</option>
+		
+		
+			<option value="287" >0287</option>
+		
+		
+			<option value="288" >0288</option>
+		
+		
+			<option value="289" >0289</option>
+		
+		
+			<option value="291" >0291</option>
+		
+		
+			<option value="292" >0292</option>
+		
+		
+			<option value="293" >0293</option>
+		
+		
+			<option value="294" >0294</option>
+		
+		
+			<option value="295" >0295</option>
+		
+		
+      </select>
+      <input type="text" name="txtNumero" size="7" maxlength="7" value=""onKeyPress="NumPress();"></td>
+    </tr>
+   <tr>
+    <td align="center" bgcolor="#daebfe">
+      <textarea name="txtMensaje" rows="4" onKeyUp="chrRest('120');" cols="18"onKeyPress="TextoPress();"></textarea></td>
+    </tr>
+   <tr>
+  	<td align="center" bgcolor="#daebfe">Carácteres restantes<br>
+	<input type="text" name="txtCaract" size="2" maxlength="3" readonly value="120">
+  	  <label>
+  	  <input type="hidden" name="codigo" value="">
+	  <input type="hidden" name="numero" value="">
+	  <input type="hidden" name="mensaje" value="">
+	  <input type="hidden" name="servicio" value="cantv">
+	  <input type="hidden" name="ur" value="www.cantv.com.ve/otraapp/sms_fijos/mensajes.asp" maxlength="200">
+  	  </label>
+  	  </td>
+	</tr>
+   <tr>
+    <td align="center" bgcolor="#daebfe">
+	<input type="button" name="enviar0" value="Enviar" onClick="fenvia()"> 
+      <input type="button" name="borrar0" value="Borrar" onClick="fborrar()">
+      </td>
+    </tr>
+   <tr>
+    <td align="center" bgcolor="#6699cc">
+      <center>
+<a href="http://www.cantv.com.ve/Portales/Cantv/Data/condiciones_SMS.htm" onclick="NewWindow(this.href,'name','240','160','yes');return false;">
+<font color="#FFFFFF">Condiciones</font></a></center></td>
+    </tr>
+</table>
+
+</form>
+</body>
+</html>
