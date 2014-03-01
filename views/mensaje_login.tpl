@@ -18,7 +18,7 @@
         <img src="img/smssend.png" width="50%" />
     		<div class="panel panel-personal">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Mensaje <span class="Three-Dee pull-right" >PyLoro</span></h3>
+			    	<h3 class="panel-title">{{mensaje}}<span class="Three-Dee pull-right" >PyLoro</span></h3>
 			 	</div>
 			  	<div class="panel-body">
 			    	
@@ -28,7 +28,7 @@
 			    		<div class="row boton">
                         
                         <div class="col-xs-12 ">
-                         <a href="http://foxcarlos.no-ip.biz:8085" class="align-vertical btn btn-personal">Regresar</a>
+                         <a href="http://localhost:8085" class="align-vertical btn btn-personal">Regresar</a>
                         </div>
                         
                         </div>

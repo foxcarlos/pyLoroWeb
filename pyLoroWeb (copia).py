@@ -70,11 +70,42 @@ class test():
 
 app = test()
 
+appPath = '/home/foxcarlos/desarrollo/python/pyLoroWeb/views/static/img'
+
+# Rutas de archivos estAticos
+  
+# javascript
+@bottle.get('/<filename:re:.*\.js>')
+def javascripts(filename):
+    return static_file(filename, root=join(appPath, 'static/js'))
+  
+# estilos css
+@bottle.get('/<filename:re:.*\.css>')
+def stylesheets(filename):
+    return static_file(filename, root=join(appPath, 'static/css'))
+  
+'''
+# imagenes
+@bottle.get('/<filename:re:.*\.(jpg|png|gif|ico)>')
+def images(filename):
+    return static_file(filename, root=join(appPath, 'static/img'))
+'''
+
+# imagenes
+@bottle.route('/images/<filename:re:.*\.png>')
+def send_image(filename):
+    return bottle.static_file(filename, root='/home/foxcarlos/desarrollo/python/pyLoroWeb/static/img')
+    
+# fuentes
+@bottle.get('/<filename:re:.*\.(eot|ttf|woff|svg)>')
+def fonts(filename):
+    return static_file(filename, root=join(appPath, 'static/fonts'))
+    
 @bottle.route('/')
 def index():
     return bottle.template('index')
 
-@bottle.post('/')
+@bottle.post('/login')
 def login():
     usuario = bottle.request.forms.get('usu_form')
     clave = bottle.request.forms.get('pass_form')
@@ -91,10 +122,10 @@ def login():
         msg = 'Usuario o Clave invalida'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
-#@bottle.route('/smsenviar')
-#def smsEnviar():
-#	return bottle.template('pyloro_sms')
-	
+@bottle.route('/sms')
+def sms():
+    return bottle.template('pyloro_sms')
+
 @bottle.post('/smsenviar')
 def smsEnviar():
     numero = bottle.request.forms.get('numero')

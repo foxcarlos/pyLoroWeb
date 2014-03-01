@@ -9,6 +9,7 @@
 </head>
 
 <body>
+<img src="static/img/smssend.png" border="1" alt="Este es el ejemplo de un texto alternativo" width="400" height="300">
 
 <form action="/login" method="post">
 <table bgcolor="#F57171" border="0" cellpadding="1" cellspacing="1" align="center">
@@ -36,7 +37,7 @@
 	<tr>
 		<td colspan="2" align="center">
  		<input type="image" src="/home/foxcarlos/desarrollo/python/pyLoroWeb/views/static/img/smssend.png" width="60" height="30">
- 		<input type="submit" value="Iniciar">
+ 		<!-- <input type="submit" value="Iniciar"> -->
         <input type="reset" value="Limpiar">
 		</td>
 	</tr>

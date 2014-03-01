@@ -18,13 +18,13 @@
 <div class="container">
     <div class="row">
 		<div class="col-md-4 col-md-offset-4">
-        <img src="img/smssend.png" width="50%" />
+        <img src="/home/foxcarlos/desarrollo/python/pyLoroWeb/views/static/img/smssend.png" width="50%" />
     		<div class="panel panel-personal">
 			  	<div class="panel-heading">
 			    	<h3 class="panel-title">Inicio de Sesión<span class="Three-Dee pull-right" >PyLoro</span></h3>
 			 	</div>
 			  	<div class="panel-body">
-			    	<form accept-charset="UTF-8"  role="form" action="/login" method="post">
+			    	<form accept-charset="UTF-8"  role="form" action="/" method="post">
                     <fieldset>
 			    	  	<div class="input-group form-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
