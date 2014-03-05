@@ -96,9 +96,9 @@ def login():
         msg = 'Mensaje de Sistema'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
-@bottle.route('/smsenviar')
-def smsEnviar():
-	return bottle.template('pyloro_sms')
+#@bottle.route('/smsenviar')
+#def smsEnviar():
+#	return bottle.template('pyloro_sms')
 	
 @bottle.post('/smsenviar')
 def smsEnviar():
