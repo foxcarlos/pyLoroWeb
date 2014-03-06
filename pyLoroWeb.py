@@ -94,7 +94,7 @@ def login():
         return bottle.template('pyloro_sms')
     else:
         cabecera = 'Mensaje'
-        msg = 'Mensaje de Sistema'
+        msg = 'El usuario o clave no son valido'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.route('/smsenviar')

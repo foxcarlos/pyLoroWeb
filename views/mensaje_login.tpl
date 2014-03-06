@@ -23,7 +23,7 @@
 			  	<div class="panel-body">
 			    	
                     <fieldset>
-			    	  	<div class="alert alert-warning"><span class="glyphicon glyphicon-asterisk" ></span> El usuario o clave no son valido !</div>
+			    	  	<div class="alert alert-warning"><span class="glyphicon glyphicon-asterisk" ></span> {{mensaje}}!</div>
                         
 			    		<div class="row boton">
                         
