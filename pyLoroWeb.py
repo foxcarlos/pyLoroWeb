@@ -76,6 +76,18 @@ def index():
 	#return bottle.static_file('index.html', root='static/')
 	return bottle.template('index.tpl') 
 
+@bottle.route('/prueba')
+def prueba():
+	#return bottle.static_file('index.html', root='static/')
+	return bottle.template('borrar.html') 
+
+@bottle.post('/prueba')
+def prueba_post():
+    ''' '''
+    lista = bottle.request.forms.get('elegir-componente')
+    print(lista)
+    return (lista)
+
 @bottle.route('/static/<filename:path>') 
 def static(filename): 
 	return bottle.static_file(filename, root='static/') 
@@ -89,7 +101,7 @@ def login():
     baseDatos = cliente.pyloroweb
     coleccionUsuarios = baseDatos.usuarios
     
-    buscar = coleccionUsuarios.find({'usuario':usuario, 'clave':clave}).count()
+    buscar = coleccionUsuarios.find({'usuario':usuario.lower(), 'clave':clave}).count()
     if buscar:
         return bottle.template('pyloro_sms')
     else:

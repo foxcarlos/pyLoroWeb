@@ -1,1 +1,2 @@
 db.usuarios.insert({'usuario': 'foxcarlos', 'clave': 'carlosgarcia', 'nombres':'Carlos Alberto', 'telefono': '04263002966', 'email': 'foxcarlos@gmail.com'})
+db.usuarios.insert({'usuario': 'invitado', 'clave': 'invitado', 'nombres':'Usuario Invitado', 'telefono': '04263002966', 'email': 'invitado@gmail.com'})
