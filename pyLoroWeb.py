@@ -118,7 +118,7 @@ def smsEnviar():
             msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
     else:
         cabecera = 'Houston tenemos un problema...'
-        msg = 'Numero telefonico invalido o Mensaje Vacio'
+        msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
         return bottle.template('mensaje_envio', {'cabecera':cabecera, 'mensaje':msg})
 
 def validaSms(num, msg):

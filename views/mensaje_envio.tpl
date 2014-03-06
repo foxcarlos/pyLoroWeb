@@ -23,7 +23,7 @@
 			  	<div class="panel-body">
 			    	
                     <fieldset>
-			    	  	<div class="alert alert-warning"><span class="glyphicon glyphicon-asterisk" ></span> El numero telefonico no es valido o mensaje se encuentra vacio !</div>
+			    	  	<div class="alert alert-warning"><span class="glyphicon glyphicon-asterisk" ></span> {{mensaje}} !</div>
                         
 			    		<div class="row boton">
                         
