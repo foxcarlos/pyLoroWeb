@@ -13,7 +13,8 @@ from bottle import route, static_file, template
 class test():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
-        archivo_configuracion = os.path.join(ruta_arch_conf, '/home/administrador/desarrollo/python/pyloro/pyloro.cfg')
+        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
+        archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
         self.zmqConectar()
