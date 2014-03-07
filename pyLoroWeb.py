@@ -70,16 +70,11 @@ class test():
         return devuelve
 
 app = test()
- 
-@bottle.route('/')
-def index():
-	#return bottle.static_file('index.html', root='static/')
-	return bottle.template('index.tpl') 
 
 @bottle.route('/prueba')
 def prueba():
-	#return bottle.static_file('index.html', root='static/')
-	return bottle.template('borrar.html') 
+    #return bottle.static_file('index.html', root='static/')
+    return bottle.template('borrar.html')
 
 @bottle.post('/prueba')
 def prueba_post():
@@ -90,7 +85,12 @@ def prueba_post():
 
 @bottle.route('/static/<filename:path>') 
 def static(filename): 
-	return bottle.static_file(filename, root='static/') 
+    return bottle.static_file(filename, root='static/')
+
+@bottle.route('/')
+def index():
+    #return bottle.static_file('index.html', root='static/')
+    return bottle.template('index.tpl')
 
 @bottle.post('/')
 def login():
@@ -105,7 +105,7 @@ def login():
     if buscar:
         return bottle.template('pyloro_sms')
     else:
-        cabecera = 'Mensaje'
+        cabecera = 'Lo Siento...!'
         msg = 'El usuario o clave no son valido'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
@@ -126,10 +126,10 @@ def smsEnviar():
             msg = 'Mensaje enviado con exito al numero {0}'.format(numero)
             return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
         else:
-            cabecera = 'Houston tenemos un problema...'
+            cabecera = 'Lo Siento ...!'
             msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
     else:
-        cabecera = 'Houston tenemos un problema...'
+        cabecera = 'Lo Siento...!'
         msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
         return bottle.template('mensaje_envio', {'cabecera':cabecera, 'mensaje':msg})
 

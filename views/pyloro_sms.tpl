@@ -23,7 +23,7 @@
         </div>
     		<div class="panel panel-personal">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Envio de SMS  <span class="Three-Dee pull-right" >PyLoro</span></h3>
+			    	<h3 class="panel-title">Envio de SMS  <span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
 			 	</div>
 			  	<div class="panel-body">
 			    	<form accept-charset="UTF-8"  role="form" action="/smsenviar" method="post">

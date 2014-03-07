@@ -18,7 +18,7 @@
         <img src="/static/img/smssend.png" width="50%" />
     		<div class="panel panel-personal">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Mensaje <span class="Three-Dee pull-right" >PyLoro</span></h3>
+			    	<h3 class="panel-title">{{cabecera}}<span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
 			 	</div>
 			  	<div class="panel-body">
 			    	
