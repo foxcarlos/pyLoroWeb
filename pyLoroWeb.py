@@ -70,16 +70,16 @@ class test():
         return devuelve
 
 app = test()
- 
+
 @bottle.route('/')
 def index():
-	#return bottle.static_file('index.html', root='static/')
-	return bottle.template('index.tpl') 
+    #return bottle.static_file('index.html', root='static/')
+    return bottle.template('index.tpl') 
 
 @bottle.route('/prueba')
 def prueba():
-	#return bottle.static_file('index.html', root='static/')
-	return bottle.template('borrar.html') 
+    #return bottle.static_file('index.html', root='static/')
+    return bottle.template('borrar.html') 
 
 @bottle.post('/prueba')
 def prueba_post():
@@ -90,10 +90,13 @@ def prueba_post():
 
 @bottle.route('/static/<filename:path>') 
 def static(filename): 
-	return bottle.static_file(filename, root='static/') 
+    return bottle.static_file(filename, root='static/') 
 
 @bottle.post('/')
 def login():
+    global usuario
+    global clave
+    
     usuario = bottle.request.forms.get('usu_form')
     clave = bottle.request.forms.get('pass_form')
 
@@ -111,10 +114,17 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-	return bottle.template('pyloro_sms')
-	
+    try:
+        print(usuario, clave)
+        return bottle.template('pyloro_sms')
+    except:
+        cabecera = 'Houston tenemos un problema...'
+        msg = 'Ud. no a iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+
 @bottle.post('/smsenviar')
 def smsEnviar():
+    print(usuario, clave)
     numero = bottle.request.forms.get('numero')
     mensaje = bottle.request.forms.get('comentarios')
     
