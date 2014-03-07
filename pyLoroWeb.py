@@ -10,7 +10,7 @@ import pymongo
 from os.path import join, dirname
 from bottle import route, static_file, template
 
-class test():
+class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
         fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
@@ -69,11 +69,32 @@ class test():
             devuelve = False
         return devuelve
 
-app = test()
+app = enviarZMQ()
+
+def validaLogin(usuario, clave):
+    ''' Metodo para validar el inicio de sesion
+    contra la base de datos'''
+
+    lcUsuario = usuario
+    lcClave = clave
+    accesoPermitido = False
+
+    cliente = pymongo.MongoClient('localhost', 27017)
+    baseDatos = cliente.pyloroweb
+    coleccionUsuarios = baseDatos.usuarios
+    
+    buscar = coleccionUsuarios.find({'usuario':lcUsuario.lower(), 'clave':lcClave}).count()
+    if buscar:
+        accesoPermitido = True
+    return accesoPermitido
+
+@bottle.route('/static/<filename:path>') 
+def static(filename): 
+    return bottle.static_file(filename, root='static/')
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('borrar.html') 
+    return bottle.template('prueba_combobox.html') 
 
 @bottle.post('/prueba')
 def prueba_post():
@@ -82,48 +103,48 @@ def prueba_post():
     print(lista)
     return (lista)
 
-@bottle.route('/static/<filename:path>') 
-def static(filename): 
-    return bottle.static_file(filename, root='static/')
-
 @bottle.route('/')
 def index():
-    #return bottle.static_file('index.html', root='static/')
     return bottle.template('index.tpl')
 
 @bottle.post('/')
 def login():
     global usuario
     global clave
-    
+    usuario = ''
+    clave = ''
+    buscar = False
+
     usuario = bottle.request.forms.get('usu_form')
     clave = bottle.request.forms.get('pass_form')
-
-    cliente = pymongo.MongoClient('localhost', 27017)
-    baseDatos = cliente.pyloroweb
-    coleccionUsuarios = baseDatos.usuarios
     
-    buscar = coleccionUsuarios.find({'usuario':usuario.lower(), 'clave':clave}).count()
+    buscar = validaLogin(usuario, clave)
     if buscar:
         return bottle.template('pyloro_sms')
     else:
         cabecera = 'Lo Siento...!'
-        msg = 'El usuario o clave no son valido'
+        msg = 'El usuario o la clave es invalida'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.route('/smsenviar')
 def smsEnviar():
     try:
-        print(usuario, clave)
-        return bottle.template('pyloro_sms')
+        buscar = validaLogin(usuario, clave)
+        if buscar:
+            return bottle.template('pyloro_sms')
+        else:
+            cabecera = 'Lo Siento ...!'
+            msg = 'El usuario o la clave es invalida'
+            return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
     except:
-        cabecera = 'Houston tenemos un problema...'
+        cabecera = 'Lo Siento ...!'
         msg = 'Ud. no a iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.post('/smsenviar')
 def smsEnviar():
-    print(usuario, clave)
+    ''' Metodo que captura lo ingresado en el form de envio de SMS
+    y lo envia al servidor ZMQ con la Clase enviar '''
     numero = bottle.request.forms.get('numero')
     mensaje = bottle.request.forms.get('comentarios')
     
