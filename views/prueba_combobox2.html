@@ -18,3 +18,13 @@
 </FORM>
 </body>
 </html>
+
+
+
+<SELECT multiple size="8" name="elegir-componente">
+		%l = {{listaContactos}}
+		%for fila in l.split(','):
+			<OPTION>{{fila}}</OPTION>	
+		%end-->
+		<OPTION>{{listaContactos}}</OPTION>
+   </SELECT><br>
