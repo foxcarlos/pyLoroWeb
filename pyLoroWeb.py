@@ -147,7 +147,12 @@ def smsEnviar():
     numero = bottle.request.forms.get('numero')
     mensaje = bottle.request.forms.get('comentarios')
     
-    if not validaLogin(usuario, clave):
+    try:
+        if not validaLogin(usuario, clave):
+            cabecera = 'Lo Siento ...!'
+            msg = 'Ud. no ha iniciado sesion en el servidor'
+            return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+    except:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
