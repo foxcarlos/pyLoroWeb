@@ -138,18 +138,7 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-    try:
-        buscar = validaLogin(usuario, clave)
-        if buscar:
-            return bottle.template('pyloro_sms')
-        else:
-            cabecera = 'Lo Siento ...!'
-            msg = 'El usuario o la clave es invalida'
-            return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
-    except:
-        cabecera = 'Lo Siento ...!'
-        msg = 'Ud. no a iniciado sesion en el servidor'
-        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+    return bottle.template('pyloro_sms')
 
 @bottle.post('/smsenviar')
 def smsEnviar():
@@ -158,6 +147,11 @@ def smsEnviar():
     numero = bottle.request.forms.get('numero')
     mensaje = bottle.request.forms.get('comentarios')
     
+    if not validaLogin(usuario, clave):
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+  
     if validaSms(numero, mensaje.strip()):
         devuelve = app.enviar(numero, mensaje)
         
