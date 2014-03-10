@@ -92,26 +92,35 @@ def validaLogin(usuario, clave):
 def static(filename): 
     return bottle.static_file(filename, root='static/')
 
-@bottle.route('/prueba')
-def prueba():
-    #server = pymongo.MongoClient('localhost', 27017)
-    #baseDatos = server.pyloroweb
+@bottle.route('/contactos')
+def buscarContactos():
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb
     
     #coleccionListas = baseDatos.listas
-    #coleccionContactos = baseDatos.contactos
-    lista = ['hola', 'chao', 'prueba']  
-    #lista = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
-    #listaStr = ','.join(lista)
-    #lista2 = '"{0}"'.format(listaStr)
-    #print(listaStr)
-    return bottle.template('prueba_combobox.html', listaContactos=lista)
+    coleccionContactos = baseDatos.contactos
+    nombres = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
+    #nombres.append('')
+    #lista = ['{0}<{1}>'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find().sort('nombre')] 
+    return bottle.template('prueba_combobox.html', listaContactos=nombres, telefonosSel='')
 
-@bottle.post('/prueba')
-def prueba_post():
-    ''' '''
-    lista = bottle.request.forms.getall('elegir-componente')
-    print('lista', lista)
-    return (lista)
+@bottle.post('/contactos')
+def seleccionarContactos():
+    '''Metodo que permite listar todos los telefonos de los contactos
+    seleccionados en el ComboBox HTML'''
+
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb
+    
+    #coleccionListas = baseDatos.listas
+    coleccionContactos = baseDatos.contactos
+    listaDevuelta = bottle.request.forms.getall('elegir-componente')
+    print(listaDevuelta)
+    telefonos = ['{0}->{1}'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}})]
+    nombres = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
+    #nombres.append(' ')
+    print(telefonos)
+    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), listaContactos=nombres)
 
 @bottle.route('/')
 def index():

@@ -5,15 +5,32 @@
 <title></title>
 </head>
 <body>
-<FORM action="/prueba" method="post">
-   <P>
+
+<FORM action="/contactos" method="post">
+	<table>
+	<tr>
+	<td colspan=2 align="left"> Contactos</td>
+	</tr>
+	<tr>
+	<td colspan=2 align="left">
    <SELECT multiple size="8" name="elegir-componente">			
 		%for fila in listaContactos:
 		<OPTION>{{fila}}</OPTION>
 		%end
-   </SELECT><br>
-   <INPUT type="submit" value="Enviar"><INPUT type="reset">
-   </P>
+   </SELECT>
+   </td>
+   </tr>
+	<tr>	   
+   <td align="left"><INPUT type="submit" value="Aceptar"></td>  
+	<td align="right"><INPUT type="reset"></td>
+   </tr>
+   </table>
+</FORM>
+
+<FORM action="/smsenviar" method="post">
+   <input type="text" name="telefono" size="31" value={{telefonosSel}}><br>
+	<textarea name="mensaje" size="31" cols=36></textarea><br>
+	<INPUT type="submit" value="Enviar"><INPUT type="reset">
 </FORM>
 </body>
 </html>
