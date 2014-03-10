@@ -2,14 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8" />
-%x = {{listaContactos}}
 <title></title>
 </head>
 <body>
 <FORM action="/prueba" method="post">
    <P>
    <SELECT multiple size="8" name="elegir-componente">			
-		<OPTION>{{listaContactos}}</OPTION>
+		%for fila in listaContactos:
+		<OPTION>{{fila}}</OPTION>
+		%end
    </SELECT><br>
    <INPUT type="submit" value="Enviar"><INPUT type="reset">
    </P>

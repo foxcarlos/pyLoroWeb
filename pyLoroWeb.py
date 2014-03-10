@@ -94,16 +94,17 @@ def static(filename):
 
 @bottle.route('/prueba')
 def prueba():
-    server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb
+    #server = pymongo.MongoClient('localhost', 27017)
+    #baseDatos = server.pyloroweb
     
     #coleccionListas = baseDatos.listas
-    coleccionContactos = baseDatos.contactos
-    lista = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
-    listaStr = ','.join(lista)
-    lista2 = '"{0}"'.format(listaStr)
-    print(listaStr)
-    return bottle.template('prueba_combobox.html', {'listaContactos':'a,b,c,d'})
+    #coleccionContactos = baseDatos.contactos
+    lista = ['hola', 'chao', 'prueba']  
+    #lista = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
+    #listaStr = ','.join(lista)
+    #lista2 = '"{0}"'.format(listaStr)
+    #print(listaStr)
+    return bottle.template('prueba_combobox.html', listaContactos=lista)
 
 @bottle.post('/prueba')
 def prueba_post():
