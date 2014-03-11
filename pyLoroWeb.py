@@ -71,6 +71,15 @@ class enviarZMQ():
 
 app = enviarZMQ()
 
+def buscarUsuarioId(usuario):
+    usuarioBuscar = usuario
+    cliente = pymongo.MongoClient('localhost', 27017)
+    baseDatos = cliente.pyloroweb
+    coleccionUsuarios = baseDatos.usuarios                    
+    buscarId = [f['_id'] for f in coleccionUsuarios.find({'usuario':usuarioBuscar})]
+    objetoId = buscarId[0] if buscarId else ''
+    return objetoId
+
 def validaLogin(usuario, clave):
     ''' Metodo para validar el inicio de sesion
     contra la base de datos'''
@@ -96,13 +105,16 @@ def static(filename):
 def buscarContactos():
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
-    
-    #coleccionListas = baseDatos.listas
+    objetoUsuarioId = buscarUsuarioId(usuario)
+   
+    coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
-    nombres = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
-    #nombres.append('')
-    #lista = ['{0}<{1}>'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find().sort('nombre')] 
-    return bottle.template('prueba_combobox.html', listaContactos=nombres, telefonosSel='')
+    
+    #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
+    contactosMostrar = [f['nombre'] for f in coleccionContactos.find({"usuarios_id":objetoUsuarioId}).sort('nombre')]
+    listasMostrar = [f['nombre_lista'] for f in coleccionListas.find().sort('nombre')]
+
+    return bottle.template('prueba_combobox.html', contactos=contactosMostrar, listas=listasMostrar, telefonosSel='')
 
 @bottle.post('/contactos')
 def seleccionarContactos():
@@ -111,16 +123,16 @@ def seleccionarContactos():
 
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
-    
+    objetoUsuarioId = buscarUsuarioId(usuario)
+
     #coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
-    listaDevuelta = bottle.request.forms.getall('elegir-componente')
-    print(listaDevuelta)
-    telefonos = ['{0}->{1}'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}})]
-    nombres = [f['nombre'] for f in coleccionContactos.find().sort('nombre')]
-    #nombres.append(' ')
+    listaDevuelta = bottle.request.forms.getall('elegir-contactos')
+    telefonos = ['{0}->{1}'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuarios_id":objetoUsuarioId})]
+    nombres = [f['nombre'] for f in coleccionContactos.find({"usuarios_id":objetoUsuarioId}).sort('nombre')]
+
     print(telefonos)
-    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), listaContactos=nombres)
+    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), contactos=nombres, listas='')
 
 @bottle.route('/')
 def index():

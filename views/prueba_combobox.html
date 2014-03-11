@@ -5,7 +5,9 @@
 <title></title>
 </head>
 <body>
-
+<table align="center">
+<tr>
+<td>
 <FORM action="/contactos" method="post">
 	<table>
 	<tr>
@@ -13,8 +15,8 @@
 	</tr>
 	<tr>
 	<td colspan=2 align="left">
-   <SELECT multiple size="8" name="elegir-componente">			
-		%for fila in listaContactos:
+   <SELECT multiple size="8" name="elegir-contactos">			
+		%for fila in contactos:
 		<OPTION>{{fila}}</OPTION>
 		%end
    </SELECT>
@@ -22,15 +24,45 @@
    </tr>
 	<tr>	   
    <td align="left"><INPUT type="submit" value="Aceptar"></td>  
-	<td align="right"><INPUT type="reset"></td>
+	<td align="right"><INPUT type="reset" value="Limpiar"></td>
    </tr>
    </table>
 </FORM>
-
-<FORM action="/smsenviar" method="post">
-   <input type="text" name="telefono" size="31" value={{telefonosSel}}><br>
-	<textarea name="mensaje" size="31" cols=36></textarea><br>
-	<INPUT type="submit" value="Enviar"><INPUT type="reset">
+</td>
+<td>
+<FORM action="/listas" method="post">
+	<table>
+	<tr>
+	<td colspan=2 align="left"> Listas</td>
+	</tr>
+	<tr>
+	<td colspan=2 align="left">
+   <SELECT multiple size="8" name="elegir-lista">			
+		%for fila in listas:
+		<OPTION>{{fila}}</OPTION>
+		%end
+   </SELECT>
+   </td>
+   </tr>
+	<tr>	   
+   <td align="left"><INPUT type="submit" value="Aceptar"></td>  
+	<td align="right"><INPUT type="reset" value="Limpiar"></td>
+   </tr>
+   </table>
 </FORM>
+</td>
+</tr>
+<tr>
+<td colspan=2 align="justify">
+<FORM action="/smsenviar" method="post">
+	Numero<br>   
+   <input type="text" name="telefono" size="31" value={{telefonosSel}}><br>
+	Mensaje<br>	
+	<textarea name="mensaje" cols=36></textarea><br>
+	<INPUT type="submit" value="Enviar">
+</FORM>
+</td>
+</tr>
+</table>
 </body>
 </html>
