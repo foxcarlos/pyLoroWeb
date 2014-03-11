@@ -125,14 +125,15 @@ def seleccionarContactos():
     baseDatos = server.pyloroweb
     objetoUsuarioId = buscarUsuarioId(usuario)
 
-    #coleccionListas = baseDatos.listas
+    coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
     listaDevuelta = bottle.request.forms.getall('elegir-contactos')
     telefonos = ['{0}->{1}'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuarios_id":objetoUsuarioId})]
     nombres = [f['nombre'] for f in coleccionContactos.find({"usuarios_id":objetoUsuarioId}).sort('nombre')]
+    listasMostrar = [f['nombre_lista'] for f in coleccionListas.find().sort('nombre')]
 
     print(telefonos)
-    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), contactos=nombres, listas='')
+    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), contactos=nombres, listas=listasMostrar)
 
 @bottle.route('/')
 def index():
