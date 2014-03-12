@@ -133,14 +133,13 @@ def seleccionarContactos():
 
     #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
     listaDevuelta = bottle.request.forms.getall('elegir-contactos')
-    print(listaDevuelta)
 
-    telefonos = ['{0}->{1}'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
+    telefonos = ['{0}<{1}>'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
     nombres = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
+    textTelefono = ','.join(telefonos)
 
-    print(telefonos)
-    return bottle.template('prueba_combobox.html', telefonosSel=','.join(telefonos), contactos=nombres, listas=listasMostrar)
+    return bottle.template('prueba_combobox.html', text1=textTelefono, contactos=nombres, listas=listasMostrar)
 
 @bottle.post('/listas')
 def seleccionarLitas():
@@ -161,9 +160,9 @@ def seleccionarLitas():
 
     nombres = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
-    textTelefono2 = ','.join(listaDevuelta)
-    print('selecciom',textTelefono2)
-    return bottle.template('prueba_combobox.html', text2=textTelefono2, contactos=nombres, listas=listasMostrar)
+    textLista = ','.join(listaDevuelta)
+
+    return bottle.template('prueba_combobox.html', text2=textLista, contactos=nombres, listas=listasMostrar)
 
 @bottle.route('/')
 def index():

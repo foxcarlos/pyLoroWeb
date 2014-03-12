@@ -55,11 +55,10 @@
 <tr>
 <td colspan=2 align="justify">
 <FORM action="/smsenviar" method="post">
-	Contactos<br>  
-	{{get('text2', '')}} 
-   <input type="text" name="telefono" size="100" value={{get('text1', '')}}><br>
+	Contactos<br>   
+   <input type="text" name="telefono" size="100" maxlength="100" value="{{get('text1', '')}}"><br>
 	Listas<br>   
-   <input type="text" name="telefono2" size="100" value={{get('text2', '')}}><br>
+   <input type="text" name="listas" size="100" maxlength="100" value="{{get('text2', '')}}"><br>
 	Mensaje<br>	
 	<textarea name="mensaje" cols=36></textarea><br>
 	<INPUT type="submit" value="Enviar">

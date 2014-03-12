@@ -5,6 +5,7 @@ db.contactos.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre
 db.contactos.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre" : "Nairesther","apellido" : "Gomez","telefonos" : "04246514697","email" : "nairestherg@gmail.com","twitter" : ""})
 db.contactos.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre" : "Marco","apellido" : "Sanchez","telefonos" : "04140633988","email" : "marcosanchezae@gmail.com","twitter" : "","listas_id" : [ObjectId("531a0fcda9bd50b03189298f")]})
 db.contactos.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre" : "Cecilia","apellido" : "Villa","telefonos" : "041406584488","email" : "renacer.cecilia@gmail.com","twitter" : "","listas_id" : [ObjectId("531a0fcda9bd50b03189298f")]})
+db.contactos.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre" : "Manuel","apellido" : "Garrido","telefonos" : "04120000000","email" : "mgarrido@gmail.com","twitter" : "","listas_id" : [ObjectId("531a0fcda9bd50b03189298f")]})
 
 db.listas.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre_lista" : "Hospital Coromoto","descripcion" : "Lista para el Hospital Coromoto"})
 db.listas.insert({"usuario_id" : ObjectId("5317788d17d1643f95682a5f"),"nombre_lista" : "Cooperativa Fuerza Roja","descripcion" : "Lista para la Cooperativa Fuerza Roja"})
