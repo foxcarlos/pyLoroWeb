@@ -22,36 +22,30 @@
    </SELECT>
    </td>
    </tr>
-	<tr>	   
-   <td align="left"><INPUT type="submit" value="Aceptar"></td>  
-	<td align="right"><INPUT type="reset" value="Limpiar"></td>
-   </tr>
    </table>
-</FORM>
 </td>
 <td>
-<FORM action="/listas" method="post">
 	<table>
 	<tr>
 	<td colspan=2 align="left"> Listas</td>
 	</tr>
 	<tr>
 	<td colspan=2 align="left">
-   <SELECT multiple size="8" name="elegir-lista">
+   <SELECT multiple size="8" name="elegir-listas">
 		%for fila in listas:
 		<OPTION>{{fila}}</OPTION>
 		%end
    </SELECT>
    </td>
    </tr>
-	<tr>	   
-   <td align="left"><INPUT type="submit" value="Aceptar"></td>  
-	<td align="right"><INPUT type="reset" value="Limpiar"></td>
-   </tr>
    </table>
-</FORM>
 </td>
 </tr>
+<tr>	   
+<td align="left"><INPUT type="submit" value="Aceptar">
+<INPUT type="reset" value="Limpiar"></td>
+</tr>
+</FORM>
 <tr>
 <td colspan=2 align="justify">
 <FORM action="/smsenviar" method="post">

@@ -114,7 +114,7 @@ def buscarContactos():
     #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
     contactosMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
-    
+    #print(contactosMostrar)    
     return bottle.template('prueba_combobox.html', contactos=contactosMostrar, listas=listasMostrar)
 
 @bottle.post('/contactos')
@@ -133,6 +133,8 @@ def seleccionarContactos():
 
     #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
     listaDevuelta = bottle.request.forms.getall('elegir-contactos')
+    listaDevuelta2 = bottle.request.forms.getall('elegir-listas')
+    print(listaDevuelta, listaDevuelta2)
 
     telefonos = ['{0}<{1}>'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
     nombres = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
@@ -157,6 +159,8 @@ def seleccionarLitas():
 
     #Capturar todas las variables que vienen del <FORM elegir-lista/>
     listaDevuelta = bottle.request.forms.getall('elegir-lista')
+    listaDevuelta2 = bottle.request.forms.getall('elegir-contactos')
+    print(listaDevuelta2)
 
     nombres = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
