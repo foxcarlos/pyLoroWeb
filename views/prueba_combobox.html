@@ -16,7 +16,7 @@
 	<tr>
 	<td colspan=2 align="left">
    <SELECT multiple size="8" name="elegir-contactos">		
-		%for fila in contactos:
+		%for fila in comboBoxContactos:
 		<OPTION>{{fila}}</OPTION>
 		%end
    </SELECT>
@@ -32,7 +32,7 @@
 	<tr>
 	<td colspan=2 align="left">
    <SELECT multiple size="8" name="elegir-listas">
-		%for fila in listas:
+		%for fila in comboBoxListas:
 		<OPTION>{{fila}}</OPTION>
 		%end
    </SELECT>

@@ -191,7 +191,20 @@ def login():
     
     buscar = validaLogin(usuario, clave)
     if buscar:
-        return bottle.template('pyloro_sms2')
+        server = pymongo.MongoClient('localhost', 27017)
+        baseDatos = server.pyloroweb
+       
+        coleccionListas = baseDatos.listas
+        coleccionContactos = baseDatos.contactos
+    
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        
+        #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
+        #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
+        nombresMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
+        listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
+
+        return bottle.template('pyloro_sms2', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
     else:
         cabecera = 'Lo Siento...!'
         msg = 'El usuario o la clave es invalida'
