@@ -28,20 +28,19 @@
 			  	<div class="panel-body">
 			  	<FORM action="/contactos" method="post">
 			  	<fieldset>
-	<div class="input-group form-group">   
-   <SELECT multiple size="8" name="elegir-contactos">		
-		%for fila in comboBoxContactos:
-		<OPTION>{{fila}}</OPTION>
-		%end
-   </SELECT>
-   <p>Hola</p>
-   <!--</div>
-   <div class="form-group">-->
-   <SELECT multiple size="8" name="elegir-listas">
-		%for fila in comboBoxListas:
-		<OPTION>{{fila}}</OPTION>
-		%end
-   </SELECT>
+				<div class="input-group form-group">   
+   				<SELECT multiple size="8" name="elegir-contactos">		
+						%for fila in comboBoxContactos:
+						<OPTION>{{fila}}</OPTION>
+						%end
+   				</SELECT>
+   				<p>Hola</p>
+				   
+				   <SELECT multiple size="8" name="elegir-listas">
+						%for fila in comboBoxListas:
+						<OPTION>{{fila}}</OPTION>
+						%end
+   				</SELECT>
    </div>
 	<div class="row boton">
 	<div class="col-xs-12 ">

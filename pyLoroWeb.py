@@ -71,15 +71,17 @@ class enviarZMQ():
 
 app = enviarZMQ()
 
-def buscarContactosListas():
-    ''' '''
+def buscarContactosListas(objetoUsuarioIdPasado):
+    '''Este metodo busca dentro de la base de datos mongo
+    todos los conmtactos y listas que pertenecen a un usuario
+    del Sistema pasado como parametro'''
 
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
     
-    objetoUsuarioId = buscarUsuarioId(usuario)
+    objetoUsuarioId = objetoUsuarioIdPasado 
     
     #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
     #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
@@ -117,24 +119,7 @@ def validaLogin(usuario, clave):
 def static(filename): 
     return bottle.static_file(filename, root='static/')
 
-@bottle.route('/prueba')
-def buscarContactos():
-    server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb
-       
-    coleccionListas = baseDatos.listas
-    coleccionContactos = baseDatos.contactos
-    
-    objetoUsuarioId = buscarUsuarioId(usuario)
-    
-    #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
-    #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
-    nombresMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
-    listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
-
-    return bottle.template('prueba_combobox.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
-
-@bottle.post('/contactos')
+@bottle.post('/seleccionar')
 def seleccionarContactos():
     '''Metodo POST capturar las variables  que vienen del FORM elegir-contactos 
     y procesarlas para luego mostrarla en los controles text de la vista 
@@ -142,8 +127,6 @@ def seleccionarContactos():
 
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb    
-    
-    coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
 
     objetoUsuarioId = buscarUsuarioId(usuario)
@@ -151,44 +134,19 @@ def seleccionarContactos():
     #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
     listaDevuelta = bottle.request.forms.getall('elegir-contactos')
     listaDevuelta2 = bottle.request.forms.getall('elegir-listas')
-    print(listaDevuelta, listaDevuelta2)
 
-    contactosElegidos = ['{0}<{1}>'.format(f['nombre'], f['telefonos']) for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
+    #Busca en la Base de datos el nombre y el telefono los contactos seleccionados en el ComboBox
+    contactosElegidos = ['{0}<{1}>'.format(f['nombre'], f['telefonos'])\
+            for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
     listasElegidas = listaDevuelta2
 
     #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
-    nombresMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
-    listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
+    nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
     
     textContactos = ','.join(contactosElegidos)
     textListas = ','.join(listasElegidas)
 
-    return bottle.template('prueba_combobox.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
-
-@bottle.post('/listas')
-def seleccionarLitas():
-    '''Metodo POST capturar las variables  que vienen del FORM elegir-contactos 
-    y procesarlas para luego mostrarla en los controles text de la vista 
-    seleccionados en el ComboBox HTML'''
-
-    server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb    
-    
-    coleccionListas = baseDatos.listas
-    coleccionContactos = baseDatos.contactos
-
-    objetoUsuarioId = buscarUsuarioId(usuario)
-
-    #Capturar todas las variables que vienen del <FORM elegir-lista/>
-    listaDevuelta = bottle.request.forms.getall('elegir-lista')
-    listaDevuelta2 = bottle.request.forms.getall('elegir-contactos')
-    print(listaDevuelta2)
-
-    nombres = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
-    listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
-    textLista = ','.join(listaDevuelta)
-
-    return bottle.template('prueba_combobox.html', text2=textLista, contactos=nombres, listas=listasMostrar)
+    return bottle.template('pyloro_sms3.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
 
 @bottle.route('/')
 def index():
@@ -204,11 +162,12 @@ def login():
 
     usuario = bottle.request.forms.get('usu_form')
     clave = bottle.request.forms.get('pass_form')
-    
+
     buscar = validaLogin(usuario, clave)
     if buscar:
-        nombresMostrar, listasMostrar = buscarContactosListas()
-        return bottle.template('pyloro_sms2', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
+        return bottle.template('pyloro_sms3', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
     else:
         cabecera = 'Lo Siento...!'
         msg = 'El usuario o la clave es invalida'
@@ -216,7 +175,8 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-    return bottle.template('pyloro_sms2')
+    nombresMostrar, listasMostrar = buscarContactosListas()
+    return bottle.template('pyloro_sms3.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
 
 @bottle.post('/smsenviar')
 def smsEnviar():
