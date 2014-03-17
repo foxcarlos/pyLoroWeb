@@ -175,7 +175,8 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-    nombresMostrar, listasMostrar = buscarContactosListas()
+    objetoUsuarioId = buscarUsuarioId(usuario)
+    nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
     return bottle.template('pyloro_sms3.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
 
 @bottle.post('/smsenviar')
