@@ -9,6 +9,7 @@ import sys
 import pymongo
 from os.path import join, dirname
 from bottle import route, static_file, template
+import re
 
 class enviarZMQ():
     def __init__(self):
@@ -90,6 +91,10 @@ def buscarContactosListas(objetoUsuarioIdPasado):
     return nombresMostrar, listasMostrar
 
 def buscarUsuarioId(usuario):
+    '''parametros 1 string: usuario
+    Este metodo busca el objetoId en mongodb del usuario que inicio
+    sesion en el Sistema pyLoroWeb'''
+
     usuarioBuscar = usuario
     cliente = pymongo.MongoClient('localhost', 27017)
     baseDatos = cliente.pyloroweb
@@ -99,7 +104,9 @@ def buscarUsuarioId(usuario):
     return objetoId
 
 def validaLogin(usuario, clave):
-    ''' Metodo para validar el inicio de sesion
+    ''' parametros recibidos 2:
+    (string usuario, string clave)
+    Metodo para validar el inicio de sesion
     contra la base de datos'''
 
     lcUsuario = usuario
@@ -129,6 +136,7 @@ def seleccionarContactos():
     baseDatos = server.pyloroweb    
     coleccionContactos = baseDatos.contactos
 
+    #Busca el objetoId del usuario en la base de datos mongodb
     objetoUsuarioId = buscarUsuarioId(usuario)
 
     #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
@@ -154,6 +162,8 @@ def index():
 
 @bottle.post('/')
 def login():
+    ''' Metodo para el inicio de Sesion en pyLoroWeb'''
+
     global usuario
     global clave
     usuario = ''
@@ -175,17 +185,27 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-    objetoUsuarioId = buscarUsuarioId(usuario)
-    nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
-    return bottle.template('pyloro_sms3.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+    try:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
+        return bottle.template('pyloro_sms3.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+    except:
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.post('/smsenviar')
 def smsEnviar():
     ''' Metodo que captura lo ingresado en el form de envio de SMS
     y lo envia al servidor ZMQ con la Clase enviar '''
-    numero = bottle.request.forms.get('numero')
-    mensaje = bottle.request.forms.get('comentarios')
+
+    contactos = bottle.request.forms.get('contactos')
+    listas = bottle.request.forms.get('listas')
+    mensaje = bottle.request.forms.get('mensaje')
     
+    listasNumeros = componerContactosListas(contactos, listas)
+    print(listasNumeros)
+
     try:
         if not validaLogin(usuario, clave):
             cabecera = 'Lo Siento ...!'
@@ -196,20 +216,53 @@ def smsEnviar():
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
   
-    if validaSms(numero, mensaje.strip()):
-        devuelve = app.enviar(numero, mensaje)
-        
-        if devuelve:
-            cabecera = 'Felicidades ...'
-            msg = 'Mensaje enviado con exito al numero {0}'.format(numero)
-            return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
+    for numero in listasNumeros:
+        print(numero)
+        if validaSms(numero, mensaje.strip()):
+            devuelve = app.enviar(numero, mensaje)
+            if devuelve:
+                cabecera = 'Felicidades ...'
+                msg = 'Mensaje enviado con exito al numero {0}'.format(numero)
+                print(msg)
+                #return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
+            else:
+                cabecera = 'Lo Siento ...!'
+                msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+                print(msg)
         else:
-            cabecera = 'Lo Siento ...!'
-            msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-    else:
-        cabecera = 'Lo Siento...!'
-        msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
-        return bottle.template('mensaje_envio', {'cabecera':cabecera, 'mensaje':msg})
+            cabecera = 'Lo Siento...!'
+            msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
+            print(msg)
+            #return bottle.template('mensaje_envio', {'cabecera':cabecera, 'mensaje':msg})
+    cabecera = 'Felicidades ...'
+    msg = 'Mensaje enviado con exito '
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
+
+def componerContactosListas(contactos, listas):
+    '''Armar'''
+    
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb    
+    coleccionContactos = baseDatos.contactos
+    coleccionListas = baseDatos.listas
+
+    recvContactos = ','.join(contactos)
+    recvListas = listas.split(',')
+
+    patron = r'[0-9]{11}'
+    devolverContactos = re.findall(patron, recvContactos)
+
+    #Busca en mongodb el objetoId del usuario que inicio sesion
+    objetoUsuarioId = buscarUsuarioId(usuario)
+
+    #Busca en la Base de datos el nombre y el telefono los contactos seleccionados en el 
+    #ComboBox que pertenescan al usuario que inicio sesion'''
+    devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
+    devolverListas = [f['telefonos'] for f in coleccionContactos.find({'lista_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
+    
+    numeros = devolverContactos + devolverListas
+    print(devolverContactos)
+    return devolverContactos
 
 def validaSms(num, msg):
     devuelve = True
