@@ -204,7 +204,7 @@ def smsEnviar():
     mensaje = bottle.request.forms.get('mensaje')
     
     listasNumeros = componerContactosListas(contactos, listas)
-    print(listasNumeros)
+    #print(listasNumeros)
 
     try:
         if not validaLogin(usuario, clave):
@@ -217,7 +217,7 @@ def smsEnviar():
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
   
     for numero in listasNumeros:
-        print(numero)
+        #print(numero)
         if validaSms(numero, mensaje.strip()):
             devuelve = app.enviar(numero, mensaje)
             if devuelve:
@@ -246,7 +246,7 @@ def componerContactosListas(contactos, listas):
     coleccionContactos = baseDatos.contactos
     coleccionListas = baseDatos.listas
 
-    recvContactos = ','.join(contactos)
+    recvContactos = contactos
     recvListas = listas.split(',')
 
     patron = r'[0-9]{11}'
@@ -258,11 +258,12 @@ def componerContactosListas(contactos, listas):
     #Busca en la Base de datos el nombre y el telefono los contactos seleccionados en el 
     #ComboBox que pertenescan al usuario que inicio sesion'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
+    print(devolverListasID)
     devolverListas = [f['telefonos'] for f in coleccionContactos.find({'lista_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
     
     numeros = devolverContactos + devolverListas
-    print(devolverContactos)
-    return devolverContactos
+    print(devolverListas)
+    return numeros 
 
 def validaSms(num, msg):
     devuelve = True
