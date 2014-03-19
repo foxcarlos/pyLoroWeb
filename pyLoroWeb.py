@@ -7,6 +7,7 @@ import ConfigParser
 import bottle
 import sys
 import pymongo
+from bson.objectid import ObjectId
 from os.path import join, dirname
 from bottle import route, static_file, template
 import re
@@ -259,10 +260,10 @@ def componerContactosListas(contactos, listas):
     #ComboBox que pertenescan al usuario que inicio sesion'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
     print(devolverListasID)
-    devolverListas = [f['telefonos'] for f in coleccionContactos.find({'lista_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
+    devolverListas = [f['telefonos'] for f in coleccionContactos.find({'listas_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
     
     numeros = devolverContactos + devolverListas
-    print(devolverListas)
+    print(numeros)
     return numeros 
 
 def validaSms(num, msg):
