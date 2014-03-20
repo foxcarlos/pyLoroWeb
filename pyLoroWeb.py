@@ -15,7 +15,7 @@ import re
 class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
-        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
+        fi = '/home/foxcarlos/desarrollo/python/pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
@@ -202,10 +202,10 @@ def smsEnviar():
 
     contactos = bottle.request.forms.get('contactos')
     listas = bottle.request.forms.get('listas')
+    numeros = bottle.request.forms.get('numeros')
     mensaje = bottle.request.forms.get('mensaje')
     
-    listasNumeros = componerContactosListas(contactos, listas)
-    #print(listasNumeros)
+    listasNumeros = componerContactosListas(contactos, listas) + numeros.split(',')
 
     try:
         if not validaLogin(usuario, clave):
@@ -218,29 +218,23 @@ def smsEnviar():
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
   
     for numero in listasNumeros:
-        #print(numero)
         if validaSms(numero, mensaje.strip()):
+            #devuelve = True
             devuelve = app.enviar(numero, mensaje)
             if devuelve:
                 cabecera = 'Felicidades ...'
                 msg = 'Mensaje enviado con exito al numero {0}'.format(numero)
-                print(msg)
-                #return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
             else:
                 cabecera = 'Lo Siento ...!'
                 msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-                print(msg)
         else:
             cabecera = 'Lo Siento...!'
             msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
-            print(msg)
-            #return bottle.template('mensaje_envio', {'cabecera':cabecera, 'mensaje':msg})
-    cabecera = 'Felicidades ...'
-    msg = 'Mensaje enviado con exito '
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
 
 def componerContactosListas(contactos, listas):
-    '''Armar'''
+    '''Obtener solo los numeros de telefonos de las selecciones
+    hechas en l combobox del html'''
     
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb    
@@ -250,20 +244,23 @@ def componerContactosListas(contactos, listas):
     recvContactos = contactos
     recvListas = listas.split(',')
 
+    #se toma solo el numero de recvContactos ya que este devuelve una lista con nombre y numeros 'Carlos<04263002966>'
     patron = r'[0-9]{11}'
     devolverContactos = re.findall(patron, recvContactos)
+    
 
     #Busca en mongodb el objetoId del usuario que inicio sesion
     objetoUsuarioId = buscarUsuarioId(usuario)
 
-    #Busca en la Base de datos el nombre y el telefono los contactos seleccionados en el 
-    #ComboBox que pertenescan al usuario que inicio sesion'''
+    ''' Busca en la base de datos "listas" los objetosId() de las listas que fueron selecioandas en el combobox
+    del html'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
-    print(devolverListasID)
+    
+    '''Buscos en la tabla "contactos" los objetosId() de las listas devueltas anteriormente y tomo solo los 
+    contactos que pertencen a esas listas'''
     devolverListas = [f['telefonos'] for f in coleccionContactos.find({'listas_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
     
     numeros = devolverContactos + devolverListas
-    print(numeros)
     return numeros 
 
 def validaSms(num, msg):
