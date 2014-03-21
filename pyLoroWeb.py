@@ -219,7 +219,6 @@ def smsEnviar():
   
     for numero in listasNumeros:
         if validaSms(numero, mensaje.strip()):
-            #devuelve = True
             devuelve = app.enviar(numero, mensaje)
             if devuelve:
                 cabecera = 'Felicidades ...'
@@ -227,9 +226,6 @@ def smsEnviar():
             else:
                 cabecera = 'Lo Siento ...!'
                 msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-        else:
-            cabecera = 'Lo Siento...!'
-            msg = 'El numero telefonico no es valido o el mensaje se encuentra vacio'
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
 
 def componerContactosListas(contactos, listas):
