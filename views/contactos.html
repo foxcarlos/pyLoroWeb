@@ -5,7 +5,7 @@
 <title></title>
 </head>
 <body>
-<form action="mostrarListas" method="post" target="_parent">
+<form action="/guardarContacto" method="post" target="_parent">
 ID:<br>
 <input type="text" name="id" /><br>
 
@@ -24,14 +24,18 @@ email:<br>
 tuiter:<br>
 <input type="text" name="tuiter" /><br>
 
-<form action="mostrarListas" method="get" target="_parent">
-Listas:<br>
-<input type="text" name="listas" /><input type="button" name="irListas" /><br>
-<select name="listas2" size="8">
+<form action="/mostrarListas" method="get" target="_parent">
+Detalles del Grupo:<br>
+<input type="text" name="listas" /><input type="button" name="irListas" value="Agregar a Grupos" /><br>
+<!-- <select name="agregarGrupo" multiple="multiple">
 <option value="Hospital Coromoto">Hospital Coromoto</option>
 <option value="Fuerza Roja">Fuerza Roja</option>
-</select>
+</select> -->
 </form>
+</br>
+
+<input type="submit" name="guardarContacto" value='Guardar' />
+<input type="reset" name="deshacer" value="Deshacer" />
 </form>
 </body>
 </html>
