@@ -155,7 +155,7 @@ def seleccionarContactos():
     textContactos = ','.join(contactosElegidos)
     textListas = ','.join(listasElegidas)
 
-    return bottle.template('pyloro_sms3.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+    return bottle.template('pyloro_sms_multiple.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
 
 @bottle.route('/')
 def index():
@@ -189,7 +189,7 @@ def smsEnviar():
     try:
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
-        return bottle.template('pyloro_sms3.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+        return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
     except:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
