@@ -20,7 +20,7 @@
 		<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-personal">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Inicio de Sesión<span class="Three-Dee pull-right" >PyLoro</span></h3>
+			    	<h3 class="panel-title">Inicio de Sesión<span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
 			 	</div>
 			  	<div class="panel-body">
 			    	<form accept-charset="UTF-8"  role="form" action="/" method="post">
