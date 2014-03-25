@@ -226,6 +226,9 @@ def smsEnviar():
             else:
                 cabecera = 'Lo Siento ...!'
                 msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+        else:
+            cabecera = 'Lo siento...!'
+            msg = 'Mensaje vacio o numero incorrecto'
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
 
 def componerContactosListas(contactos, listas):
