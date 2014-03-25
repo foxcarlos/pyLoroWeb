@@ -178,7 +178,7 @@ def login():
     if buscar:
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
-        return bottle.template('pyloro_sms3', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+        return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
     else:
         cabecera = 'Lo Siento...!'
         msg = 'El usuario o la clave es invalida'
