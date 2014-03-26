@@ -3,6 +3,23 @@
 <head>
 <meta charset="utf-8" />
 <title></title>
+
+<script type="text/javascript">
+function mostrarVentana()
+{
+    var ventana = document.getElementById('miVentana'); // Accedemos al contenedor
+    ventana.style.marginTop = "100px"; // Definimos su posición vertical. La ponemos fija para simplificar el código
+    ventana.style.marginLeft = ((document.body.clientWidth-350) / 2) +  "px"; // Definimos su posición horizontal
+    ventana.style.display = 'block'; // Y lo hacemos visible
+}
+
+function ocultarVentana()
+{
+    var ventana = document.getElementById('miVentana'); // Accedemos al contenedor
+    ventana.style.display = 'none'; // Y lo hacemos invisible
+}
+</script>
+
 </head>
 <body>
 <form action="/guardarContacto" method="post" target="_parent">
@@ -24,17 +41,24 @@ email:<br>
 tuiter:<br>
 <input type="text" name="tuiter" /><br>
 
-<form action="/mostrarListas" method="get" target="_parent">
-Detalles del Grupo:<br>
-<input type="text" name="listas" /><input type="button" name="irListas" value="Agregar a Grupos" /><br>
-<!-- <select name="agregarGrupo" multiple="multiple">
-<option value="Hospital Coromoto">Hospital Coromoto</option>
-<option value="Fuerza Roja">Fuerza Roja</option>
-</select> -->
-</form>
-</br>
-
-<input type="submit" name="guardarContacto" value='Guardar' />
+Listas:</br>
+<input type="text" name="listas" />
+Haz click <a href="javascript:mostrarVentana();">aquí</a>
+<div id="miVentana" style="position: fixed; width: 350px; height: 220x; top: 0; left: 0; font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; border: #333333 3px solid; background-color: #FAFAFA; color: #000000; display:none;">
+ <div style="font-weight: bold; text-align: left; color: #FFFFFF; padding: 5px; background-color:#006394">Título de la ventana</div>
+ <p style="padding: 5px; text-align: justify; line-height:normal">
+	<select name="Grupos" multiple="multiple">
+	<option value="Hospital Coromoto">Hospital Coromoto</option>
+	<option value="Hospital Coromoto">Fuerza Roja</option>
+	<option value="Hospital Coromoto">Personal</option>
+	</select>
+ </p>
+  <div style="padding: 10px; background-color: #F0F0F0; text-align: center; margin-top: 44px;"><input id="btnAceptar" onclick="ocultarVentana();" name="btnAceptar" size="20" type="button" value="Aceptar" />
+ </div>
+</div>
+<br>
+<br>
+<input type="submit" name="guardarContacto" value='Guardar'/>
 <input type="reset" name="deshacer" value="Deshacer" />
 </form>
 </body>
