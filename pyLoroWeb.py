@@ -216,19 +216,20 @@ def smsEnviar():
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
-  
-    for numero in listasNumeros:
-        if validaSms(numero, mensaje.strip()):
-            devuelve = app.enviar(numero, mensaje)
-            if devuelve:
-                cabecera = 'Felicidades ...'
-                msg = 'Mensaje enviado con exito al numero {0}'.format(numero)
-            else:
-                cabecera = 'Lo Siento ...!'
-                msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-        else:
-            cabecera = 'Lo siento...!'
-            msg = 'Mensaje vacio o numero incorrecto'
+
+    if not listasNumeros or not mensaje:
+        cabecera = 'Lo siento ...!'
+        msg = 'Mensaje o numeros de telefonos vacios'
+    else:
+        for numero in listasNumeros:
+            if validaSms(numero, mensaje.strip()):
+                devuelve = app.enviar(numero, mensaje)
+                if devuelve:
+                    cabecera = 'Felicidades ...'
+                    msg = 'Mensaje enviado con exito'.format(numero)
+                else:
+                    cabecera = 'Lo Siento ...!'
+                    msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
 
 def componerContactosListas(contactos, listas):
