@@ -217,7 +217,7 @@ def smsEnviar():
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
-    if not listasNumeros or not mensaje:
+    if not listasNumeros or not mensaje.strip():
         cabecera = 'Lo siento ...!'
         msg = 'Mensaje o numeros de telefonos vacios'
     else:
