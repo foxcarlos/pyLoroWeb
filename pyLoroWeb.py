@@ -232,6 +232,10 @@ def smsEnviar():
                     msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
 
+@bottle.route('/contactoNuevo')
+def contactos():
+    return bottle.template('contactos.html')
+
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
     hechas en l combobox del html'''
