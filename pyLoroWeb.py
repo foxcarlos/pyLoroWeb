@@ -236,6 +236,12 @@ def smsEnviar():
 def contactos():
     return bottle.template('contactos.html')
 
+@bottle.post('/asignarGrupo')
+def asignarGrupo():
+    gruposSeleccionados = bottle.request.forms.getall('elegir-Grupos')
+    print(gruposSeleccionados)
+    return bottle.template('contactos.html')
+
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
     hechas en l combobox del html'''
