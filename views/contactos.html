@@ -16,6 +16,17 @@
       });
     };
   </script>
+  
+  <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript> 
+  	function btn_onclick() { 
+		alert(elegirGrupos.value)
+		for (var i=0;i<select11.length;i++){ 
+			if(elegirGrupos.options[i].selected){ 
+			<!-- alert(select11.options[i].text); -->
+			} 
+		} 
+	}
+	</script>
 </head>
 <body style="background:#FFFFFF">
 
@@ -44,19 +55,18 @@
 	</BR></br>
 	<input type="submit" name="guardarContacto" value='Guardar'/>
 	<input type="reset" name="deshacer" value="Deshacer" />
-
 </form>
-<div id="dialog" title="Titulo dialog" style="display:none;">
-	<p>Contenido de la ventana.</p>
-	<form action="/asignarGrupo" method="post">
-		<select name="elegir-Grupos" multiple="multiple">
+
+<div id="dialog" title="Listado de Grupos" style="display:none;">
+	<p>Seleccione el Grupo.</p>
+	<form name='lgrupos'>
+		<select name="elegirGrupos" id="elegirGrupos" size="5" multiple> 
 			<option value="Hospital Coromoto">Hospital Coromoto</option>
 			<option value="Fuerza Roja">Fuerza Roja</option>
 			<option value="Personal">Personal</option>
 		</select></br>
-		<input type="submit" name="aceptar" value = "Seleccionar"/>
-		<input type="reset" name="cancelar" value = "Cancelar"/>
-	</form>	
+		<input id=btn name=btn type=button value="btn" onclick="btn_onclick()">
+	</form> 	
 </div> 
 </body>
 </html>

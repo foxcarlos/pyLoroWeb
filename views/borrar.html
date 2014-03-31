@@ -27,10 +27,12 @@
    
    <div id="dialog" title="Titulo dialog" style="display:none;">
     <p>Contenido de la ventana.</p>
-    <form action="prueba" method="post">
+    <form name="datos">
 	 	<input type="text" name="Nombre" />
 	 	<input type="submit" name="Aceptar" />    
     </form>
+    var pos=datos.cbo.selectedindex;
+    var lugar= datos.cbo.options[pos].value;
 	</div> 
    <!-- <button onclick="abrir_dialog()">Abrir ventana emergente</button> -->
 </body>
