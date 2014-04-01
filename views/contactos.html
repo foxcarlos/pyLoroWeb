@@ -19,12 +19,18 @@
   
   <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript> 
   	function btn_onclick() { 
-		alert(elegirGrupos.value)
-		for (var i=0;i<select11.length;i++){ 
+		<!-- alert(elegirGrupos.value) -->
+		var lcGrupo;	
+		elegidos = ''
+		for (var i=0;i<elegirGrupos.length;i++){ 
 			if(elegirGrupos.options[i].selected){ 
-			<!-- alert(select11.options[i].text); -->
-			} 
-		} 
+				<!-- alert(elegirGrupos.options[i].text); --> 
+				lcGrupo = elegirGrupos.options[i].text;
+				elegidos+=lcGrupo+" ";
+			}
+		}
+		<!-- alert(elegidos.split(' ')); -->
+	return elegidos
 	}
 	</script>
 </head>
@@ -66,7 +72,8 @@
 			<option value="Personal">Personal</option>
 		</select></br>
 		<input id=btn name=btn type=button value="btn" onclick="btn_onclick()">
-	</form> 	
-</div> 
+	</form>
+</div>
+<script type="text/javascript" >alert(elegidos)</script>
 </body>
 </html>
