@@ -8,35 +8,44 @@
    <script src="/resources/demos/external/jquery.bgiframe-2.1.2.js"></script>
    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
    <link rel="stylesheet" href="http://www.proyectosbds.com/html/css/layout.css" />
-  <script>
+   
+   <script>
     function abrir_dialog() {
       $( "#dialog" ).dialog({
           show: "blind",
           hide: "explode"
       });
     };
-  </script>
+   </script>
   
-  <SCRIPT ID=clientEventHandlersJS LANGUAGE=javascript> 
+   <script>  
+    function btn_cancelar() {
+      $( "#dialog" ).dialog( "close" );
+    };
+   </script>
+  
+   <script> 
   	function btn_onclick() { 
-		<!-- alert(elegirGrupos.value) -->
 		var lcGrupo;	
-		elegidos = ''
+		var elegidos = ''
+		
 		for (var i=0;i<elegirGrupos.length;i++){ 
-			if(elegirGrupos.options[i].selected){ 
-				<!-- alert(elegirGrupos.options[i].text); --> 
+			if(elegirGrupos.options[i].selected){  
 				lcGrupo = elegirGrupos.options[i].text;
-				elegidos+=lcGrupo+" ";
+				elegidos+=lcGrupo+",";
 			}
 		}
-		<!-- alert(elegidos.split(' ')); -->
-	return elegidos
+		lElegidos = elegidos.split(',')
+		lElegidos.pop()
+		document.contactos.listas.value = lElegidos
+		$( "#dialog" ).dialog( "close" );
 	}
 	</script>
+	
 </head>
 <body style="background:#FFFFFF">
 
-<form action="/guardarContacto" method="post">
+<form action="/guardarContacto" method="post" name="contactos">
 	ID:<br>
 	<input type="text" name="id" /><br>
 	
@@ -59,8 +68,10 @@
 	<input type="text" name="listas" />
 	<input type="button" name="unBoton" value="Listas" onclick="abrir_dialog()" />
 	</BR></br>
+	
 	<input type="submit" name="guardarContacto" value='Guardar'/>
 	<input type="reset" name="deshacer" value="Deshacer" />
+	
 </form>
 
 <div id="dialog" title="Listado de Grupos" style="display:none;">
@@ -71,9 +82,9 @@
 			<option value="Fuerza Roja">Fuerza Roja</option>
 			<option value="Personal">Personal</option>
 		</select></br>
-		<input id=btn name=btn type=button value="btn" onclick="btn_onclick()">
+		<input id=btnAceptar name=btnAceptar type=button value="Aceptar" onclick="btn_onclick()">
+		<input id=btnCancelar name=btnCancelar type=button value="Cancelar" onclick="btn_cancelar()">
 	</form>
 </div>
-<script type="text/javascript" >alert(elegidos)</script>
 </body>
 </html>
