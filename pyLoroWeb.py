@@ -242,6 +242,11 @@ def asignarGrupo():
     print(gruposSeleccionados)
     return bottle.template('contactos.html')
 
+@bottle.post('/guardarContacto')
+def guardarContacto():
+    contactoDevuelto = bottle.request.forms.getall('contactos')
+    print(contactoDevuelto)
+
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
     hechas en l combobox del html'''

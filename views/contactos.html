@@ -28,16 +28,16 @@
   	function btn_onclick() { 
 		var lcGrupo;	
 		var elegidos = ''
-		
 		for (var i=0;i<elegirGrupos.length;i++){ 
 			if(elegirGrupos.options[i].selected){  
 				lcGrupo = elegirGrupos.options[i].text;
 				elegidos+=lcGrupo+",";
 			}
 		}
-		lElegidos = elegidos.split(',')
-		lElegidos.pop()
-		document.contactos.listas.value = lElegidos
+		lElegidos = elegidos.split(',');
+		lElegidos.pop();
+		<!-- document.contactos.listas.value = lElegidos -->
+		document.getElementById('listas').value = lElegidos;
 		$( "#dialog" ).dialog( "close" );
 	}
 	</script>
@@ -64,12 +64,13 @@
 	<input type="text" name="tuiter" /><br>
 
 	Listas:</br>
-	<input type="text" name="listas" />
+	<input type="text" id="listas" />
 	<input type="button" name="unBoton" value="Listas" onclick="abrir_dialog()" />
 	</BR></br>
 	
 	<input type="submit" name="guardarContacto" value='Guardar'/>
-	<input type="reset" name="deshacer" value="Deshacer" />
+	<input type="reset" name="deshacer" value="Limpiar" />
+	<input type="button" name="btnSalir" id="btnSalir" value="Salir"/>
 	
 </form>
 
@@ -83,6 +84,7 @@
 		</select></br>
 		<input id=btnAceptar name=btnAceptar type=button value="Aceptar" onclick="btn_onclick()">
 		<input id=btnCancelar name=btnCancelar type=button value="Cancelar" onclick="btn_cancelar()">
+		
 	</form>
 </div>
 </body>
