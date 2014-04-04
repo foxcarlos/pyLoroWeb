@@ -244,8 +244,23 @@ def asignarGrupo():
 
 @bottle.post('/guardarContacto')
 def guardarContacto():
-    contactoDevuelto = bottle.request.forms.getall('contactos')
-    print(contactoDevuelto)
+    idDevuelto = bottle.request.forms.get('id')
+    nombreDevuelto = bottle.request.forms.get('nombre')
+    apellidoDevuelto = bottle.request.forms.get('apellido')
+    telefonoDevuelto = bottle.request.forms.get('telefono')
+    emailDevuelto = bottle.request.forms.get('email')
+    tuiterDevuelto = bottle.request.forms.get('tuiter')
+    listasDevuelto = bottle.request.forms.get('listas ')
+
+    print(idDevuelto)
+    print(nombreDevuelto)
+    print(apellidoDevuelto)
+    print(nombreDevuelto)
+    print(apellidoDevuelto)
+    print(telefonoDevuelto)
+    print(emailDevuelto)
+    print(tuiterDevuelto)
+    print(listasDevuelto)
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
