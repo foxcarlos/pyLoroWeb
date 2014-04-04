@@ -250,7 +250,7 @@ def guardarContacto():
     telefonoDevuelto = bottle.request.forms.get('telefono')
     emailDevuelto = bottle.request.forms.get('email')
     tuiterDevuelto = bottle.request.forms.get('tuiter')
-    listasDevuelto = bottle.request.forms.get('listas ')
+    listasDevuelto = bottle.request.forms.get('listas')
 
     print(idDevuelto)
     print(nombreDevuelto)
