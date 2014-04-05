@@ -15,7 +15,7 @@ import re
 class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
-        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
+        fi = '/home/cgarcia/desarrollo/python/pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
@@ -90,6 +90,18 @@ def buscarContactosListas(objetoUsuarioIdPasado):
     nombresMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
     return nombresMostrar, listasMostrar
+
+def buscarGrupos():
+    '''Este metodo busca dentro de la base de datos mongo
+    todos los Grupos o listas'''
+
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb
+    coleccionListas = baseDatos.listas
+    
+    #Aqui se buscan los grupos para mostrarlos en el combobox
+    gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find().sort('nombre_lista')]
+    return gruposMostrar
 
 def buscarUsuarioId(usuario):
     '''parametros 1 string: usuario
@@ -230,37 +242,84 @@ def smsEnviar():
                 else:
                     cabecera = 'Lo Siento ...!'
                     msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg})
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/smsenviar'})
 
 @bottle.route('/contactoNuevo')
 def contactos():
-    return bottle.template('contactos.html')
+    grupos = buscarGrupos()
+    return bottle.template('contactos',{'comboBoxGrupos':grupos})
 
-@bottle.post('/asignarGrupo')
-def asignarGrupo():
-    gruposSeleccionados = bottle.request.forms.getall('elegir-Grupos')
-    print(gruposSeleccionados)
-    return bottle.template('contactos.html')
+@bottle.post('/contactoNuevo')
+def contactoGuardar():
+    '''Metodo que permite guardar un contacto desde el metodo post del form '''
 
-@bottle.post('/guardarContacto')
-def guardarContacto():
-    idDevuelto = bottle.request.forms.get('id')
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb    
+    coleccionListas = baseDatos.listas
+    coleccionContactos = baseDatos.contactos
+
+    #Capturo desde el form html los campos 
+    #idDevuelto = bottle.request.forms.get('id')
     nombreDevuelto = bottle.request.forms.get('nombre')
     apellidoDevuelto = bottle.request.forms.get('apellido')
     telefonoDevuelto = bottle.request.forms.get('telefono')
     emailDevuelto = bottle.request.forms.get('email')
     tuiterDevuelto = bottle.request.forms.get('tuiter')
-    listasDevuelto = bottle.request.forms.get('listas')
+    gruposDevuelto = bottle.request.forms.get('grupos').split(',')
+    
+    #Busca en mongodb el objetoId del usuario que inicio sesion
+    objetoUsuarioId = buscarUsuarioId(usuario)
 
-    print(idDevuelto)
-    print(nombreDevuelto)
-    print(apellidoDevuelto)
-    print(nombreDevuelto)
-    print(apellidoDevuelto)
-    print(telefonoDevuelto)
-    print(emailDevuelto)
-    print(tuiterDevuelto)
-    print(listasDevuelto)
+    #Busca en la base de datos "listas" los objetosId() de las listas que fueron selecioandas en el combobox
+    #del html solo para el usuario que inicio sesion
+    devolverGruposID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':gruposDevuelto}, "usuario_id":objetoUsuarioId})]
+
+    #Armo el documento o regisrtos que se insertara en la base de datos mongodb
+    documento = {'usuario_id':objetoUsuarioId, 'nombre':nombreDevuelto, 'apellido':apellidoDevuelto,
+            'telefonos':telefonoDevuelto, 'email':emailDevuelto, 'twitter':tuiterDevuelto, 'listas_id':devolverGruposID}
+    
+    #Inserto el documento en mongodb
+    try:
+        coleccionContactos.insert(documento)
+        cabecera = 'Felicidades ...'
+        msg = 'Contacto Guardado con exito'
+    except:
+        cabecera = 'Lo Siento ...'
+        msg = 'Ocurrio un error al Guardar'
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/contactoNuevo'})
+
+@bottle.route('/grupoNuevo')
+def contactos():
+    return bottle.template('grupos')
+
+@bottle.post('/grupoNuevo')
+def grupoGuardar():
+    '''Metodo que permite guardar un grupo desde el metodo post del form '''
+
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb    
+    coleccionListas = baseDatos.listas
+
+    #Capturo desde el form html los campos 
+    #idDevuelto = bottle.request.forms.get('id')
+    nombreDevuelto = bottle.request.forms.get('nombre')
+    descripcionDevuelto = bottle.request.forms.get('descripcion')
+    
+    #Busca en mongodb el objetoId del usuario que inicio sesion
+    objetoUsuarioId = buscarUsuarioId(usuario)
+
+    #Armo el documento o regisrtos que se insertara en la base de datos mongodb
+    documento = {'usuario_id':objetoUsuarioId, 'nombre_lista':nombreDevuelto, 'descripcion':descripcionDevuelto}
+    
+    #Inserto el documento en mongodb
+    try:
+        coleccionListas.insert(documento)
+        cabecera = 'Felicidades ...'
+        msg = 'Grupo Guardado con exito'
+    except:
+        cabecera = 'Lo Siento ...'
+        msg = 'Ocurrio un error al Guardar'
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/grupoNuevo'})
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones

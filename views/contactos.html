@@ -10,7 +10,7 @@
    <link rel="stylesheet" href="http://www.proyectosbds.com/html/css/layout.css" />
    
    <script>
-    function abrir_dialog() {
+    function listarGrupos() {
       $( "#dialog" ).dialog({
           show: "blind",
           hide: "explode"
@@ -19,13 +19,13 @@
    </script>
   
    <script>  
-    function btn_cancelar() {
+    function btnCancelarListarGrupos() {
       $( "#dialog" ).dialog( "close" );
     };
    </script>
   
    <script> 
-  	function btn_onclick() { 
+  	function btnAceptarListarGrupos() { 
 		var lcGrupo;	
 		var elegidos = ''
 		for (var i=0;i<elegirGrupos.length;i++){ 
@@ -36,42 +36,42 @@
 		}
 		lElegidos = elegidos.split(',');
 		lElegidos.pop();
-		<!-- document.contactos.listas.value = lElegidos -->
-		document.getElementById('listas').value = lElegidos;
+		<!-- document.contactos.grupos.value = lElegidos -->
+		document.getElementById('grupos').value = lElegidos;
 		$( "#dialog" ).dialog( "close" );
 	}
 	</script>
 	
 </head>
 <body style="background:#E5E5E5">
-<form action="/guardarContacto" method="post" name="contactos">
+<form action="/contactoNuevo" method="post" name="contactos">
 	ID:<br>
-	<input type="text" name="id" /><br>
+	<input type="text" name="id" /><br/>
 	
-	Nombre:<br>
-	<input type="text" name="nombre" /><br>
+	Nombre:<br/>
+	<input type="text" name="nombre" required="required"/><br/>
 
-	Apellido:<br>
-	<input type="text" name="apellido" /><br>
+	Apellido:<br/>
+	<input type="text" name="apellido" /><br/>
 
-	Telefono:<br>
-	<input type="number" name="telefono" /><br>
+	Telefono:<br/>
+	<input type="number" name="telefono" required="required" pattern="[0-9]{11}" maxlength="11" /><br/>
 
-	email:<br>
-	<input type="email" name="email"/><br>
+	email:<br/>
+	<input type="email" name="email" /><br/>
 
-	tuiter:<br>
-	<input type="text" name="tuiter" /><br>
+	tuiter:<br/>
+	<input type="text" name="tuiter" /><br/>
 
-	Listas:</br>
-	<input type="text" id="listas" name="listas" />
+	Grupos:<br/>
+	<input type="text" id="grupos" name="grupos" />
 	
-	<input type="button" name="unBoton" value="Listas" onclick="abrir_dialog()" />
-	</BR></br>
-	
+	<input type="button" name="btnListarGrupos" value="Listas" onclick="listarGrupos()" />
+	<br/>
+		
 	<input type="submit" name="guardarContacto" value='Guardar'/>
 	<input type="reset" name="deshacer" value="Limpiar" />
-	<input type="button" name="btnSalir" id="btnSalir" value="Salir"/>
+	<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
 	
 </form>
 
@@ -79,12 +79,12 @@
 	<p>Seleccione el Grupo.</p>
 	<form name='lgrupos'>
 		<select name="elegirGrupos" id="elegirGrupos" size="5" multiple> 
-			<option value="Hospital Coromoto">Hospital Coromoto</option>
-			<option value="Fuerza Roja">Fuerza Roja</option>
-			<option value="Personal">Personal</option>
-		</select></br>
-		<input id=btnAceptar name=btnAceptar type=button value="Aceptar" onclick="btn_onclick()">
-		<input id=btnCancelar name=btnCancelar type=button value="Cancelar" onclick="btn_cancelar()">
+			%for fila in comboBoxGrupos:
+         	<option>{{fila}}</option> 
+         %end
+		</select><br/>
+		<input id=btnAceptar name=btnAceptar type=button value="Aceptar" onclick="btnAceptarListarGrupos()">
+		<input id=btnCancelar name=btnCancelar type=button value="Cancelar" onclick="btnCancelarListarGrupos()">
 		
 	</form>
 </div>

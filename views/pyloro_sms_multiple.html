@@ -10,7 +10,7 @@
 <link href='http://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/contador.js" ></script>
-<title>PyLoro SMS - Multiple</title>
+<title>PyLoroWeb SMS</title>
 </head>
 
 <body>
@@ -30,7 +30,8 @@
                        <form action="/seleccionar" method="post">
                         <div class="row">
                             <div class="col-sm-6">
-                            	Contactos
+										<a href="/contactoNuevo">Contactos</a>                            	
+                            	
                                 <div class="form-group">
                                 <select name="elegir-contactos" multiple class="form-control">
                                       %for fila in comboBoxContactos:
@@ -41,7 +42,7 @@
                         
 			    				</div>
                             <div class="col-sm-6">
-                            	Grupos
+                            	<a href="/grupoNuevo">Grupos</a>
                                 <div class="form-group">
                                 <select name="elegir-listas" multiple class="form-control">
                                 	%for fila in comboBoxListas:

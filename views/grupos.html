@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/style2.css">
+	<link href='http://fonts.googleapis.com/css?family=Cabin+Condensed:400,500,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
+	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/contador.js" ></script>	
+	<title>Crear Grupos Nuevo</title>
+</head>
+
+<body>
+<form action="/grupoNuevo" method="post" name="grupos">
+	ID:<br>
+	<input type="text" name="id" /><br/>
+	
+	Nombre del Grupo:<br/>
+	<input type="text" name="nombre" required="required"/><br/>
+
+	Descripcion:<br/>
+	<input type="text" name="descripcion" /><br/>
+		
+	<input type="submit" name="guardarGrupo" value='Guardar'/>
+	<input type="reset" name="deshacer" value="Limpiar" />
+	<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
+</form>
+</body>
+</html>
