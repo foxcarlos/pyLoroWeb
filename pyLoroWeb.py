@@ -83,7 +83,7 @@ def buscarContactosListas(objetoUsuarioIdPasado):
     coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
     
-    objetoUsuarioId = objetoUsuarioIdPasado 
+    objetoUsuarioId = objetoUsuarioIdPasado
     
     #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
     #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
@@ -98,9 +98,10 @@ def buscarGrupos():
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
-    
+
+    objetoUsuarioId = buscarUsuarioId(usuario)
     #Aqui se buscan los grupos para mostrarlos en el combobox
-    gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find().sort('nombre_lista')]
+    gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
     return gruposMostrar
 
 def buscarUsuarioId(usuario):
