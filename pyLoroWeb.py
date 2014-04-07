@@ -261,8 +261,8 @@ def contactoGuardar():
 
     #Capturo desde el form html los campos 
     #idDevuelto = bottle.request.forms.get('id')
-    nombreDevuelto = bottle.request.forms.get('nombre')
-    apellidoDevuelto = bottle.request.forms.get('apellido')
+    nombreDevuelto = bottle.request.forms.get('nombres')
+    apellidoDevuelto = bottle.request.forms.get('apellidos')
     telefonoDevuelto = bottle.request.forms.get('telefono')
     emailDevuelto = bottle.request.forms.get('email')
     tuiterDevuelto = bottle.request.forms.get('tuiter')
@@ -282,6 +282,7 @@ def contactoGuardar():
     #Inserto el documento en mongodb
     try:
         coleccionContactos.insert(documento)
+        print(documento)
         cabecera = 'Felicidades ...'
         msg = 'Contacto Guardado con exito'
     except:
@@ -321,6 +322,33 @@ def grupoGuardar():
         cabecera = 'Lo Siento ...'
         msg = 'Ocurrio un error al Guardar'
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/grupoNuevo'})
+
+@bottle.get('/registro')
+def registro():
+    '''Metodo que permite registrar una cuenta en el Sistema pyLoro'''
+
+    try:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+    except:
+        objetoUsuarioId = 'root' 
+
+    if objetoUsuarioId:
+        usuario_padre_id = objetoUsuarioId
+    
+    return bottle.template('registro', {'estructuraOrganizativa':usuario_padre_id})
+
+@bottle.post('/registro')
+def registroGuardar():
+    '''Metodo que permite registrar una cuenta en el Sistema pyLoro'''
+
+    usuario = bottle.request.forms.get('usuario')
+    clave = bottle.request.forms.get('clave')
+
+
+@bottle.get('/grid')
+def grid():
+    grid = [('Carlos', 'Garcia', 'Diaz'), ('Nairesther', 'Gomez', 'Villa'), ('Carla', 'Garcia', 'Gomez'), ('Paola', 'Garcia', 'Sanchez')]
+    return bottle.template('grid', {'grid':grid})
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
