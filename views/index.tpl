@@ -44,7 +44,7 @@
 			    		<div class="row boton">
                         
                         <div class="col-xs-12 ">
-                        <input class="btn btn-personal" type="submit" value="Entrar"> &nbsp;o <a href="registro.html" class="align-vertical">Regístrarte</a>
+                        <input class="btn btn-personal" type="submit" value="Entrar"> &nbsp;o <a href="/registro" class="align-vertical">Regístrarte</a>
                         </div>
                         
                         </div>

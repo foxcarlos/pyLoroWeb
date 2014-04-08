@@ -230,7 +230,7 @@ def smsEnviar():
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
-    if not listasNumeros or not mensaje.strip():
+    if not ''.join(listasNumeros) or not mensaje.strip():
         cabecera = 'Lo siento ...!'
         msg = 'Mensaje o numeros de telefonos vacios'
     else:
@@ -243,6 +243,7 @@ def smsEnviar():
                 else:
                     cabecera = 'Lo Siento ...!'
                     msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+    
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/smsenviar'})
 
 @bottle.route('/contactoNuevo')
@@ -291,7 +292,7 @@ def contactoGuardar():
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/contactoNuevo'})
 
 @bottle.route('/grupoNuevo')
-def contactos():
+def grupoNuevo():
     return bottle.template('grupos')
 
 @bottle.post('/grupoNuevo')
@@ -325,25 +326,66 @@ def grupoGuardar():
 
 @bottle.get('/registro')
 def registro():
-    '''Metodo que permite registrar una cuenta en el Sistema pyLoro'''
+    ''' **Metodo que permite registrar una cuenta en el Sistema pyLoro**
+    Se captura el usuario que esta creando la cuenta, si no hay usuario es porque se esta creando desde la
+    pantalla de inicio lo cual significa que este usuario sera una especie de root y no tiene ningun
+    usuario padre, en cambio si tiene un usuario padre debe heredar los planes del usuario padre '''
 
     try:
-        objetoUsuarioId = buscarUsuarioId(usuario)
+        #Buscar el plan del usuario padre y devolverlo a la plantilla
+        usuario_padre_id = buscarUsuarioId(usuario)
+        usuarioActivo = 'checked="checked"'
+        plan = 'El del Padre'
     except:
-        objetoUsuarioId = 'root' 
-
-    if objetoUsuarioId:
-        usuario_padre_id = objetoUsuarioId
-    
-    return bottle.template('registro', {'estructuraOrganizativa':usuario_padre_id})
+        #como no tiene usuario padre se le da la opcion que el seleccione el plan
+        #pero el usuario debe estar inactivo hasta que no sea apobado por mi
+        usuario_padre_id = ''
+        usuarioActivo = ''
+        plan = ''
+     
+    return bottle.template('registro', {'estructuraOrganizativa':usuario_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
 
 @bottle.post('/registro')
 def registroGuardar():
     '''Metodo que permite registrar una cuenta en el Sistema pyLoro'''
 
-    usuario = bottle.request.forms.get('usuario')
-    clave = bottle.request.forms.get('clave')
+    cliente = pymongo.MongoClient('localhost', 27017)
+    baseDatos = cliente.pyloroweb
+    coleccionUsuarios = baseDatos.usuarios
 
+    id = bottle.request.forms.get('id')
+    usuario = bottle.request.forms.get('usuario')
+
+    clave = bottle.request.forms.get('clave')
+    descripcion = bottle.request.forms.get('descripcion')
+    ced_rif = bottle.request.forms.get('cedreif')
+    fecha = ''
+    direccion = bottle.request.forms.get('direccion')
+    telefono = bottle.request.forms.get('telefono')
+    email = bottle.request.forms.get('email')
+    plan = bottle.request.forms.get('plan')
+    usuario_padre_id = bottle.request.forms.get('estructura')
+    activo = bottle.request.forms.get('activo')
+    
+    documento = {}
+    
+    existe = coleccionUsuarios.find({'usuario':usuario.lower()}).count()
+    if not existe:
+        try:
+            #Si no existe el usuario Se agrega el usuario nuevo
+            coleccionUsuarios.insert(documento)
+            
+            cabecera = 'Felicidades ...'
+            msg = 'Registro realizado con exito'
+            pagina = '/registro'
+        except:
+            cabecera = 'Lo Siento ...'
+            msg = 'Ocurrio un error al Guardar'
+            pagina='/registro'
+    else:
+        pass
+
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/grupoNuevo'})
 
 @bottle.get('/grid')
 def grid():
