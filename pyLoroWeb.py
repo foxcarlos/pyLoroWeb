@@ -98,11 +98,17 @@ def buscarGrupos():
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
+    
+    try:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        #Aqui se buscan los grupos para mostrarlos en el combobox
+        gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
+        return gruposMostrar
+    except:
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
-    objetoUsuarioId = buscarUsuarioId(usuario)
-    #Aqui se buscan los grupos para mostrarlos en el combobox
-    gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
-    return gruposMostrar
 
 def buscarUsuarioId(usuario):
     '''parametros 1 string: usuario
@@ -248,8 +254,14 @@ def smsEnviar():
 
 @bottle.route('/contactoNuevo')
 def contactos():
-    grupos = buscarGrupos()
-    return bottle.template('contactos',{'comboBoxGrupos':grupos})
+    try:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        grupos = buscarGrupos()
+        return bottle.template('contactos',{'comboBoxGrupos':grupos})
+    except:
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.post('/contactoNuevo')
 def contactoGuardar():
@@ -293,7 +305,14 @@ def contactoGuardar():
 
 @bottle.route('/grupoNuevo')
 def grupoNuevo():
-    return bottle.template('grupos')
+    try:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        return bottle.template('grupos')
+    except:
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+
 
 @bottle.post('/grupoNuevo')
 def grupoGuardar():
@@ -373,19 +392,18 @@ def registroGuardar():
     if not existe:
         try:
             #Si no existe el usuario Se agrega el usuario nuevo
-            coleccionUsuarios.insert(documento)
+            #coleccionUsuarios.insert(documento)
             
             cabecera = 'Felicidades ...'
-            msg = 'Registro realizado con exito'
-            pagina = '/registro'
+            msg = 'Registro realizado con exito' if usuario_padre_id else 'Registro realizado con Exito, en unos minutos su cuenta estara activa'
         except:
             cabecera = 'Lo Siento ...'
             msg = 'Ocurrio un error al Guardar'
-            pagina='/registro'
     else:
-        pass
+        cabecera = 'Lo Siento ...'
+        msg = 'Usuario {0} Ya esta registrado'.format(usuario)
 
-    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/grupoNuevo'})
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/registro'})
 
 @bottle.get('/grid')
 def grid():
