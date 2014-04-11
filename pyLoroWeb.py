@@ -10,6 +10,7 @@ import pymongo
 from bson.objectid import ObjectId
 from os.path import join, dirname
 from bottle import route, static_file, template
+import datetime
 import re
 
 class enviarZMQ():
@@ -350,19 +351,35 @@ def registro():
     pantalla de inicio lo cual significa que este usuario sera una especie de root y no tiene ningun
     usuario padre, en cambio si tiene un usuario padre debe heredar los planes del usuario padre '''
 
+    cliente = pymongo.MongoClient('localhost', 27017)
+    baseDatos = cliente.pyloroweb
+    coleccionUsuarios = baseDatos.usuarios
+
     try:
         #Buscar el plan del usuario padre y devolverlo a la plantilla
-        usuario_padre_id = buscarUsuarioId(usuario)
-        usuarioActivo = 'checked="checked"'
-        plan = 'El del Padre'
+        #usuario_padre_id = buscarUsuarioId(usuario)
+        usuarioBuscar = coleccionUsuarios.find({'usuario':usuario})
+        if usuarioBuscar.count()>0:
+            usuarioEncontrado = usuarioBuscar[0]
+            #usu = usuarioEncontrado['usuario']
+            nom = usuarioEncontrado['nombres']
+            #telf = usuarioEncontrado['telefono']
+            #email = usuarioEncontrado['email']
+            usu_padre_id = usuarioEncontrado['usuario_padre_id']
+
+            usuarioActivo = 'checked="checked"'
+            plan = 'El del Padre:{0}'.format(nom)
+        else:
+            usu_padre_id = ''
+            usuarioActivo = ''
+            plan = ''
     except:
         #como no tiene usuario padre se le da la opcion que el seleccione el plan
         #pero el usuario debe estar inactivo hasta que no sea apobado por mi
-        usuario_padre_id = ''
+        usu_padre_id = ''
         usuarioActivo = ''
         plan = ''
-     
-    return bottle.template('registro', {'estructuraOrganizativa':usuario_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
+    return bottle.template('registro', {'estructuraOrganizativa':usu_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
 
 @bottle.post('/registro')
 def registroGuardar():
@@ -372,30 +389,42 @@ def registroGuardar():
     baseDatos = cliente.pyloroweb
     coleccionUsuarios = baseDatos.usuarios
 
-    id = bottle.request.forms.get('id')
+    #id = bottle.request.forms.get('id')
     usuario = bottle.request.forms.get('usuario')
 
     clave = bottle.request.forms.get('clave')
-    descripcion = bottle.request.forms.get('descripcion')
-    ced_rif = bottle.request.forms.get('cedreif')
-    fecha = ''
+    nombres = bottle.request.forms.get('descripcion')
+    ced_rif = bottle.request.forms.get('cedrif')
+    fecha = datetime.datetime.now()
     direccion = bottle.request.forms.get('direccion')
     telefono = bottle.request.forms.get('telefono')
     email = bottle.request.forms.get('email')
     plan = bottle.request.forms.get('plan')
     usuario_padre_id = bottle.request.forms.get('estructura')
-    activo = bottle.request.forms.get('activo')
+    activo = True if usuario_padre_id else False  # bottle.request.forms.get('activo')
     
-    documento = {}
+    documento = {'usuario':usuario,
+            'clave':clave,
+            'nombres':nombres,
+            'ced_rif':ced_rif,
+            'fecha_creacion':fecha,
+            'direccion':direccion,
+            'telefono':telefono,
+            'email':email,
+            'plan':plan,
+            'usuario_padre_id':usuario_padre_id,
+            'activo':activo}
     
     existe = coleccionUsuarios.find({'usuario':usuario.lower()}).count()
     if not existe:
         try:
             #Si no existe el usuario Se agrega el usuario nuevo
-            #coleccionUsuarios.insert(documento)
-            
+            coleccionUsuarios.insert(documento)
             cabecera = 'Felicidades ...'
             msg = 'Registro realizado con exito' if usuario_padre_id else 'Registro realizado con Exito, en unos minutos su cuenta estara activa'
+            if not usuario_padre_id:
+                app.enviar('04263002966', 'El usuario {0} espera por aprobacion de creacion de cuenta en pyLoroWeb'.format(nombres))
+                #Enviar email tambien
         except:
             cabecera = 'Lo Siento ...'
             msg = 'Ocurrio un error al Guardar'
