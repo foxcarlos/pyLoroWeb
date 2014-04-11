@@ -16,7 +16,7 @@ import re
 class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
-        fi = '/home/cgarcia/desarrollo/python/pyloro/pyloro.cfg'
+        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
@@ -179,14 +179,16 @@ def seleccionarContactos():
 
 @bottle.route('/')
 def index():
+    global usuario
+    global clave
+    usuario = ''
+    clave = ''
     return bottle.template('index.tpl')
 
 @bottle.post('/')
 def login():
     ''' Metodo para el inicio de Sesion en pyLoroWeb'''
-
-    global usuario
-    global clave
+    
     usuario = ''
     clave = ''
     buscar = False
