@@ -179,8 +179,8 @@ def seleccionarContactos():
 
 @bottle.route('/salir')
 def salir():
-    global usuario
-    global clave
+    #global usuario
+    #global clave
     usuario = ''
     clave = ''
     return bottle.template('index.tpl')
