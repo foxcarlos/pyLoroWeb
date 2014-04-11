@@ -181,8 +181,8 @@ def seleccionarContactos():
 def index():
     global usuario
     global clave
-    usuario = ''
-    clave = ''
+    #usuario = ''
+    #clave = ''
     return bottle.template('index.tpl')
 
 @bottle.post('/')
