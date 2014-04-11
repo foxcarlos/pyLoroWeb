@@ -179,8 +179,8 @@ def seleccionarContactos():
 
 @bottle.route('/')
 def index():
-    global usuario
-    global clave
+    #global usuario
+    #global clave
     #usuario = ''
     #clave = ''
     return bottle.template('index.tpl')
@@ -188,7 +188,9 @@ def index():
 @bottle.post('/')
 def login():
     ''' Metodo para el inicio de Sesion en pyLoroWeb'''
-    
+    global usuario
+    global clave
+   
     usuario = ''
     clave = ''
     buscar = False
