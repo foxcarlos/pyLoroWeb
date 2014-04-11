@@ -16,7 +16,7 @@ import re
 class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.path.dirname(sys.argv[0])
-        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
+        fi = '/home/cgarcia/desarrollo/python/pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
@@ -183,6 +183,9 @@ def salir():
     #global clave
     usuario = ''
     clave = ''
+    bottle.response.set_cookie("account", usuario)
+    username = bottle.request.get_cookie("account")
+    print('usuario',username)
     return bottle.template('index.tpl')
 
 @bottle.route('/')
@@ -191,6 +194,8 @@ def index():
     #global clave
     #usuario = ''
     #clave = ''
+    username = bottle.request.get_cookie("account")
+    print('usuario',username)
     return bottle.template('index.tpl')
 
 @bottle.post('/')
@@ -207,7 +212,10 @@ def login():
     clave = bottle.request.forms.get('pass_form')
 
     buscar = validaLogin(usuario, clave)
+    
     if buscar:
+        bottle.response.set_cookie("account", usuario, secret=clave)
+
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
@@ -219,6 +227,10 @@ def login():
 @bottle.route('/smsenviar')
 def smsEnviar():
     try:
+        #username = bottle.request.cookies.username
+        username = bottle.request.get_cookie("account", secret=clave)
+        print('usuario',username)
+
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
