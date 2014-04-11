@@ -177,6 +177,14 @@ def seleccionarContactos():
 
     return bottle.template('pyloro_sms_multiple.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
 
+@bottle.route('/salir')
+def salir():
+    global usuario
+    global clave
+    usuario = ''
+    clave = ''
+    return bottle.template('index.tpl')
+
 @bottle.route('/')
 def index():
     #global usuario
