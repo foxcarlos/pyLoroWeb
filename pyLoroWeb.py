@@ -140,7 +140,10 @@ def validaLogin(usuario, clave):
     
     buscar = coleccionUsuarios.find({'usuario':lcUsuario.lower(), 'clave':lcClave}).count()
     if buscar:
+        bottle.response.set_cookie("account", usuario, secret=clave)
         accesoPermitido = True
+    else:
+        bottle.response.set_cookie("account", 'vacio')
     return accesoPermitido
 
 @bottle.route('/static/<filename:path>') 
@@ -179,10 +182,7 @@ def seleccionarContactos():
 
 @bottle.route('/salir')
 def salir():
-    #global usuario
-    #global clave
     usuario = ''
-    clave = ''
     bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
     print('usuario',username)
@@ -190,10 +190,6 @@ def salir():
 
 @bottle.route('/')
 def index():
-    #global usuario
-    #global clave
-    #usuario = ''
-    #clave = ''
     username = bottle.request.get_cookie("account")
     print('usuario',username)
     return bottle.template('index.tpl')
@@ -214,8 +210,7 @@ def login():
     buscar = validaLogin(usuario, clave)
     
     if buscar:
-        bottle.response.set_cookie("account", usuario, secret=clave)
-
+        
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
