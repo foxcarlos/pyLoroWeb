@@ -140,7 +140,7 @@ def validaLogin(usuario, clave):
     
     buscar = coleccionUsuarios.find({'usuario':lcUsuario.lower(), 'clave':lcClave}).count()
     if buscar:
-        bottle.response.set_cookie("account", usuario, secret=clave)
+        bottle.response.set_cookie("account", usuario)
         accesoPermitido = True
     else:
         bottle.response.set_cookie("account", 'vacio')
@@ -161,6 +161,8 @@ def seleccionarContactos():
     coleccionContactos = baseDatos.contactos
 
     #Busca el objetoId del usuario en la base de datos mongodb
+    usuario = bottle.request.get_cookie("account")
+    print(usuario)
     objetoUsuarioId = buscarUsuarioId(usuario)
 
     #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
@@ -182,7 +184,7 @@ def seleccionarContactos():
 
 @bottle.route('/salir')
 def salir():
-    usuario = ''
+    usuario = 'vacio'
     bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
     print('usuario',username)
@@ -190,6 +192,9 @@ def salir():
 
 @bottle.route('/')
 def index():
+    usuario = 'vacio'
+    bottle.response.set_cookie("account", usuario)
+
     username = bottle.request.get_cookie("account")
     print('usuario',username)
     return bottle.template('index.tpl')
@@ -197,8 +202,8 @@ def index():
 @bottle.post('/')
 def login():
     ''' Metodo para el inicio de Sesion en pyLoroWeb'''
-    global usuario
-    global clave
+    #global usuario
+    #global clave
    
     usuario = ''
     clave = ''
@@ -209,8 +214,7 @@ def login():
 
     buscar = validaLogin(usuario, clave)
     
-    if buscar:
-        
+    if buscar:        
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
@@ -221,15 +225,13 @@ def login():
 
 @bottle.route('/smsenviar')
 def smsEnviar():
-    try:
-        #username = bottle.request.cookies.username
-        username = bottle.request.get_cookie("account", secret=clave)
-        print('usuario',username)
-
+    usuario = bottle.request.get_cookie("account")
+    if usuario != 'vacio':
+        print('usuario',usuario)
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
-    except:
+    else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
@@ -246,12 +248,13 @@ def smsEnviar():
     
     listasNumeros = componerContactosListas(contactos, listas) + numeros.split(',')
 
-    try:
-        if not validaLogin(usuario, clave):
-            cabecera = 'Lo Siento ...!'
-            msg = 'Ud. no ha iniciado sesion en el servidor'
-            return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
-    except:
+    usuario = bottle.request.get_cookie("account")
+
+    if usuario == 'vacio':
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+    else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
@@ -274,11 +277,11 @@ def smsEnviar():
 
 @bottle.route('/contactoNuevo')
 def contactos():
-    try:
-        objetoUsuarioId = buscarUsuarioId(usuario)
+    usuario = bottle.request.get_cookie("account")
+    if usuario != 'vacio':
         grupos = buscarGrupos()
         return bottle.template('contactos',{'comboBoxGrupos':grupos})
-    except:
+    else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
@@ -286,6 +289,8 @@ def contactos():
 @bottle.post('/contactoNuevo')
 def contactoGuardar():
     '''Metodo que permite guardar un contacto desde el metodo post del form '''
+    
+    usuario = bottle.request.get_cookie("account")
 
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb    
@@ -325,10 +330,11 @@ def contactoGuardar():
 
 @bottle.route('/grupoNuevo')
 def grupoNuevo():
-    try:
-        objetoUsuarioId = buscarUsuarioId(usuario)
+    
+    usuario = bottle.request.get_cookie("account")
+    if usuario != 'vacio':
         return bottle.template('grupos')
-    except:
+    else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
@@ -337,6 +343,8 @@ def grupoNuevo():
 @bottle.post('/grupoNuevo')
 def grupoGuardar():
     '''Metodo que permite guardar un grupo desde el metodo post del form '''
+    
+    usuario = bottle.request.get_cookie("account")
 
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb    
@@ -373,6 +381,8 @@ def registro():
     cliente = pymongo.MongoClient('localhost', 27017)
     baseDatos = cliente.pyloroweb
     coleccionUsuarios = baseDatos.usuarios
+    
+    usuario = bottle.request.get_cookie("account")
 
     try:
         #Buscar el plan del usuario padre y devolverlo a la plantilla
@@ -476,6 +486,7 @@ def componerContactosListas(contactos, listas):
     
 
     #Busca en mongodb el objetoId del usuario que inicio sesion
+    usuario = bottle.request.get_cookie("account")
     objetoUsuarioId = buscarUsuarioId(usuario)
 
     ''' Busca en la base de datos "listas" los objetosId() de las listas que fueron selecioandas en el combobox
