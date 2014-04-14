@@ -255,24 +255,20 @@ def smsEnviar():
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
     else:
-        cabecera = 'Lo Siento ...!'
-        msg = 'Ud. no ha iniciado sesion en el servidor'
-        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
-
-    if not ''.join(listasNumeros) or not mensaje.strip():
-        cabecera = 'Lo siento ...!'
-        msg = 'Mensaje o numeros de telefonos vacios'
-    else:
-        for numero in listasNumeros:
-            if validaSms(numero, mensaje.strip()):
-                devuelve = app.enviar(numero, mensaje)
-                if devuelve:
-                    cabecera = 'Felicidades ...'
-                    msg = 'Mensaje enviado con exito'.format(numero)
-                else:
-                    cabecera = 'Lo Siento ...!'
-                    msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-    
+        if not ''.join(listasNumeros) or not mensaje.strip():
+            cabecera = 'Lo siento ...!'
+            msg = 'Mensaje o numeros de telefonos vacios'
+        else:
+            for numero in listasNumeros:
+                if validaSms(numero, mensaje.strip()):
+                    devuelve = app.enviar(numero, mensaje)
+                    if devuelve:
+                        cabecera = 'Felicidades ...'
+                        msg = 'Mensaje enviado con exito'.format(numero)
+                    else:
+                        cabecera = 'Lo Siento ...!'
+                        msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+                        
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/smsenviar'})
 
 @bottle.route('/contactoNuevo')
@@ -477,20 +473,22 @@ def componerContactosListas(contactos, listas):
     coleccionContactos = baseDatos.contactos
     coleccionListas = baseDatos.listas
 
-    recvContactos = contactos
+    recvContactos = contactos.split(',')
     recvListas = listas.split(',')
 
     #se toma solo el numero de recvContactos ya que este devuelve una lista con nombre y numeros 'Carlos<04263002966>'
-    patron = r'[0-9]{11}'
-    devolverContactos = re.findall(patron, recvContactos)
-    
+    #patron = r'[0-9]{11}'
+    #devolverContactos = re.findall(patron, recvContactos)
 
     #Busca en mongodb el objetoId del usuario que inicio sesion
     usuario = bottle.request.get_cookie("account")
     objetoUsuarioId = buscarUsuarioId(usuario)
 
-    ''' Busca en la base de datos "listas" los objetosId() de las listas que fueron selecioandas en el combobox
-    del html'''
+    devolverContactos = [f['telefonos'] for f in coleccionContactos.find({'nombre':{'$in':recvContactos}, "usuario_id":objetoUsuarioId})]
+
+
+    ''' Busca en la base de datos "listas" los objetosId() de las listas 
+    que fueron selecioandas en el comboboxdel html'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
     
     '''Buscos en la tabla "contactos" los objetosId() de las listas devueltas anteriormente y tomo solo los 
