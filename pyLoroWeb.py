@@ -100,12 +100,13 @@ def buscarGrupos():
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
     
-    try:
+    usuario = bottle.request.get_cookie("account")
+    if usuario != 'vacio':
         objetoUsuarioId = buscarUsuarioId(usuario)
         #Aqui se buscan los grupos para mostrarlos en el combobox
         gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
         return gruposMostrar
-    except:
+    else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
