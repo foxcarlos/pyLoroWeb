@@ -477,6 +477,8 @@ def componerContactosListas(contactos, listas):
     recvContactos = contactos.split(',')
     recvListas = listas.split(',')
 
+    print(recvListas)
+
     #se toma solo el numero de recvContactos ya que este devuelve una lista con nombre y numeros 'Carlos<04263002966>'
     #patron = r'[0-9]{11}'
     #devolverContactos = re.findall(patron, recvContactos)
