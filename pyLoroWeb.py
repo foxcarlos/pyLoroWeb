@@ -477,7 +477,7 @@ def componerContactosListas(contactos, listas):
     recvContactos = contactos.split(',')
     recvListas = listas.split(',')
 
-    print(listas.split(','))
+    print('listas recv', recvListas)
 
     #se toma solo el numero de recvContactos ya que este devuelve una lista con nombre y numeros 'Carlos<04263002966>'
     #patron = r'[0-9]{11}'
@@ -493,12 +493,15 @@ def componerContactosListas(contactos, listas):
     ''' Busca en la base de datos "listas" los objetosId() de las listas 
     que fueron selecioandas en el comboboxdel html'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
+    print('listas id', devolverListasID)
     
     '''Buscos en la tabla "contactos" los objetosId() de las listas devueltas anteriormente y tomo solo los 
     contactos que pertencen a esas listas'''
     devolverListas = [f['telefonos'] for f in coleccionContactos.find({'listas_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
-    
+    print('telefonos', devolverListas)
+
     numeros = devolverContactos + devolverListas
+    print('numeros', numeros)
     return numeros 
 
 def validaSms(num, msg):
