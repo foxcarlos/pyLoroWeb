@@ -20,7 +20,6 @@ class enviarZMQ():
         # NOTA: Es necesario que exista fuera de la ruta actual un directorio llamado pyloro
         fi = '../pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
-        print(archivo_configuracion)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
         self.zmqConectar()
@@ -185,6 +184,10 @@ def seleccionarContactos():
     textListas = ','.join(listasElegidas)
 
     return bottle.template('pyloro_sms_multiple.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+
+@bottle.route('/llamados')
+def llamados():
+    return bottle.template('llamados.html')
 
 @bottle.route('/salir')
 def salir():
