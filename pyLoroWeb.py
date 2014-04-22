@@ -261,7 +261,7 @@ def smsEnviar():
     else:
         if not ''.join(listasNumeros) or not mensaje.strip():
             cabecera = 'Lo siento ...!'
-            msg = 'Mensaje o numeros de telefonos vacios'
+            msg = 'Mensaje, Grupos o Numeros de telefonos estan vacios'
         else:
             for numero in listasNumeros:
                 if validaSms(numero, mensaje.strip()):
