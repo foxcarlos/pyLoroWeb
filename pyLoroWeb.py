@@ -15,9 +15,12 @@ import re
 
 class enviarZMQ():
     def __init__(self):
-        ruta_arch_conf = os.path.dirname(sys.argv[0])
-        fi = '/home/administrador/desarrollo/python/pyloro/pyloro.cfg'
+        ruta_arch_conf = os.getcwdu()  # os.path.dirname(sys.argv[0])
+        
+        # NOTA: Es necesario que exista fuera de la ruta actual un directorio llamado pyloro
+        fi = '../pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
+        print(archivo_configuracion)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
         self.zmqConectar()
