@@ -189,6 +189,10 @@ def seleccionarContactos():
 def llamados():
     return bottle.template('llamados.html')
 
+@bottle.route('/actualizar')
+def llamados():
+    return bottle.template('actualizar.html')
+
 @bottle.route('/salir')
 def salir():
     usuario = 'vacio'
@@ -283,7 +287,7 @@ def contactos():
     usuario = bottle.request.get_cookie("account")
     if usuario != 'vacio':
         grupos = buscarGrupos()
-        return bottle.template('contactos',{'comboBoxGrupos':grupos})
+        return bottle.template('contactos2',{'comboBoxGrupos':grupos})
     else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
