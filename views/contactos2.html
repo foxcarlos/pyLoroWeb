@@ -60,12 +60,15 @@
 			  	<div class="panel-body">
 <form action="/contactoNuevo" method="post" name="contactos">
 	<div class="input-group form-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
 	<input class="form-control" type="text" name="id" /><br/>
 	</div>
 	
-	Nombre:<br/>
+	<div class="input-group form-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>	
 	<input class="form-control" type="text" name="nombres" required="required"/><br/>
-
+	</div>
+	
 	Apellido:<br/>
 	<input class="form-control" type="text" name="apellidos" /><br/>
 
@@ -84,9 +87,11 @@
 	<input type="button" name="btnListarGrupos" value="Grupos" onclick="listarGrupos()" />
 	<br/>
 		
+	<div class="col-xs-12 ">	
 	<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
 	<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
 	<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
+	</div>
 	
 </form>			  			    	                    
            	</div>
