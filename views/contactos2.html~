@@ -10,8 +10,40 @@
 <link href='http://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/contador.js" ></script>
-
 <title>PyLoroWeb SMS</title>
+
+<script>
+    function listarGrupos() {
+      $( "#dialog" ).dialog({
+          show: "blind",
+          hide: "explode"
+      });
+    };
+   </script>
+  
+   <script>  
+    function btnCancelarListarGrupos() {
+      $( "#dialog" ).dialog( "close" );
+    };
+   </script>
+  
+   <script> 
+  	function btnAceptarListarGrupos() { 
+		var lcGrupo;	
+		var elegidos = ''
+		for (var i=0;i<elegirGrupos.length;i++){ 
+			if(elegirGrupos.options[i].selected){  
+				lcGrupo = elegirGrupos.options[i].text;
+				elegidos+=lcGrupo+",";
+			}
+		}
+		lElegidos = elegidos.split(',');
+		lElegidos.pop();
+		<!-- document.contactos.grupos.value = lElegidos -->
+		document.getElementById('grupos').value = lElegidos;
+		$( "#dialog" ).dialog( "close" );
+	}
+	</script>
 </head>
 
 <body>
@@ -28,10 +60,10 @@
 			  	<div class="panel-body">
 <form action="/contactoNuevo" method="post" name="contactos">
 	ID:<br>
-	<input type="text" name="id" /><br/>
+	<input class="form-control" type="text" name="id" /><br/>
 	
 	Nombre:<br/>
-	<input type="text" name="nombres" required="required"/><br/>
+	<input class="form-control" type="text" name="nombres" required="required"/><br/>
 
 	Apellido:<br/>
 	<input type="text" name="apellidos" /><br/>
