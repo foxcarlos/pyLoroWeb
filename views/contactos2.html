@@ -99,5 +99,18 @@
 		</div>
 	</div>
 </div>
+<div id="dialog" title="Listado de Grupos" style="display:none;">
+	<p>Seleccione el Grupo.</p>
+	<form name='lgrupos'>
+		<select name="elegirGrupos" id="elegirGrupos" size="5" multiple> 
+			%for fila in comboBoxGrupos:
+         	<option>{{fila}}</option> 
+         %end
+		</select><br/>
+		<input id=btnAceptar name=btnAceptar type=button value="Aceptar" onclick="btnAceptarListarGrupos()">
+		<input id=btnCancelar name=btnCancelar type=button value="Cancelar" onclick="btnCancelarListarGrupos()">
+		
+	</form>
+</div>
 </body>
 </html>
