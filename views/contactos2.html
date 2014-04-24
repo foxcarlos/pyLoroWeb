@@ -35,6 +35,7 @@
   
    <script> 
   	function btnAceptarListarGrupos() { 
+		/* Funcion*/		
 		var lcGrupo;	
 		var elegidos = ''
 		for (var i=0;i<elegirGrupos.length;i++){ 
@@ -106,17 +107,42 @@
 			<input class="form-control" type="text" name="tuiter" />
 		</div>
 	</div>
-
-	<div class="input-group form-group">
+	
+	<div class="row">
+		<div class="col-lg-3">
+            <div class="input-group custom-search-form">
+              <input type="text" class="form-control">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+             </button>
+             </span>
+             </div>
+        </div>
+	</div>
+	
+	<!-- /input-group -->	
+	<!-- <div class="input-group form-group">
 		<label class="control-label" for="grupos">Grupos</label>	
-		<div class="controls">		
-			<!--<input class="btn btn-personal" type="button" name="btnListarGrupos" value="Grupos" onclick="listarGrupos()" /> -->		
+		<div class="controls">			
 			<input class="form-control" type="text" id="grupos" name="grupos" />
-			<span class="add-on">Buscar</span>
 			<!-- <button class="btn btn-primary" name="btnListarGrupos" id="btnListarGrupos" onclick="listarGrupos()">Button</button> -->
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-lg-3">
+            <div class="input-group custom-search-form">
+              <input type="text" class="form-control">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+             </button>
+             </span>
+             </div><!-- /input-group -->
+        </div>
+	</div>
+	
 	<div class="input-group form-group">
 		<div class="col-x12 margin-abajo">
 			<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
