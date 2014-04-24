@@ -41,13 +41,11 @@
 			    	    	</a>
                          </div>
 			    	    </div>
-			    		<div class="row boton">
-                        
-                        <div class="col-xs-12 ">
+			    		<div class="row boton">      
+                  	<div class="col-xs-12 ">
                         <input class="btn btn-personal" type="submit" value="Entrar"> &nbsp;o <a href="/registro" class="align-vertical">Regístrarte</a>
-                        </div>
-                        
-                        </div>
+                     </div>
+                  </div>
 			    	</fieldset>
 			      	</form>
 			    </div>
