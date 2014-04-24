@@ -26,7 +26,7 @@
 			    	<form accept-charset="UTF-8"  role="form" action="/" method="post">
                     <fieldset>
 			    	  	<div class="input-group form-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 			    		    <input class="form-control" placeholder="Usuario" name="usu_form" maxlength="16" type="text">
 			    		</div>
                         
