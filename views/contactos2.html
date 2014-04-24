@@ -10,7 +10,13 @@
 <link href='http://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/contador.js" ></script>
-<title>PyLoroWeb SMS</title>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="/resources/demos/external/jquery.bgiframe-2.1.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://www.proyectosbds.com/html/css/layout.css" />
+<title>Crear Contacto Nuevo</title>
 
 	<script>
     function listarGrupos() {
@@ -46,7 +52,7 @@
 	</script>
 </head>
 
-<body>
+<body style="background:#FFFFFF">
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
@@ -55,45 +61,69 @@
         </div>
 		  <div class="panel panel-personal">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Envio de SMS  <span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
+			    	<h3 class="panel-title">Crear Contactos <span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
 			 	</div>
 			  	<div class="panel-body">
 <form action="/contactoNuevo" method="post" name="contactos">
 	<div class="input-group form-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
-	<input class="form-control" type="text" name="id" /><br/>
+		<label class="control-label" for="nombre">ID</label>
+		<div class="controls">
+			<input class="form-control" type="text" name="id" />
+		</div>	
 	</div>
 	
 	<div class="input-group form-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>	
-	<input class="form-control" type="text" name="nombres" required="required"/><br/>
+		<label class="control-label" for="nombre">Nombre</label>	
+		<div class="controls">	
+			<input class="form-control" type="text" name="nombres" required="required"/>
+		</div>
 	</div>
 	
-	Apellido:
-	<input class="form-control" type="text" name="apellidos" /><br/>
-
-	Telefono:
-	<input class="form-control" type="number" name="telefono" required="required" pattern="[0-9]{11}" maxlength="11" /><br/>
-
-	email:
-	<input class="form-control" type="email" name="email" /><br/>
-
-	tuiter:
-	<input class="form-control" type="text" name="tuiter" /><br/>
-
-	Grupos:
-	<input type="text" id="grupos" name="grupos" />
-	
-	<input type="button" name="btnListarGrupos" value="Grupos" onclick="listarGrupos()" />
-	
-		
-	<div class="col-xs-12 margin-abajo">
-	<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
-	<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
-	<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
+	<div class="input-group form-group">
+		<label class="control-label" for="nombre">Apellido</label>
+		<div class="controls">		
+			<input class="form-control" type="text" name="apellidos" />
+		</div>
 	</div>
 	
+	<div class="input-group form-group">
+		<label class="control-label" for="telefono">Telefono</label>
+		<div class="controls">		
+			<input class="form-control" type="number" name="telefono" required="required" pattern="[0-9]{11}" maxlength="11" />
+		</div>
+	</div>
+
+	<div class="input-group form-group">
+		<label class="control-label" for="email">Email</label>
+		<div class="controls">		
+			<input class="form-control" type="email" name="email" />
+		</div>
+	</div>
+	
+	<div class="input-group form-group">
+		<label class="control-label" for="tuiter">Tuiter</label>
+		<div class="controls">		
+			<input class="form-control" type="text" name="tuiter" />
+		</div>
+	</div>
+
+	<div class="input-group form-group">
+		<label class="control-label" for="grupos">Grupos</label>	
+		<div class="controls">		
+			<input class="btn btn-personal" type="button" name="btnListarGrupos" value="Grupos" onclick="listarGrupos()" />		
+			<input class="form-control" type="text" id="grupos" name="grupos" />
+		</div>
+	</div>
+
+	<div class="input-group form-group">
+		<div class="col-x12 margin-abajo">
+			<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
+			<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
+			<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
+		</div>
+	</div>
 </form>
+
 <div id="dialog" title="Listado de Grupos" style="display:none;">
 	<p>Seleccione el Grupo.</p>
 	<form name='lgrupos'>
