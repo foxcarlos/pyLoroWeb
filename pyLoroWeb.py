@@ -461,6 +461,8 @@ def registroGuardar():
             if not usuario_padre_id:
                 app.enviar('04263002966', 'El usuario {0} espera por aprobacion de creacion de cuenta en pyLoroWeb'.format(nombres))
                 #Enviar email tambien
+                app.enviar(telefono, 'Registro del usuario {0} fue realizado con exito, en unos minutos su cuenta estara activa'.format(nombres))
+
         except:
             cabecera = 'Lo Siento ...'
             msg = 'Ocurrio un error al Guardar'
