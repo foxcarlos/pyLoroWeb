@@ -1,23 +1,61 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
 <head>
-	<title>Crear Grupos Nuevo</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/style.css">
+<link href='http://fonts.googleapis.com/css?family=Cabin+Condensed:400,500,600,700' rel='stylesheet' type='text/css'>
+
+<style>
+
+</style>
+<title>Crear Grupos</title>
 </head>
 
 <body>
-<form action="/grupoNuevo" method="post" name="grupos">
-	ID:<br>
-	<input type="text" name="id" /><br/>
-	
-	Nombre del Grupo:<br/>
-	<input type="text" name="nombre" required="required"/><br/>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="row">
+				<div class="col-xs-6" ></div>
+			</div>		
+    		<div class="panel panel-personal">
+				<div class="panel-heading">
+			    	<h3 class="panel-title">Crear Grupos<span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
+			 	</div>
+			  	<div class="panel-body">
+			    	<form accept-charset="UTF-8" action="/grupoNuevo" method="post">
+               	<fieldset>
+			    	  	<div class="input-group form-group">
+			    	  		<label class="control-label" >Id Unico</label>	
+			    			<input class="form-control" placeholder="Id Unico" name="id" id="id" type="text" required="required">
+			    		</div>
 
-	Descripcion:<br/>
-	<input type="text" name="descripcion" /><br/>
-		
-	<input type="submit" name="guardarGrupo" value='Guardar'/>
-	<input type="reset" name="deshacer" value="Limpiar" />
-	<a href="/smsenviar">Regresar</a>
-</form>
+			    	  	<div class="input-group form-group">
+			    	  		<label class="control-label" >Nombre del Grupo</label>
+			    			<input class="form-control" placeholder="Nombre del Grupo" name="nombres" id="nombres" type="text" required="required">
+			    		</div>
+                        
+			    		<div class="input-group form-group">
+			    			<label class="control-label" >Descrion del Grupo</label>
+			    			<input class="form-control" placeholder="Descripcion del Grupo" name="descripcion" id="edscripcion" type="text" required="required">
+			    		</div>
+			    					    	   
+			    		<div class="row boton">      
+                  	<div class="col-xs-12 ">
+								<input class="btn btn-personal" type="submit" name="guardarGrupo" value='Guardar'/>
+								<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
+								<a href="/smsenviar" class="align-vertical btn btn-personal">Regresar</a>
+                     </div>
+                  </div>
+			    		</fieldset>
+			      </form>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

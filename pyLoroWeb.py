@@ -287,7 +287,7 @@ def contactos():
     usuario = bottle.request.get_cookie("account")
     if usuario != 'vacio':
         grupos = buscarGrupos()
-        return bottle.template('contactos3',{'comboBoxGrupos':grupos})
+        return bottle.template('contactos4',{'comboBoxGrupos':grupos})
     else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
@@ -340,7 +340,7 @@ def grupoNuevo():
     
     usuario = bottle.request.get_cookie("account")
     if usuario != 'vacio':
-        return bottle.template('grupos')
+        return bottle.template('grupos2')
     else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
