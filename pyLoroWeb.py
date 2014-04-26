@@ -199,7 +199,7 @@ def salir():
     bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
     print('usuario',username)
-    return bottle.template('index.tpl')
+    return bottle.template('mensaje_exito', {'cabecera':'Hasta Pronto ...', 'mensaje':'Su sesion fue cerrada con exito', 'pagina':'/'})
 
 @bottle.route('/')
 def index():
@@ -287,7 +287,7 @@ def contactos():
     usuario = bottle.request.get_cookie("account")
     if usuario != 'vacio':
         grupos = buscarGrupos()
-        return bottle.template('contactos4',{'comboBoxGrupos':grupos})
+        return bottle.template('contactos',{'comboBoxGrupos':grupos})
     else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
@@ -340,7 +340,7 @@ def grupoNuevo():
     
     usuario = bottle.request.get_cookie("account")
     if usuario != 'vacio':
-        return bottle.template('grupos2')
+        return bottle.template('grupos')
     else:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
@@ -468,7 +468,7 @@ def registroGuardar():
         cabecera = 'Lo Siento ...'
         msg = 'Usuario {0} Ya esta registrado'.format(usuario)
 
-    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/registro'})
+    return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/'})
 
 @bottle.get('/grid')
 def grid():
