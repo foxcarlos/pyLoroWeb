@@ -187,7 +187,7 @@ def seleccionarContactos():
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('index2.html')
+    return bottle.template('accordion_menu.html')
 
 @bottle.route('/llamados')
 def llamados():
