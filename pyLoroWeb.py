@@ -199,7 +199,7 @@ def salir():
     bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
     print('usuario',username)
-    return bottle.template('mensaje_exito', {'cabecera':'Hasta Pronto ...', 'mensaje':'Su sesion fue cerrada con exito', 'pagina':'/'})
+    return bottle.template('mensaje_exito', {'cabecera':'Hasta Pronto ...', 'mensaje':'Su sesion {0} fue cerrada con exito'.format(username), 'pagina':'/'})
 
 @bottle.route('/')
 def index():
