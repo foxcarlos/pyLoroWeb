@@ -214,8 +214,17 @@ def index():
     print('usuario',username)
     return bottle.template('index')
 
-@bottle.post('/login')
+@bottle.route('/login')
 def login():
+    usuario = 'vacio'
+    bottle.response.set_cookie("account", usuario)
+
+    username = bottle.request.get_cookie("account")
+    print('usuario',username)
+    return bottle.template('login')
+
+@bottle.post('/login')
+def loginp():
     ''' Metodo para el inicio de Sesion en pyLoroWeb'''
     #global usuario
     #global clave
