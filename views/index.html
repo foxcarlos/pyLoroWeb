@@ -24,7 +24,7 @@
 		  			<div class="panel panel-default">
             		<div class="panel-heading">
             			<h4 class="panel-title">
-               			<a data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-folder-close">
+               			<a data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-home">
                   		</span><a href="/">Inicio</a></a>
                		</h4>
             		</div>
@@ -33,7 +33,7 @@
 		  			<div class="panel panel-default">
             		<div class="panel-heading">
             			<h4 class="panel-title">
-               			<a data-toggle="collapse" data-parent="#accordion" href="#login"><span class="glyphicon glyphicon-folder-close">
+               			<a data-toggle="collapse" data-parent="#accordion" href="#login"><span class="glyphicon glyphicon-user">
                   		</span>Login</a>
                		</h4>
             		</div>
@@ -43,9 +43,14 @@
             				<table class="table">
             					<tr>
                					<td>
-                  					<span class="glyphicon glyphicon-pencil text-primary"></span><a href="/login">Iniciar Sesion</a>
+                  					<span class="glyphicon glyphicon-log-in"></span><a href="/login">Iniciar Sesion</a>
                   				</td>
                				</tr>
+									<tr>
+               					<td>
+                  					<span class="glyphicon glyphicon-off"></span><a href="/salir">Cerrar Sesion:{{get('usuario', '')}}</a>
+                  				</td>
+               				</tr>               				
             				</table>
             			</div>
             		</div>
@@ -54,7 +59,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-folder-close">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-comment">
                             </span>SMS</a>
                         </h4>
                     </div>
@@ -63,22 +68,17 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-pencil text-primary"></span><a href="/smsenviar">Enviar SMS</a>
+                                        <span class="glyphicon glyphicon-envelope"></span><a href="/smsenviar">Enviar SMS</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-flash text-success"></span><a href="#">Planificar SMS</a>
+                                        <span class="glyphicon glyphicon-calendar"></span><a href="#">Planificar SMS</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span class="glyphicon glyphicon-file text-info"></span><a href="#">Noticias</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-comment text-success"></span><a href="#">Borradores</a>
+                                        <span class="glyphicon glyphicon-inbox"></span><a href="#">Borradores</a>
                                         <span class="badge">42</span>
                                     </td>
                                 </tr>
@@ -98,7 +98,7 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="/contactoNuevo">Contactos</a> <span class="label label-success">$ 320</span>
+                                        <a href="/contactoNuevo">Contactos</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -113,7 +113,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="#">Otras 2</a>
+                                        <a href="#">Otras 2</a><span class="label label-success">$ 320</span>
                                     </td>
                                 </tr>
                             </table>
@@ -189,14 +189,7 @@
                         </div>
                     </div>
                 </div>
-<div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <span class="glyphicon glyphicon-user"></span><a href="/salir">Cerrar Sesion:{{get('usuario', '')}}</a>
-                        </h4>
-                    </div>
-                    
-</div>                
+                
             </div>
         </div>
         <div class="col-sm-9 col-md-9">
