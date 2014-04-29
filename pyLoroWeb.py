@@ -143,51 +143,19 @@ def validaLogin(usuario, clave):
     
     buscar = coleccionUsuarios.find({'usuario':lcUsuario.lower(), 'clave':lcClave}).count()
     if buscar:
-        bottle.response.set_cookie("account", usuario)
+        bottle.response.set_cookie("account", lcUsuario)
         accesoPermitido = True
     else:
-        bottle.response.set_cookie("account", 'vacio')
+        bottle.response.set_cookie("account", '')
     return accesoPermitido
 
 @bottle.route('/static/<filename:path>') 
 def static(filename): 
     return bottle.static_file(filename, root='static/')
 
-@bottle.post('/seleccionar')
-def seleccionarContactos():
-    '''Metodo POST capturar las variables  que vienen del FORM elegir-contactos 
-    y procesarlas para luego mostrarla en los controles text de la vista 
-    seleccionados en el ComboBox HTML'''
-
-    server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb    
-    coleccionContactos = baseDatos.contactos
-
-    #Busca el objetoId del usuario en la base de datos mongodb
-    usuario = bottle.request.get_cookie("account")
-    print(usuario)
-    objetoUsuarioId = buscarUsuarioId(usuario)
-
-    #Capturar todas las variables que vienen del <FORM elegir-comtactos/>
-    listaDevuelta = bottle.request.forms.getall('elegir-contactos')
-    listaDevuelta2 = bottle.request.forms.getall('elegir-listas')
-
-    #Busca en la Base de datos el nombre y el telefono los contactos seleccionados en el ComboBox
-    contactosElegidos = ['{0}<{1}>'.format(f['nombre'], f['telefonos'])\
-            for f in coleccionContactos.find({'nombre':{'$in':listaDevuelta}, "usuario_id":objetoUsuarioId})]
-    listasElegidas = listaDevuelta2
-
-    #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
-    nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
-    
-    textContactos = ','.join(contactosElegidos)
-    textListas = ','.join(listasElegidas)
-
-    return bottle.template('pyloro_sms_multiple.html', text1=textContactos, text2=textListas, comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
-
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('accordion_menu.html')
+    return bottle.template('')
 
 @bottle.route('/llamados')
 def llamados():
@@ -199,7 +167,7 @@ def llamados():
 
 @bottle.route('/salir')
 def salir():
-    usuario = 'vacio'
+    usuario = ''
     bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
     print('usuario',username)
@@ -207,20 +175,20 @@ def salir():
 
 @bottle.route('/')
 def index():
-    usuario = 'vacio'
-    bottle.response.set_cookie("account", usuario)
-
+    #usuario = ''
+    #bottle.response.set_cookie("account", usuario)
     username = bottle.request.get_cookie("account")
+
     print('usuario',username)
-    return bottle.template('index')
+    return bottle.template('index', {'usuario':username})
 
 @bottle.route('/login')
 def login():
-    usuario = 'vacio'
-    bottle.response.set_cookie("account", usuario)
+    #usuario = 'vacio'
+    #bottle.response.set_cookie("account", usuario)
 
     username = bottle.request.get_cookie("account")
-    print('usuario',username)
+    print('El usuario es:',username)
     return bottle.template('login')
 
 @bottle.post('/login')
@@ -238,10 +206,12 @@ def loginp():
 
     buscar = validaLogin(usuario, clave)
     
-    if buscar:        
+    if buscar:
+        print('Se valido el usuaRIO AHORA VAMOS AL INDEX', usuario)
+        #usuario = bottle.request.get_cookie("account")
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
-        return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
+        return bottle.template('index', {'usuario':usuario})
     else:
         cabecera = 'Lo Siento...!'
         msg = 'El usuario o la clave es invalida'
@@ -250,7 +220,8 @@ def loginp():
 @bottle.route('/smsenviar')
 def smsEnviar():
     usuario = bottle.request.get_cookie("account")
-    if usuario != 'vacio':
+    print('Entre en smsenviar',usuario)
+    if usuario:
         print('usuario',usuario)
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
@@ -261,7 +232,7 @@ def smsEnviar():
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
 
 @bottle.post('/smsenviar')
-def smsEnviar():
+def smsEnviarp():
     ''' Metodo que captura lo ingresado en el form de envio de SMS
     y lo envia al servidor ZMQ con la Clase enviar '''
 
@@ -274,7 +245,7 @@ def smsEnviar():
 
     usuario = bottle.request.get_cookie("account")
 
-    if usuario == 'vacio':
+    if not usuario:
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
@@ -298,7 +269,7 @@ def smsEnviar():
 @bottle.route('/contactoNuevo')
 def contactos():
     usuario = bottle.request.get_cookie("account")
-    if usuario != 'vacio':
+    if usuario:
         grupos = buscarGrupos()
         return bottle.template('contactos',{'comboBoxGrupos':grupos})
     else:
@@ -352,7 +323,7 @@ def contactoGuardar():
 def grupoNuevo():
     
     usuario = bottle.request.get_cookie("account")
-    if usuario != 'vacio':
+    if usuario:
         return bottle.template('grupos')
     else:
         cabecera = 'Lo Siento ...!'
