@@ -25,19 +25,19 @@
             		<div class="panel-heading">
             			<h4 class="panel-title">
                			<a data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-folder-close">
-                  		</span><a href="/login">Inicio</a></a>
+                  		</span><a href="/login">Main</a></a>
                		</h4>
             		</div>           
 <!--  -->
 		  			<div class="panel panel-default">
             		<div class="panel-heading">
             			<h4 class="panel-title">
-               			<a data-toggle="collapse" data-parent="#accordion" href="#login"><span class="glyphicon glyphicon-folder-close">
+               			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="glyphicon glyphicon-folder-close">
                   		</span>Login</a>
                		</h4>
             		</div>
             
-            		<div id="login" class="panel-collapse collapse in">
+            		<div id="collapseOne" class="panel-collapse collapse in">
             			<div class="panel-body">
             				<table class="table">
             					<tr>
