@@ -46,24 +46,50 @@
                   					<span class="glyphicon glyphicon-log-in"></span><a href="/login">Iniciar Sesion</a>
                   				</td>
                				</tr>
+                           <tr>
+                               <td>
+                                   <span class="glyphicon glyphicon-plus"></span><a href="/registro">Crear Usuario Nuevo</a>
+                               </td>
+                                </tr>
+                           <tr>
+                               <td>
+                                   <span class="glyphicon glyphicon-pencil"></span><a href="#">Modificar Usuario</a>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <span class="glyphicon glyphicon-trash text-danger"></span><a href="#" class="text-danger">Eliminar Usuario</a>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <span class="glyphicon glyphicon-eye-open"></span><a href="#">Cambiar Clave</a>
+                               </td>
+                           </tr>
 									<tr>
                					<td>
                   					<span class="glyphicon glyphicon-off"></span><a href="/salir">Cerrar Sesion:{{get('usuario', '')}}</a>
                   				</td>
-               				</tr>               				
+               				</tr>
+<!--                                 <tr>
+                                    <td>
+                                        <a href="#">Notificaciones</a> <span class="label label-info">5</span>
+                                    </td>
+                                </tr>
+ -->
+               				               				
             				</table>
             			</div>
             		</div>
         			</div>
-<!--  -->            
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne1"><span class="glyphicon glyphicon-comment">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#sms"><span class="glyphicon glyphicon-comment">
                             </span>SMS</a>
                         </h4>
                     </div>
-                    <div id="collapseOne1" class="panel-collapse collapse">
+                    <div id="sms" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -89,107 +115,32 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
-                            </span>Mantenimiento</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#libreta"><span class="glyphicon glyphicon-book">
+                            </span>Libreta</a>
                         </h4>
                     </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
+                    <div id="libreta" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="/contactoNuevo">Contactos</a>
+                                       <span class="glyphicon glyphicon-phone"></span><a href="/contactoNuevo">Contactos</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="/grupoNuevo">Grupos</a>
+                                        <span class="glyphicon glyphicon-list"></span><a href="/grupoNuevo">Grupos</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Otras</a>
-                                    </td>
-                                </tr>
-                                <tr>
+<!--                                 <tr>
                                     <td>
                                         <a href="#">Otras 2</a><span class="label label-success">$ 320</span>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
-                            </span>Cuenta</a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <a href="#">Cambiar Clave</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Notificaciones</a> <span class="label label-info">5</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="/registro">Crear Cuenta</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-trash text-danger"></span><a href="#" class="text-danger">
-                                            Eliminar Cuenta</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
-                            </span>Reportes</a>
-                        </h4>
-                    </div>
-                    <div id="collapseFour" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-usd"></span><a href="#">Vacio</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-user"></span><a href="#">Vacio</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-tasks"></span><a href="#">Vacio</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-shopping-cart"></span><a href="#">Vacio</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
         <div class="col-sm-9 col-md-9">
