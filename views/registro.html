@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="http://www.proyectosbds.com/html/css/layout.css" />
 
 <style></style>
+	
 	<script>
 	function listarGrupos() {
 		$( "#dialog" ).dialog({
@@ -51,7 +52,30 @@
 		$( "#dialog" ).dialog( "close" );
 	}
 	</script>
-
+	
+	<script> 
+	function verificaClave() { 
+		/* Funcion para verificar si las cajas de texto de las
+		claves son iguales, de no serlo se blanquean las cajas de
+		texto y se devuelve el foco al campo clave 1*/		
+		
+		var clave1 = document.getElementById('clave');
+		var clave2 = document.getElementById('clave2');
+		var botonS = document.getElementById('guardarContacto');
+		
+		if(clave1.value != clave2.value ){
+			  alert('Claves no coinciden, Intente nuevamente');
+			  botonS.disabled=true;
+			  clave1.value='';
+			  clave2.value='';
+			  clave1.focus();
+		}
+		else {
+			botonS.disabled=false;
+		}
+		}
+	</script>
+	
 <title>Registro de Nuevos Usuarios</title>
 </head>
 
@@ -95,7 +119,7 @@
 							<div class="input-group form-group">
 								<label class="control-label">Confirmar Password</label>	
 								<div class="controls">	
-									<input class="form-control" type="password" placeholder="Ingrese Nuevamente el Password" name="clave2" id="clave2" required="required"/>
+									<input class="form-control" type="password" placeholder="Ingrese Nuevamente el Password" name="clave2" id="clave2" required="required" onblur="verificaClave()"/>
 								</div>
 							</div>
 
@@ -162,7 +186,7 @@
 														
 							<div class="row boton">
 								<div class="col-xs-12 ">
-								<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
+								<input class="btn btn-personal" type="submit" name="guardarContacto" id="guardarContacto" value='Guardar'/>
 								<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
 								<a href="/" class="align-vertical btn btn-personal">Regresar</a>
 								</div>							
