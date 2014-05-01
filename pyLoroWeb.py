@@ -162,7 +162,7 @@ def llamados():
     return bottle.template('llamados.html')
 
 @bottle.route('/actualizar')
-def llamados():
+def llamadosp():
     return bottle.template('actualizar.html')
 
 @bottle.route('/salir')
@@ -225,6 +225,8 @@ def smsEnviar():
         print('usuario',usuario)
         objetoUsuarioId = buscarUsuarioId(usuario)
         nombresMostrar, listasMostrar = buscarContactosListas(objetoUsuarioId)
+        print(objetoUsuarioId)
+        print(nombresMostrar, listasMostrar)
         return bottle.template('pyloro_sms_multiple.html', comboBoxContactos=nombresMostrar, comboBoxListas=listasMostrar)
     else:
         cabecera = 'Lo Siento ...!'
