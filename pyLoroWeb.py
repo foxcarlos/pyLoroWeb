@@ -377,31 +377,26 @@ def registro():
     
     usuario = bottle.request.get_cookie("account")
 
-    try:
-        #Buscar el plan del usuario padre y devolverlo a la plantilla
-        #usuario_padre_id = buscarUsuarioId(usuario)
-        usuarioBuscar = coleccionUsuarios.find({'usuario':usuario})
-        if usuarioBuscar.count()>0:
-            usuarioEncontrado = usuarioBuscar[0]
-            #usu = usuarioEncontrado['usuario']
-            nom = usuarioEncontrado['nombres']
-            #telf = usuarioEncontrado['telefono']
-            #email = usuarioEncontrado['email']
-            usu_padre_id = usuarioEncontrado['usuario_padre_id']
-
-            usuarioActivo = 'checked="checked"'
-            plan = 'El del Padre:{0}'.format(nom)
-        else:
-            usu_padre_id = ''
-            usuarioActivo = ''
-            plan = ''
-    except:
+    usuarioBuscar = coleccionUsuarios.find({'usuario':usuario})
+    if usuarioBuscar.count()>0:
+        usuarioEncontrado = usuarioBuscar[0]
+        #usu = usuarioEncontrado['usuario']
+        nom = usuarioEncontrado['nombres']
+        #telf = usuarioEncontrado['telefono']
+        #email = usuarioEncontrado['email']
+        usu_padre_id = usuarioEncontrado['_id']
+        nom_padre_id = usuarioEncontrado['nombres']
+        usuarioActivo = 'checked="checked"'
+        plan = 'El del Padre:{0}'.format(nom)
+    else:
         #como no tiene usuario padre se le da la opcion que el seleccione el plan
         #pero el usuario debe estar inactivo hasta que no sea apobado por mi
-        usu_padre_id = ''
+        #usu_padre_id = ''
+        nom_padre_id = ''
         usuarioActivo = ''
         plan = ''
-    return bottle.template('registro', {'estructuraOrganizativa':usu_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
+
+    return bottle.template('registro', {'estructuraOrganizativa':nom_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
 
 @bottle.post('/registro')
 def registroGuardar():
@@ -422,7 +417,15 @@ def registroGuardar():
     telefono = bottle.request.forms.get('telefono')
     email = bottle.request.forms.get('email')
     plan = bottle.request.forms.get('plan')
-    usuario_padre_id = bottle.request.forms.get('estructura')
+
+    #Buscar el nombre del usuario padre y obtener el objeto _id
+    usuario_padre_nom = bottle.request.forms.get('estructura')
+    usuarioBuscar = coleccionUsuarios.find({'usuario':usuario_padre_nom})
+    if usuarioBuscar.count()>0:
+        usuario_padre_id = usuarioBuscar[0]['_id']
+    else:
+        usuario_padre_id = ''
+
     activo = True if usuario_padre_id else False  # bottle.request.forms.get('activo')
     
     documento = {'usuario':usuario,
