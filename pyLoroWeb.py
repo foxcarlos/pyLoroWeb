@@ -155,7 +155,7 @@ def static(filename):
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('ventanaModal')
+    return bottle.template('registro2')
 
 @bottle.route('/llamados')
 def llamados():

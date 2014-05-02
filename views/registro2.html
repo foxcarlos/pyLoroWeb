@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="description" content="">
@@ -17,8 +17,7 @@
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://www.proyectosbds.com/html/css/layout.css" />
 
-<style></style>
-	<script>
+<script>
 	function listarGrupos() {
 		$( "#dialog" ).dialog({
 			show: "blind",
@@ -51,129 +50,95 @@
 		$( "#dialog" ).dialog( "close" );
 	}
 	</script>
-
+	
+	<script> 
+	function verificaClave() { 
+		/* Funcion para verificar si las cajas de texto de las
+		claves son iguales, de no serlo se blanquean las cajas de
+		texto y se devuelve el foco al campo clave 1*/		
+		
+		var clave1 = document.getElementById('clave');
+		var clave2 = document.getElementById('clave2');
+		var botonS = document.getElementById('guardarContacto');
+		
+		if(clave1.value != clave2.value ){
+			  alert('Claves no coinciden, Intente nuevamente');
+			  botonS.disabled=true;
+			  clave1.value='';
+			  clave2.value='';
+			  clave1.focus();
+		}
+		else {
+			botonS.disabled=false;
+		}
+		}
+	</script>
+	
 <title>Registro de Nuevos Usuarios</title>
 </head>
-
 <body style="background:#FFFFFF">
 <div class="container">
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
-			<div class="row">
-				<div class="col-xs-6" ></div>
-			</div>		
-    		<div class="panel panel-personal">
-				<div class="panel-heading">
-			    	<h3 class="panel-title">Registro de Nuevos Usuarios<span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
-			 	</div>
-			  	<div class="panel-body">
-			    	<form accept-charset="UTF-8" action="/registro" method="post" id = "registro">
-               	<fieldset>
-							
-							<!-- <div class="input-group form-group">
-								<label class="control-label" for="Id">ID Unico</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" name="id" id="id" required="required"/>
-								</div>
-							</div> -->
-			
-							<div class="input-group form-group">
-								<label class="control-label">Usuario</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" name="usuario" placeholder="Ingrese Nombre de Usuario" id="usuario" required="required"/>
-								</div>
-							</div>
-							
-							<div class="input-group form-group">
-								<label class="control-label">Password</label>	
-								<div class="controls">	
-									<input class="form-control" type="password" placeholder="Ingrese el Password" name="clave" id="clave" required="required"/>
-								</div>
-							</div>
+        <div class="row">
+            <div class="span6">
+                <label class="">Usuario</label>
+                <input type="text" class="input-Xlarge">
 
-							<div class="input-group form-group">
-								<label class="control-label">Confirmar Password</label>	
-								<div class="controls">	
-									<input class="form-control" type="password" placeholder="Ingrese Nuevamente el Password" name="clave2" id="clave2" required="required"/>
-								</div>
-							</div>
+                <label class="">Descripcion</label>
+                <input type="text" class="input-Xlarge">
 
-							<div class="input-group form-group">
-								<label class="control-label">Descripcion</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" placeholder="Descripcion del Usuario Ej: Carlos Garcia" name="descripcion" id="descripcion" required="required"/>
-								</div>
-							</div>
-	
-							<div class="input-group form-group">
-								<label class="control-label">Cedula o Rif</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" placeholder="Ingrese el Rif, Cedula o ID Personal" name="cedrif" id="cedrif" required="required"/>
-								</div>
-							</div>	
-	
-							<div class="input-group form-group">
-								<label class="control-label">Direccion</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" placeholder="Ingrese la Direccion de habitacion o Empresa" name="direccion" id="direccion"/>
-								</div>
-							</div>
-							
-							<div class="input-group form-group">
-								<label class="control-label">Telefono</label>	
-								<div class="controls">	
-									<input class="form-control" type="number" placeholder="Ingrese el Numero de celular o movil" name="telefono" id="telefono" required="required" pattern="[0-9]{11}" maxlength="11" />
-								</div>
-							</div>
-							
-							<div class="input-group form-group">
-								<label class="control-label">Correo Electronico</label>	
-								<div class="controls">	
-									<input class="form-control" type="email" placeholder="Ingrese su email" name="email" id="email" required="required"/>
-								</div>
-							</div>
-																				
-							<div class="row">
-								<div class="col-lg-5">
-									<label class="control-label" for="grupos">Plan o Paquete de SMS</label>	      
-									<div class="input-group custom-search-form">
-										<input type="text" class="form-control" placeholder="Seleccione el Plan al cual desea afiliarse" id="plan" name="plan">
-										<span class="input-group-btn">
-											<button class="btn btn-default" type="button" onclick="listarPlan()"><span class="glyphicon glyphicon-search"></span></button>
-											<button type="submit" class="btn btn-primary"> <i class="icon-search icon-white"></i></button>
-										</span>
-									</div>
-								</div>
-							</div>		
-							
-							<div class="input-group form-group">
-								<label class="control-label">Estructura Organizativa</label>	
-								<div class="controls">	
-									<input class="form-control" type="text" placeholder="Estrctura Organizativa" name="estructura" id="estructura" readonly value="{{get('estructuraOrganizativa', '')}}"/>
-								</div>
-							</div>
+                <label class="">Direccion</label>
+                <input type="text" class="input-xLarge">
 
-							<div class="input-group form-group">
-								<label class="control-label">Activar o Desactivar Usuario</label>	
-								<div class="controls">	
-									<input class="form-control" type="checkbox" name="activo" id="activo" {{usuarioActivo}}/>
-								</div>
-							</div>
-														
-							<div class="row boton">
-								<div class="col-xs-12 ">
-								<input class="btn btn-personal" type="submit" name="guardarContacto" value='Guardar'/>
-								<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
-								<a href="/" class="align-vertical btn btn-personal">Regresar</a>
-								</div>							
-							</div>
+                <label class="">Telefono</label>
+                <input type="text" class="input-Xlarge">
 
-			    		</fieldset>
-			      </form>			    
-			    </div>
-			</div>
-		</div>
-	</div>
-</div>
+                <label class="">Plan o Paquete de SMS</label>
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Seleccione el Plan al cual desea afiliarse" id="plan" name="plan">
+                    <span class="input-group-btn">
+					    <button class="btn btn-default" type="button" onclick="listarPlan()"><span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    </span>
+                </div>
+                
+                <div class="input-group form-group">
+					 	<label class="control-label">Activar o Desactivar Usuario</label>	
+							<div class="controls">	
+								<input class="form-control" type="checkbox" name="activo" id="activo" {{usuarioActivo}}/>
+							</div>
+					 </div>
+            </div>
+
+            <div class="span6">
+                <div class="row">
+                    <div class="span6">
+                        <label class="">Clave</label>
+                        <input type="text" class="input-small">
+                    </div>
+                    <div class="span6">
+                        <label class="">Confirmar Clave</label>
+                        <input type="text" class="input-small">
+                    </div>
+                </div>
+
+                <label class="">Cedula o Rif</label>
+                <input type="text" class="input-Xlarge">
+
+                <label class="">Correo Electronico</label>
+                <input type="text" class="input-Xlarge">
+
+                <label class="">Estructura Organizativa</label>
+                <input type="text" class="input-Xlarge">
+            </div>
+            <div class="span12"></div>
+				<div class="row boton">
+					<div class="col-xs-12 ">
+						<input class="btn btn-personal" type="submit" name="guardarContacto" id="guardarContacto" value='Guardar'/>
+							<input class="btn btn-personal" type="reset" name="deshacer" value="Limpiar" />
+							<a href="/" class="align-vertical btn btn-personal">Regresar</a>
+					</div>							
+				</div>
+        </div>
+    </div>
 </body>
 </html>
