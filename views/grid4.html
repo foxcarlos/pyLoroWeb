@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="cgarcia" >
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/style2.css">    
+    <style>
+        body {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+<div class="container">
+    <div class="row">
+    	<div class="panel panel-personal">
+			<div class="panel-heading">
+				<h3 class="panel-title">Lista de Contactos<span class="Three-Dee pull-right" >PyLoroWeb</span></h3>
+			</div>
+        <!-- <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lista de Contactos</h3>
+            </div> -->
+            <table class="table table-bordered  table-striped  table-hover  table-condensed table-scrollable">
+                <thead>
+            		<tr class="warning">
+               		<th>Nombre</th>
+                  	<th>Apellido</th>
+                  	<th>Segundo Nombre</th>
+                	</tr>
+                </thead>                
+            	<tbody>           		
+						%for fila in grid:
+							<tr>
+								%for col in fila:
+									<!-- <td ><a href="grupos.html" name="link" id="link">{{col}}</a></td> -->
+									<td >{{col}}</td>
+								%end
+							</tr>
+						%end                
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="/static/css/gridtemp.ccs">		
+</head>
+<body>
+<div class="datagrid">
+<table>
+<thead>
+	<tr>
+		<th>Nombre</th>
+		<th>Apellido</th>
+		<th>Segundo Apellido</th>
+	</tr>
+</thead>
+<tfoot>
+	<tr>
+	<td colspan="4">
+		<div id="paging">
+		<ul>
+			<li><a href="#"><span>Previous</span></a></li>
+			<li><a href="#" class="active"><span>1</span></a></li>
+			<li><a href="#"><span>2</span></a></li>
+			<li><a href="#"><span>3</span></a></li>
+			<li><a href="#"><span>4</span></a></li>
+			<li><a href="#"><span>5</span></a></li>
+			<li><a href="#"><span>Next</span></a></li>
+		</ul>
+		</div>
+	</tr>
+</tfoot>
+<tbody>
+%for fila in grid:
+	<tr class="alt">
+	%for col in fila:
+		<td ><a href="grupos.html" name="link" id="link">{{col}}</a></td>
+	%end
+	</tr>
+%end
+
+</tbody>
+</table>
+</div>
+</body>
+</html>

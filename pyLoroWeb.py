@@ -94,6 +94,25 @@ def buscarContactosListas(objetoUsuarioIdPasado):
     listasMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
     return nombresMostrar, listasMostrar
 
+def buscarContactos():
+    '''Este metodo busca dentro de la base de datos mongo
+    todos los Contactos'''
+
+    server = pymongo.MongoClient('localhost', 27017)
+    baseDatos = server.pyloroweb
+    coleccionListas = baseDatos.contactos
+    
+    usuario = bottle.request.get_cookie("account")
+    if usuario:
+        objetoUsuarioId = buscarUsuarioId(usuario)
+        #Aqui se buscan los Contactos
+        contactosMostrar = [f for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
+        return contactosMostrar
+    else:
+        cabecera = 'Lo Siento ...!'
+        msg = 'Ud. no ha iniciado sesion en el servidor'
+        return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
+
 def buscarGrupos():
     '''Este metodo busca dentro de la base de datos mongo
     todos los Grupos o listas'''
@@ -112,7 +131,6 @@ def buscarGrupos():
         cabecera = 'Lo Siento ...!'
         msg = 'Ud. no ha iniciado sesion en el servidor'
         return bottle.template('mensaje_login', {'cabecera':cabecera, 'mensaje':msg})
-
 
 def buscarUsuarioId(usuario):
     '''parametros 1 string: usuario
@@ -464,7 +482,13 @@ def registroGuardar():
 @bottle.get('/grid')
 def grid():
     grid = [('Carlos', 'Garcia', 'Diaz'), ('Nairesther', 'Gomez', 'Villa'), ('Carla', 'Garcia', 'Gomez'), ('Paola', 'Garcia', 'Sanchez')]
-    return bottle.template('grid', {'grid':grid})
+    lista = buscarContactos()
+    listaFinal = []
+    for f in lista:
+        #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
+        l = f['nombre'], f['apellido'], f['telefonos']
+        listaFinal.append(l)
+    return bottle.template('grid4', {'grid':listaFinal})
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
