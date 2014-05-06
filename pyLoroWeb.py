@@ -74,6 +74,38 @@ class enviarZMQ():
             devuelve = False
         return devuelve
 
+class consultaM():
+    def __init__(self):
+        '''Clase que permite realizar consultas a una coleccion
+	en mongoDB '''
+
+    def abrirColeccion(self, tabla):
+        server = pymongo.MongoClient('localhost', 27017)
+        baseDatos = server.pyloroweb
+        self.coleccionAbierta = eval('baseDatos.{0}'.format(tabla))
+        
+    def consulta(self, camposMostrar='', condicion='', ordenarPor=''):
+        '''Metodo para realizar consulta, parametros recibidos (3)
+        camposMostrar (tipo Diccionario)
+        condicion (tipo Diccionario)
+        Campo a Ordenar (Tipo String) '''
+        
+        #Para habilitar los campos a mostrar
+        diccionarioSelect = {}
+        #Se toma la tupla que contiene los campos
+        sentenciaSelect = camposMostrar
+        #Se coloca verdadero a los campos que se deean mostrar
+        for f in sentenciaSelect:
+            diccionarioSelect[f] = True
+            
+        sentenciaWhere = {} if not condicion else condicion
+        sentenciaOrderBy = '_id' if not ordenarPor else ordenarPor
+        
+        c = self.coleccionAbierta
+        documento = x = c.find(sentenciaWhere, diccionarioSelect).sort(sentenciaOrderBy)
+        print([f for f in x])
+        return documento
+
 app = enviarZMQ()
 
 def buscarContactosListas(objetoUsuarioIdPasado):
@@ -479,14 +511,31 @@ def registroGuardar():
 
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/'})
 
+'''
 @bottle.get('/grid')
 def grid():
-    grid = [('Carlos', 'Garcia', 'Diaz'), ('Nairesther', 'Gomez', 'Villa'), ('Carla', 'Garcia', 'Gomez'), ('Paola', 'Garcia', 'Sanchez')]
+    #grid = [('Carlos', 'Garcia', 'Diaz'), ('Nairesther', 'Gomez', 'Villa'), ('Carla', 'Garcia', 'Gomez'), ('Paola', 'Garcia', 'Sanchez')]
     lista = buscarContactos()
     listaFinal = []
-    for f in lista:
+    for i, f in enumerate(lista):
         #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
-        l = f['_id'], f['nombre'], f['apellido'], f['telefonos']
+        l = str(i+1), f['_id'], f['nombre'], f['apellido'], f['telefonos']
+        listaFinal.append(l)
+    return bottle.template('grid4', {'grid':listaFinal})'''
+
+@bottle.get('/grid')
+def grid():
+    appBuscar = consultaM()
+    appBuscar.abriColeccion('contactos')
+
+    camposMostrar = ('_id', 'nombre', 'apellido')
+    condicion = {'usuario_id':ObjectId('5348359df591f061feb36741')}
+    ordenadoPor = 'nombre'
+
+    listaFinal = []
+    for i, f in enumerate(lista):
+        #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
+        l = str(i+1), f['_id'], f['nombre'], f['apellido'], f['telefonos']
         listaFinal.append(l)
     return bottle.template('grid4', {'grid':listaFinal})
 
