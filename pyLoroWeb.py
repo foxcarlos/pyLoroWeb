@@ -486,7 +486,7 @@ def grid():
     listaFinal = []
     for f in lista:
         #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
-        l = f['nombre'], f['apellido'], f['telefonos']
+        l = f['_id'], f['nombre'], f['apellido'], f['telefonos']
         listaFinal.append(l)
     return bottle.template('grid4', {'grid':listaFinal})
 
