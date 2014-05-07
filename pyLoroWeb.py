@@ -526,16 +526,20 @@ def grid():
 
 @bottle.get('/grid')
 def grid():
+    #Busca en mongodb el objetoId del usuario que inicio sesion
+    usuario = bottle.request.get_cookie("account")
+    objetoUsuarioId = buscarUsuarioId(usuario)
+    
     appBuscar = consultaM()
     appBuscar.abrirColeccion('contactos')
 
     camposMostrar = ('_id', 'nombre', 'apellido')
-    condicion = {'usuario_id':ObjectId('5348359df591f061feb36741')}
+    condicion = {'usuario_id':objetoUsuarioId}
     ordenadoPor = 'nombre'
     
     #appBuscar realiza la consulta y devuelve una lista con diccionarios por cada registro
     #
-    doc = appBuscar.consulta(camposMostrar,'', ordenadoPor)
+    doc = appBuscar.consulta(camposMostrar, condicion, ordenadoPor)
     listaFinal = [f.values() for f in doc]
 
     return bottle.template('grid4', {'grid':listaFinal, 'cabecera':camposMostrar})
