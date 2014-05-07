@@ -76,20 +76,14 @@ class enviarZMQ():
 
 class consultaM():
     def __init__(self):
-        '''Clase que permite realizar consultas a una coleccion
-	en mongoDB '''
-
+        ''' '''
+        #server = pymongo.MongoClient('localhost', 27017)
+        #baseDatos = server.pyloroweb
+    
     def abrirColeccion(self, tabla):
-	
-	'''con = pymongo.Connection("mongodb://localhost", safe=True)
-	db = con.pyloroweb
-	coleccionContactos = db.contactos
-	doc = coleccionContactos({'nombre':'Nairesther'})
-	doc = coleccionContactos.find_one({'nombre':'Nairesther'})'''
-
-        server = pymongo.MongoClient('localhost', 27017)
-        baseDatos = server.pyloroweb
-        self.coleccionAbierta = eval('baseDatos.{0}'.format(tabla))
+        con = pymongo.Connection("mongodb://localhost", safe=True)
+        db = con.pyloroweb
+        self.coleccionAbierta = eval('db.{0}'.format(tabla))
         
     def consulta(self, camposMostrar='', condicion='', ordenarPor=''):
         '''Metodo para realizar consulta, parametros recibidos (3)
@@ -109,10 +103,10 @@ class consultaM():
         sentenciaOrderBy = '_id' if not ordenarPor else ordenarPor
         
         c = self.coleccionAbierta
-        documento = x = c.find(sentenciaWhere, diccionarioSelect).sort(sentenciaOrderBy)
-        print([f for f in x])
+        documento = list(c.find(sentenciaWhere, diccionarioSelect).sort(sentenciaOrderBy))
+        #x = documento  # [f for f in documento]
         return documento
-
+        
 app = enviarZMQ()
 
 def buscarContactosListas(objetoUsuarioIdPasado):
@@ -533,18 +527,18 @@ def grid():
 @bottle.get('/grid')
 def grid():
     appBuscar = consultaM()
-    appBuscar.abriColeccion('contactos')
+    appBuscar.abrirColeccion('contactos')
 
     camposMostrar = ('_id', 'nombre', 'apellido')
     condicion = {'usuario_id':ObjectId('5348359df591f061feb36741')}
     ordenadoPor = 'nombre'
+    
+    #appBuscar realiza la consulta y devuelve una lista con diccionarios por cada registro
+    #
+    doc = appBuscar.consulta(camposMostrar,'', ordenadoPor)
+    listaFinal = [f.values() for f in doc]
 
-    listaFinal = []
-    for i, f in enumerate(lista):
-        #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
-        l = str(i+1), f['_id'], f['nombre'], f['apellido'], f['telefonos']
-        listaFinal.append(l)
-    return bottle.template('grid4', {'grid':listaFinal})
+    return bottle.template('grid4', {'grid':listaFinal, 'cabecera':camposMostrar})
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones

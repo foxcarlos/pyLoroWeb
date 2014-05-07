@@ -26,14 +26,13 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Lista de Contactos</h3>
             </div> -->
+				<div class="table-responsive">            
             <table class="table table-bordered  table-striped  table-hover  table-condensed table-scrollable">
                 <thead>
             		<tr class="warning">
-            			<th>#</th>
-            			<th>Id Unico</th>
-               		<th>Nombre</th>
-                  	<th>Apellido</th>
-                  	<th>Telefono</th>
+							%for f in cabecera:                  	
+                  		<th>{{f}}</th>
+                  	%end
                 	</tr>
                 </thead>                
             	<tbody>           		
@@ -47,6 +46,7 @@
 						%end                
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>
