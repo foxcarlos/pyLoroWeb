@@ -80,6 +80,13 @@ class consultaM():
 	en mongoDB '''
 
     def abrirColeccion(self, tabla):
+	
+	'''con = pymongo.Connection("mongodb://localhost", safe=True)
+	db = con.pyloroweb
+	coleccionContactos = db.contactos
+	doc = coleccionContactos({'nombre':'Nairesther'})
+	doc = coleccionContactos.find_one({'nombre':'Nairesther'})'''
+
         server = pymongo.MongoClient('localhost', 27017)
         baseDatos = server.pyloroweb
         self.coleccionAbierta = eval('baseDatos.{0}'.format(tabla))
