@@ -206,7 +206,7 @@ def static(filename):
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('registro2')
+    return bottle.template('grid1')
 
 @bottle.route('/llamados')
 def llamados():
@@ -447,7 +447,7 @@ def registro():
         usuarioActivo = ''
         plan = ''
 
-    return bottle.template('registro', {'estructuraOrganizativa':nom_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
+    return bottle.template('registro2', {'estructuraOrganizativa':nom_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
 
 @bottle.post('/registro')
 def registroGuardar():
@@ -512,17 +512,6 @@ def registroGuardar():
 
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/'})
 
-'''
-@bottle.get('/grid')
-def grid():
-    #grid = [('Carlos', 'Garcia', 'Diaz'), ('Nairesther', 'Gomez', 'Villa'), ('Carla', 'Garcia', 'Gomez'), ('Paola', 'Garcia', 'Sanchez')]
-    lista = buscarContactos()
-    listaFinal = []
-    for i, f in enumerate(lista):
-        #l = f['nombre'], f['apellido'], f['telefonos'], f['email'], f['usuario_id'], f['listas_id']
-        l = str(i+1), f['_id'], f['nombre'], f['apellido'], f['telefonos']
-        listaFinal.append(l)
-    return bottle.template('grid4', {'grid':listaFinal})'''
 
 @bottle.get('/grid')
 def grid():
@@ -542,7 +531,7 @@ def grid():
     doc = appBuscar.consulta(camposMostrar, condicion, ordenadoPor)
     listaFinal = [f.values() for f in doc]
 
-    return bottle.template('grid4', {'grid':listaFinal, 'cabecera':camposMostrar})
+    return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
