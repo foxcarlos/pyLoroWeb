@@ -24,10 +24,11 @@ class correo:
         Mensaje:'Esto es una prueba de envio'
         Remitente:Si no se envia ningun remitente el toma por defecto pycondor@gma
         Asunto:si no se coloca ninguno el toma por defecto el pasado en el parametr
-        '''
+        MEMultipart()'''
         
         # Creamos el mensaje
         msg = MIMEText(mensaje)
+        msg = MIMEMultipart('alternative')  # MIMEText(mensaje)
         
         # Conexin con el server
         msg['Subject'] = asunto
