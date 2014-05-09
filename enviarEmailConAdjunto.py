@@ -10,12 +10,15 @@ class correo:
         '''ru'''
 
     def leerArchivo(self):
+        listaEmail = []
         f = '/home/cgarcia/correos'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
         for fila in lista:
-            print(fila.strip())    
+            print(fila.strip())
+            listaEmail.append(fila.strip())
+        return listaEmail
     
     def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='pycondor@gmail.com', asunto='** Sistema de Monitoreo y Control Condor **'):
         '''
@@ -67,5 +70,7 @@ class correo:
     
 if __name__ == '__main__':
     app = correo()
-    app.enviar_email('foxcarlos@gmail.com', 'Prueba', '/home/cgarcia/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
+    #l = app.leerArchivo()
+    #l
+    app.enviar_email(['foxcarlos@gmail.com, foxcarlos@gmail.com'], 'Prueba', '/home/cgarcia/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
     
