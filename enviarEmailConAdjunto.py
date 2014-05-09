@@ -51,7 +51,7 @@ class correo:
         mailServer.close()
     
 if __name__ == '__main__':
-    #enviar_email('foxcarlos@gmail.com', 'Prueba', '/home/cgarcia/CONGRESO HOSPITAL COROMOTO AGOSTO 2014.JPG', 'pycondor@gmail.com', 'Enviando desde python')
     app = correo()
-    app.enviar_email('foxcarlos@gmail.com', 'Prueba', '', 'pycondor@gmail.com', 'Enviando desde python')
+    app.enviar_email('foxcarlos@gmail.com', 'Prueba', 'CONGRESO HOSPITAL COROMOTO AGOSTO 2014.JPG', 'pycondor@gmail.com', 'Enviando desde python')
+    #app.enviar_email('foxcarlos@gmail.com', 'Prueba', '', 'pycondor@gmail.com', 'Enviando desde python')
     
