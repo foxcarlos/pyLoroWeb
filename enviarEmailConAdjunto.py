@@ -1,11 +1,14 @@
 import smtplib
 from email.mime.text import MIMEText
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email.MIMEText import MIMEText
+from email.MIMEImage import MIMEImage
 
 class correo:
     def __init__(self):
-        import smtplib
-        from email.mime.text import MIMEText        
-        
+    ''' '''
+
     def leerArchivo(self):
         f = '/home/cgarcia/correos'
         fi = open(f)
@@ -36,7 +39,18 @@ class correo:
         attach_image = MIMEImage(file.read())
         attach_image.add_header('Content-Disposition', 'attachment; filename = imgAdjunta')
         msg.attach(attach_image)'''
-        
+
+        archivo_imagen = open(imgAdjunta, 'rb')
+        msgImage = MIMEImage(archivo_imagen.read())
+        archivo_imagen.close()
+
+        #Hemos de adjuntar la imagen en el content-id.
+        #En el archivo html se debe hacer referencia al content-id
+        #como fuente en el source de la imagen, por ejemplo:
+        #<img src="cid:/nombre/de_la_ruta_entera/imagen.jpg">
+        msgImage.add_header('Content-ID', '<' + imgAdjunta + '>')
+        msg.attach(msgImage)
+
         # Autenticamos
         mailServer = smtplib.SMTP('smtp.gmail.com', 587)
         mailServer.ehlo()
@@ -52,6 +66,5 @@ class correo:
     
 if __name__ == '__main__':
     app = correo()
-    app.enviar_email('foxcarlos@gmail.com', 'Prueba', 'CONGRESO HOSPITAL COROMOTO AGOSTO 2014.JPG', 'pycondor@gmail.com', 'Enviando desde python')
-    #app.enviar_email('foxcarlos@gmail.com', 'Prueba', '', 'pycondor@gmail.com', 'Enviando desde python')
+    app.enviar_email('foxcarlos@gmail.com', 'Prueba', '/home/cgarcia/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
     
