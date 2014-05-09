@@ -11,12 +11,12 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/cgarcia/correos'
+        f = '/home/administradorcgarcia/desarrollo/python/pyLoroWeb/correos'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
         for fila in lista:
-            print(fila.strip())
+            #print(fila.strip())
             listaEmail.append(fila.strip())
         return listaEmail
     
@@ -70,7 +70,7 @@ class correo:
     
 if __name__ == '__main__':
     app = correo()
-    #l = app.leerArchivo()
-    #l
-    app.enviar_email(['foxcarlos@gmail.com, foxcarlos@gmail.com'], 'Prueba', '/home/cgarcia/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
+    l = app.leerArchivo()
+    ll = ','.join(l)
+    app.enviar_email(ll, 'Prueba', '/home/administradorcgarcia/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
     
