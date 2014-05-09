@@ -7,7 +7,7 @@ from email.MIMEImage import MIMEImage
 
 class correo:
     def __init__(self):
-    ''' '''
+        '''ru'''
 
     def leerArchivo(self):
         f = '/home/cgarcia/correos'
