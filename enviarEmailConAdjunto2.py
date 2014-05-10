@@ -1,9 +1,10 @@
+# Import smtplib for the actual sending function
 import smtplib
+
+# Here are the email package modules we'll need
 from email.mime.text import MIMEText
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEBase import MIMEBase
-from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
 
 class correo:
     def __init__(self):
@@ -28,24 +29,20 @@ class correo:
         Remitente:Si no se envia ningun remitente el toma por defecto pycondor@gma
         Asunto:si no se coloca ninguno el toma por defecto el pasado en el parametr
         MEMultipart()'''
+
+        #COMMASPACE = ', '
         
-        # Creamos el mensaje
-        #msg = MIMEText(mensaje)
-        msg = MIMEMultipart()  # 'alternative')  # MIMEText(mensaje)
-        
-        # Conexin con el server
+        # Create the container (outer) email message.
+        msg = MIMEMultipart()
         msg['Subject'] = asunto
+        # me == the sender's email address
+        # family = the list of all recipients' email addresses
         msg['From'] = remitente
-        msg['To'] = destinatario
-    
+        msg['To'] = destinatario  # COMMASPACE.join(destinatario)
+        msg.preamble = mensaje
+
         #Creamos el cuerpo del mensaje
         msg.attach(MIMEText(mensaje))
-
-        '''# Adjuntamos Imagen
-        file = open(imgAdjunta, "rb")
-        attach_image = MIMEImage(file.read())
-        attach_image.add_header('Content-Disposition', 'attachment; filename = "imgAdjunta"')
-        msg.attach(attach_image)'''
 
         archivo_imagen = open(imgAdjunta, 'rb')
         msgImage = MIMEImage(archivo_imagen.read())
@@ -74,6 +71,8 @@ class correo:
 if __name__ == '__main__':
     app = correo()
     l = app.leerArchivo()
-    ll = ','.join(l)
-    app.enviar_email('foxcarlos@hotmail.com foxcarlos@gmail.com', 'Prueba', '/home/foxcarlos/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
+    #ll = ','.join(l)
+    for destino in l:
+        app.enviar_email(destino, 'Ante todo un cordial saludo', '/home/foxcarlos/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
+
     
