@@ -12,7 +12,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
+        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
@@ -73,4 +73,4 @@ if __name__ == '__main__':
     l = app.leerArchivo()
     #ll = ','.join(l)
     for destino in l:
-        app.enviar_email(destino, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso.html', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
+        app.enviar_email(destino, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@gmail.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
