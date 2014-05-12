@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+import sys
 
 class correo:
     def __init__(self):
@@ -64,7 +65,11 @@ class correo:
     
         # Enviamos
         print(destinatario)
-        mailServer.sendmail(remitente, destinatario, msg.as_string())
+        try:
+            mailServer.sendmail(remitente, destinatario, msg.as_string())
+        except:
+            print(destinatario, sys.exc_info()[1])
+
         # Cerramos conexion
         mailServer.close()
     
