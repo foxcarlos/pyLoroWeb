@@ -200,6 +200,10 @@ def validaLogin(usuario, clave):
         bottle.response.set_cookie("account", '')
     return accesoPermitido
 
+@bottle.route('/congreso')
+def congreso():
+    return bottle.template('congreso.html')
+
 @bottle.route('/static/<filename:path>') 
 def static(filename): 
     return bottle.static_file(filename, root='static/')

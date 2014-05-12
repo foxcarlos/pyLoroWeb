@@ -12,7 +12,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos'
+        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
