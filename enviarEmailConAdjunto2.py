@@ -12,7 +12,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/foxcarlos/desarrollo/python/pyLoroWeb/correos2'
+        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
@@ -21,7 +21,7 @@ class correo:
             listaEmail.append(fila.strip())
         return listaEmail
     
-    def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='pycondor@gmail.com', asunto='** Sistema de Monitoreo y Control Condor **'):
+    def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='congresoshospitalcoromoto@gmail.com', asunto='Congresos Hospital Coromoto'):
         '''
         El metodo enviar email recibe 3 parametros:
         Destinatario:uncorreo@gmail.com
@@ -60,7 +60,7 @@ class correo:
         mailServer.ehlo()
         mailServer.starttls()
         mailServer.ehlo()
-        mailServer.login("pycondor@gmail.com", "shc21152115")
+        mailServer.login("congresoshospitalcoromoto@gmail.com", "pdvserviciosdesalud")
     
         # Enviamos
         print(destinatario)
@@ -73,6 +73,4 @@ if __name__ == '__main__':
     l = app.leerArchivo()
     #ll = ','.join(l)
     for destino in l:
-        app.enviar_email(destino, 'Ante todo un cordial saludo', '/home/foxcarlos/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Enviando desde python')
-
-    
+        app.enviar_email(destino, 'http://foxcarlos.no-ip.biz:8085/ Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'pycondor@gmail.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
