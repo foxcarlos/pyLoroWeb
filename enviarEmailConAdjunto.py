@@ -13,7 +13,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos'
+        oshospitalcoromoto@outlook.com = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
@@ -22,7 +22,7 @@ class correo:
             listaEmail.append(fila.strip())
         return listaEmail
     
-    def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='congresoshospitalcoromoto@gmail.com', asunto='Congresos Hospital Coromoto'):
+    def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='congresoshospitalcoromoto@outlook.com', asunto='Congresos Hospital Coromoto'):
         '''
         El metodo enviar email recibe 3 parametros:
         Destinatario:uncorreo@gmail.com
