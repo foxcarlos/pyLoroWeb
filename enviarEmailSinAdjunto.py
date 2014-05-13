@@ -13,7 +13,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
+        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
@@ -64,8 +64,8 @@ class correo:
 if __name__ == '__main__':
     app = correo()
     l = app.leerArchivo()
-    ll = ','.join(l)
-    app.enviar_email(ll, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')   
+    #ll = ','.join(l)
+    #app.enviar_email(ll, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')   
     
-    #for destino in l:
-    #    app.enviar_email(destino, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
+    for destino in l:
+        app.enviar_email(destino, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
