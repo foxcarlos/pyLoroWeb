@@ -96,31 +96,77 @@
 			    	<form accept-charset="UTF-8" action="/registro" method="post" id = "registro">
                	<fieldset>
 <!--  -->							
-					<div class="span6">
+					<div class="col-md-6">
+						<div class="input-group form-group">                    
                     <label class="">Nombre de Usuario</label>
-                    <input type="text" class="input-Xlarge">
+                    <input type="text" class="form-control" name="usuario" placeholder="Ingrese Nombre de Usuario" id="usuario" required="required">
+                  </div>
+                    
+                  <div class="input-group form-group">
                     <label class="">Confirmar Password</label>
-                    <input type="text" class="input-Xlarge">
+                    <input class="form-control" type="password" placeholder="Ingrese Nuevamente el Password" name="clave2" id="clave2" required="required" onblur="verificaClave()">
+                  </div>
+                  
+                  <div class="input-group form-group">
                     <label class="">Cedula o Rif</label>
-                    <input type="text" class="input-Xlarge">
+                    <input type="text" class="form-control" placeholder="Ingrese el Rif, Cedula o ID Personal" name="cedrif" id="cedrif" required="required">
+                  </div>
+                  
+                  <div class="input-group form-group">
                     <label class="">Telefono Movil</label>
-                    <input type="text" class="input-Xlarge">
+                    <input class="form-control" type="number" placeholder="Ingrese el Numero de celular o movil" name="telefono" id="telefono" required="required" pattern="[0-9]{11}" maxlength="11">
+                  </div>
+                    
+                  <!-- <div class="input-group form-group">
                     <label class="">Plan o Paquete de SMS</label>
-                    <input type="text" class="input-small">
-                    <label class="">Activar o Desactivar cuenta de Usuario</label>
-                    <input type="checkbox" class="input-small">
+                    <input type="text" class="form-control" placeholder="Seleccione el Plan al cual desea afiliarse" id="plan" name="plan">
+                  </div> -->
+						<div class="row">
+							<div class="col-md-12">
+								<label class="control-label" for="grupos">Plan o Paquete de SMS</label>	      
+								<div class="input-group custom-search-form">
+								<input type="text" class="form-control" placeholder="Seleccione el Plan al cual desea afiliarse" id="plan" name="plan">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" onclick="listarPlan()"><span class="glyphicon glyphicon-search"></span></button>
+									</span>
+								</div>
+							</div>
+						</div>                  
+                    
+						<div class="input-group form-group">	
+							<br/>							
+							<div class="controls">	
+								<input class="form-control" type="checkbox" name="activo" id="activo" {{usuarioActivo}}/>
+								<label class="control-label">  Activar o Desactivar Usuario</label>
+							</div>
+						</div>                 
                 </div>
-                <div class="span6">
+                
+                <div class="col-md-6">
+						<div class="input-group form-group">                    
                     <label class="">Password</label>
-                    <input type="text" class="Xlarge">
+                    <input class="form-control" type="password" placeholder="Ingrese el Password" name="clave" id="clave" required="required">
+                  </div>
+                  
+                  <div class="input-group form-group">
                     <label class="">Nombre de la Persona o Empresa</label>
-                    <input type="text" class="input-small span12">
+                    <input type="text" class="form-control" placeholder="Descripcion del Usuario Ej: Carlos Garcia" name="descripcion" id="descripcion" required="required">
+                  </div>
+                  
+                  <div class="input-group form-group">
                     <label class="">Direccion de Habitacion</label>
-                    <input type="text" class="input-small span12">
+                    <input type="text" class="form-control" placeholder="Ingrese la Direccion de habitacion o Empresa" name="direccion" id="direccion">
+                  </div>
+                    
+                  <div class="input-group form-group">
                     <label class="">Correo Electronico</label>
-                    <input type="text" class="input-Xlarge">
+                    <input class="form-control" type="email" placeholder="Ingrese su email" name="email" id="email" required="required">
+                  </div>
+                  
+                  <div class="input-group form-group">
                     <label class="">Estructura Padre</label>
-                    <input type="text" class="input-small span12">
+                    <input type="text" class="form-control" placeholder="Estrctura Organizativa" name="estructura" id="estructura" readonly value="{{get('estructuraOrganizativa', '')}}">
+                  </div>
                 </div>														
 <!--  -->														
 							<div class="row boton">

@@ -21,7 +21,7 @@ class correo:
             listaEmail.append(fila.strip())
         return listaEmail
     
-    def enviar_email(self, destinatario, mensaje, imgAdjunta, remitente='congresoshospitalcoromoto@outlook.com', asunto='Congresos Hospital Coromoto'):
+    def enviar_email(self, remitente, destinatario, asunto,  mensaje, adjunto, clave, server, puerto):
         '''
         El metodo enviar email recibe 3 parametros:
         Destinatario:uncorreo@gmail.com
@@ -45,11 +45,11 @@ class correo:
         msg.attach(MIMEText(mensaje))
 
         # Autenticamos
-        mailServer = smtplib.SMTP('smtp.live.com', 587)
+        mailServer = smtplib.SMTP(server, puerto)
         mailServer.ehlo()
         mailServer.starttls()
         mailServer.ehlo()
-        mailServer.login("congresoshospitalcoromoto@outlook.com", "docencia2014")
+        mailServer.login(remitente, clave)
     
         # Enviamos
         print(destinatario)
@@ -64,8 +64,17 @@ class correo:
 if __name__ == '__main__':
     app = correo()
     l = app.leerArchivo()
-    #ll = ','.join(l)
-    #app.enviar_email(ll, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')   
     
+    correoH = ['hotmail', 'congresoshospitalcoromoto@outlook.com', 'docencia2014', 'smtp.live.com', '587']
+    correoG = ['gmail', 'congresoshospitalcoromoto@gmail.com', 'pdvserviciosdesalud', 'smtp.gmail.com', '587']
+    
+    mensaje = 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.\
+            Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso'
+    adjunto = '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg'
+    asunto = 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto'
+
     for destino in l:
+        #anavr8486@gmail.com
+        #remitente, destino, asunto,  mensaje, adjunto, clave, server, puerto
+
         app.enviar_email(destino, 'Invitacion al II Congreso y III Jornadas Cientificas Integrales del Hospital Coromoto.  Si no puede ver la imagen haga click aqui: http://foxcarlos.no-ip.biz:8085/congreso', '/home/administrador/desarrollo/python/pyLoroWeb/congreso.jpg', 'congresoshospitalcoromoto@outlook.com', 'Invitacvion al II Congreso y III Jornadas Cientificas del Hospital Coromoto')
