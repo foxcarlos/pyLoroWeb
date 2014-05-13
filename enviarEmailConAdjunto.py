@@ -13,7 +13,7 @@ class correo:
 
     def leerArchivo(self):
         listaEmail = []
-        oshospitalcoromoto@outlook.com = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
+        f = '/home/administrador/desarrollo/python/pyLoroWeb/correos2'
         fi = open(f)
         leido = fi.read()
         lista = leido.split(',')
