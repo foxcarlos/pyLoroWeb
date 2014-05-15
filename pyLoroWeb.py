@@ -155,7 +155,7 @@ def buscarGrupos():
     coleccionListas = baseDatos.listas
     
     usuario = bottle.request.get_cookie("account")
-    if usuario != 'vacio':
+    if usuario:
         objetoUsuarioId = buscarUsuarioId(usuario)
         #Aqui se buscan los grupos para mostrarlos en el combobox
         gruposMostrar = [f['nombre_lista'] for f in coleccionListas.find({"usuario_id":objetoUsuarioId}).sort('nombre_lista')]
