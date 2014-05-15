@@ -400,7 +400,7 @@ def grupoGuardar():
 
     #Capturo desde el form html los campos 
     #idDevuelto = bottle.request.forms.get('id')
-    nombreDevuelto = bottle.request.forms.get('nombre')
+    nombreDevuelto = bottle.request.forms.get('nombres')
     descripcionDevuelto = bottle.request.forms.get('descripcion')
     
     #Busca en mongodb el objetoId del usuario que inicio sesion
