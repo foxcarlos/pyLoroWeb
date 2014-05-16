@@ -453,7 +453,7 @@ def registro():
         usuarioActivo = ''
         plan = ''
 
-    return bottle.template('registroEditarModificado', {'estructuraOrganizativa':nom_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
+    return bottle.template('registroEditarModificado2', {'estructuraOrganizativa':nom_padre_id, 'usuarioActivo':usuarioActivo, 'planp':plan})
 
 @bottle.post('/registro')
 def registroGuardar():
