@@ -203,7 +203,7 @@ def validaLogin(usuario, clave):
 @bottle.route('/congreso')
 def congreso():
     #return bottle.template('congreso.html')
-    web = "https://www.dropbox.com/s/ien3f3wc6hn78aq/congreso.jpg"
+    web = "http://congresoshospitalcoromoto.blogspot.com"
     bottle.redirect(web)
 
 @bottle.route('/static/<filename:path>') 
