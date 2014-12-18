@@ -7,6 +7,7 @@ import ConfigParser
 import bottle
 import sys
 import pymongo
+from bottle.ext.websocket import GeventWebSocketServer
 from bson.objectid import ObjectId
 from os.path import join, dirname
 from bottle import route, static_file, template
@@ -16,7 +17,7 @@ import re
 class enviarZMQ():
     def __init__(self):
         ruta_arch_conf = os.getcwdu()  # os.path.dirname(sys.argv[0])
-        
+
         # NOTA: Es necesario que exista fuera de la ruta actual un directorio llamado pyloro
         fi = '../pyloro/pyloro.cfg'
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
@@ -25,14 +26,14 @@ class enviarZMQ():
         self.zmqConectar()
 
     def zmqConectar(self):
-        ''' Busca en el archivo de configuracion pyloro.cfg todos los 
+        ''' Busca en el archivo de configuracion pyloro.cfg todos los
         demonios servidores ZMQ y los conecta'''
-        
+
         self.socket = ''
         context = zmq.Context()
         self.socket = context.socket(zmq.REQ)
         seccionDemonio = 'DEMONIOS'
-        
+
         if self.fc.has_section(seccionDemonio):
             for demonios in self.fc.items(seccionDemonio):
                 seccion, archivo = demonios
@@ -41,7 +42,7 @@ class enviarZMQ():
                     listaPar = []
                     for var, par in self.fc.items(seccionFinal):
                         listaPar.append(par)
-                    print(listaPar)               
+                    print(listaPar)
                     ip_telefono, \
                     puerto_telefono, \
                     puerto_adb_forward, \
@@ -66,7 +67,7 @@ class enviarZMQ():
             print(e)
 
         #Se recibe el mensaje de vuelta
-        msg_in = self.socket.recv()            
+        msg_in = self.socket.recv()
         noEnviado, nombreServidor = msg_in.split(',')
         if int(noEnviado):
             devuelve = True
@@ -79,18 +80,18 @@ class consultaM():
         ''' '''
         #server = pymongo.MongoClient('localhost', 27017)
         #baseDatos = server.pyloroweb
-    
+
     def abrirColeccion(self, tabla):
         con = pymongo.Connection("mongodb://localhost", safe=True)
         db = con.pyloroweb
         self.coleccionAbierta = eval('db.{0}'.format(tabla))
-        
+
     def consulta(self, camposMostrar='', condicion='', ordenarPor=''):
         '''Metodo para realizar consulta, parametros recibidos (3)
         camposMostrar (tipo Diccionario)
         condicion (tipo Diccionario)
         Campo a Ordenar (Tipo String) '''
-        
+
         #Para habilitar los campos a mostrar
         diccionarioSelect = {}
         #Se toma la tupla que contiene los campos
@@ -98,15 +99,15 @@ class consultaM():
         #Se coloca verdadero a los campos que se deean mostrar
         for f in sentenciaSelect:
             diccionarioSelect[f] = True
-            
+
         sentenciaWhere = {} if not condicion else condicion
         sentenciaOrderBy = '_id' if not ordenarPor else ordenarPor
-        
+
         c = self.coleccionAbierta
         documento = list(c.find(sentenciaWhere, diccionarioSelect).sort(sentenciaOrderBy))
         #x = documento  # [f for f in documento]
         return documento
-        
+
 app = enviarZMQ()
 
 def buscarContactosListas(objetoUsuarioIdPasado):
@@ -118,9 +119,9 @@ def buscarContactosListas(objetoUsuarioIdPasado):
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
-    
+
     objetoUsuarioId = objetoUsuarioIdPasado
-    
+
     #Aqui se buscan los contactos y las listas que pertecen al usuario que inico sesion para mostrarlos en los combobox
     #Tanto los contactos como las listas se deben mostrar solo los del usuario que inicio sesion
     nombresMostrar = [f['nombre'] for f in coleccionContactos.find({"usuario_id":objetoUsuarioId}).sort('nombre')]
@@ -134,7 +135,7 @@ def buscarContactos():
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.contactos
-    
+
     usuario = bottle.request.get_cookie("account")
     if usuario:
         objetoUsuarioId = buscarUsuarioId(usuario)
@@ -153,7 +154,7 @@ def buscarGrupos():
     server = pymongo.MongoClient('localhost', 27017)
     baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
-    
+
     usuario = bottle.request.get_cookie("account")
     if usuario:
         objetoUsuarioId = buscarUsuarioId(usuario)
@@ -173,7 +174,7 @@ def buscarUsuarioId(usuario):
     usuarioBuscar = usuario
     cliente = pymongo.MongoClient('localhost', 27017)
     baseDatos = cliente.pyloroweb
-    coleccionUsuarios = baseDatos.usuarios                    
+    coleccionUsuarios = baseDatos.usuarios
     buscarId = [f['_id'] for f in coleccionUsuarios.find({'usuario':usuarioBuscar})]
     objetoId = buscarId[0] if buscarId else ''
     return objetoId
@@ -191,7 +192,7 @@ def validaLogin(usuario, clave):
     cliente = pymongo.MongoClient('localhost', 27017)
     baseDatos = cliente.pyloroweb
     coleccionUsuarios = baseDatos.usuarios
-    
+
     buscar = coleccionUsuarios.find({'usuario':lcUsuario.lower(), 'clave':lcClave}).count()
     if buscar:
         bottle.response.set_cookie("account", lcUsuario)
@@ -206,8 +207,8 @@ def congreso():
     web = "http://congresoshospitalcoromoto.blogspot.com"
     bottle.redirect(web)
 
-@bottle.route('/static/<filename:path>') 
-def static(filename): 
+@bottle.route('/static/<filename:path>')
+def static(filename):
     return bottle.static_file(filename, root='static/')
 
 @bottle.route('/prueba')
@@ -253,7 +254,7 @@ def loginp():
     ''' Metodo para el inicio de Sesion en pyLoroWeb'''
     #global usuario
     #global clave
-   
+
     usuario = ''
     clave = ''
     buscar = False
@@ -262,7 +263,7 @@ def loginp():
     clave = bottle.request.forms.get('pass_form')
 
     buscar = validaLogin(usuario, clave)
-    
+
     if buscar:
         print('Se valido el usuaRIO AHORA VAMOS AL INDEX', usuario)
         #usuario = bottle.request.get_cookie("account")
@@ -299,7 +300,7 @@ def smsEnviarp():
     listas = bottle.request.forms.get('listas')
     numeros = bottle.request.forms.get('numeros')
     mensaje = bottle.request.forms.get('mensaje')
-    
+
     listasNumeros = componerContactosListas(contactos, listas) + numeros.split(',')
 
     usuario = bottle.request.get_cookie("account")
@@ -322,7 +323,7 @@ def smsEnviarp():
                     else:
                         cabecera = 'Lo Siento ...!'
                         msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-                        
+
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/smsenviar'})
 
 @bottle.route('/contactoNuevo')
@@ -339,15 +340,15 @@ def contactos():
 @bottle.post('/contactoNuevo')
 def contactoGuardar():
     '''Metodo que permite guardar un contacto desde el metodo post del form '''
-    
+
     usuario = bottle.request.get_cookie("account")
 
     server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb    
+    baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
     coleccionContactos = baseDatos.contactos
 
-    #Capturo desde el form html los campos 
+    #Capturo desde el form html los campos
     #idDevuelto = bottle.request.forms.get('id')
     nombreDevuelto = bottle.request.forms.get('nombres')
     apellidoDevuelto = bottle.request.forms.get('apellidos')
@@ -355,7 +356,7 @@ def contactoGuardar():
     emailDevuelto = bottle.request.forms.get('email')
     tuiterDevuelto = bottle.request.forms.get('tuiter')
     gruposDevuelto = bottle.request.forms.get('grupos').split(',')
-    
+
     #Busca en mongodb el objetoId del usuario que inicio sesion
     objetoUsuarioId = buscarUsuarioId(usuario)
 
@@ -366,7 +367,7 @@ def contactoGuardar():
     #Armo el documento o regisrtos que se insertara en la base de datos mongodb
     documento = {'usuario_id':objetoUsuarioId, 'nombre':nombreDevuelto, 'apellido':apellidoDevuelto,
             'telefonos':telefonoDevuelto, 'email':emailDevuelto, 'twitter':tuiterDevuelto, 'listas_id':devolverGruposID}
-    
+
     #Inserto el documento en mongodb
     try:
         coleccionContactos.insert(documento)
@@ -380,7 +381,7 @@ def contactoGuardar():
 
 @bottle.route('/grupoNuevo')
 def grupoNuevo():
-    
+
     usuario = bottle.request.get_cookie("account")
     if usuario:
         return bottle.template('grupos')
@@ -393,24 +394,24 @@ def grupoNuevo():
 @bottle.post('/grupoNuevo')
 def grupoGuardar():
     '''Metodo que permite guardar un grupo desde el metodo post del form '''
-    
+
     usuario = bottle.request.get_cookie("account")
 
     server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb    
+    baseDatos = server.pyloroweb
     coleccionListas = baseDatos.listas
 
-    #Capturo desde el form html los campos 
+    #Capturo desde el form html los campos
     #idDevuelto = bottle.request.forms.get('id')
     nombreDevuelto = bottle.request.forms.get('nombres')
     descripcionDevuelto = bottle.request.forms.get('descripcion')
-    
+
     #Busca en mongodb el objetoId del usuario que inicio sesion
     objetoUsuarioId = buscarUsuarioId(usuario)
 
     #Armo el documento o regisrtos que se insertara en la base de datos mongodb
     documento = {'usuario_id':objetoUsuarioId, 'nombre_lista':nombreDevuelto, 'descripcion':descripcionDevuelto}
-    
+
     #Inserto el documento en mongodb
     try:
         coleccionListas.insert(documento)
@@ -431,7 +432,7 @@ def registro():
     cliente = pymongo.MongoClient('localhost', 27017)
     baseDatos = cliente.pyloroweb
     coleccionUsuarios = baseDatos.usuarios
-    
+
     usuario = bottle.request.get_cookie("account")
 
     usuarioBuscar = coleccionUsuarios.find({'usuario':usuario})
@@ -484,7 +485,7 @@ def registroGuardar():
         usuario_padre_id = ''
 
     activo = True if usuario_padre_id else False  # bottle.request.forms.get('activo')
-    
+
     documento = {'usuario':usuario,
             'clave':clave,
             'nombres':nombres,
@@ -496,7 +497,7 @@ def registroGuardar():
             'plan':plan,
             'usuario_padre_id':usuario_padre_id,
             'activo':activo}
-    
+
     existe = coleccionUsuarios.find({'usuario':usuario.lower()}).count()
     if not existe:
         try:
@@ -524,14 +525,14 @@ def grid():
     #Busca en mongodb el objetoId del usuario que inicio sesion
     usuario = bottle.request.get_cookie("account")
     objetoUsuarioId = buscarUsuarioId(usuario)
-    
+
     appBuscar = consultaM()
     appBuscar.abrirColeccion('contactos')
 
     camposMostrar = ('_id', 'nombre', 'apellido')
     condicion = {'usuario_id':objetoUsuarioId}
     ordenadoPor = 'nombre'
-    
+
     #appBuscar realiza la consulta y devuelve una lista con diccionarios por cada registro
     #
     doc = appBuscar.consulta(camposMostrar, condicion, ordenadoPor)
@@ -542,9 +543,9 @@ def grid():
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
     hechas en l combobox del html'''
-    
+
     server = pymongo.MongoClient('localhost', 27017)
-    baseDatos = server.pyloroweb    
+    baseDatos = server.pyloroweb
     coleccionContactos = baseDatos.contactos
     coleccionListas = baseDatos.listas
 
@@ -564,19 +565,19 @@ def componerContactosListas(contactos, listas):
     devolverContactos = [f['telefonos'] for f in coleccionContactos.find({'nombre':{'$in':recvContactos}, "usuario_id":objetoUsuarioId})]
 
 
-    ''' Busca en la base de datos "listas" los objetosId() de las listas 
+    ''' Busca en la base de datos "listas" los objetosId() de las listas
     que fueron selecioandas en el comboboxdel html'''
     devolverListasID = [f['_id'] for f in coleccionListas.find({'nombre_lista':{'$in':recvListas}, "usuario_id":objetoUsuarioId})]
     print('listas id', devolverListasID)
-    
-    '''Buscos en la tabla "contactos" los objetosId() de las listas devueltas anteriormente y tomo solo los 
+
+    '''Buscos en la tabla "contactos" los objetosId() de las listas devueltas anteriormente y tomo solo los
     contactos que pertencen a esas listas'''
     devolverListas = [f['telefonos'] for f in coleccionContactos.find({'listas_id':{'$in':devolverListasID}, "usuario_id":objetoUsuarioId})]
     print('telefonos', devolverListas)
 
     numeros = devolverContactos + devolverListas
     print('numeros', numeros)
-    return numeros 
+    return numeros
 
 def validaSms(num, msg):
     devuelve = True
@@ -591,4 +592,4 @@ def validaSms(num, msg):
     return devuelve
 
 bottle.debug(True)
-bottle.run(host='0.0.0.0', port=8085)
+bottle.run(host='0.0.0.0', port=80, server=GeventWebSocketServer, reloader = True)
