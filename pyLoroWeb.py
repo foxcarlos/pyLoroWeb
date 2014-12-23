@@ -23,9 +23,9 @@ class enviarZMQ():
         archivo_configuracion = os.path.join(ruta_arch_conf, fi)
         self.fc = ConfigParser.ConfigParser()
         self.fc.read(archivo_configuracion)
-        self.zmqConectar()
+        #self.zmqConectar()
 
-    def zmqConectar(self):
+    def zmqCConectar(self):
         ''' Busca en el archivo de configuracion pyloro.cfg todos los
         demonios servidores ZMQ y los conecta'''
 
@@ -33,17 +33,27 @@ class enviarZMQ():
         context = zmq.Context()
         self.socket = context.socket(zmq.REQ)
         seccionDemonio = 'DEMONIOS'
-
+	print('Me Llamo')
         if self.fc.has_section(seccionDemonio):
-            for demonios in self.fc.items(seccionDemonio):
+            print(self.fc.items(seccionDemonio))
+            veces = 1
+	    for demonios in self.fc.items(seccionDemonio):
+		#print('demonios', demonios)
+		print(veces)
+		veces = veces + 1
                 seccion, archivo = demonios
                 seccionFinal = seccion.upper()
                 if self.fc.has_section(seccionFinal):
-                    listaPar = []
-                    for var, par in self.fc.items(seccionFinal):
-                        listaPar.append(par)
-                    print(listaPar)
-                    ip_telefono, \
+                    #listaPar = []
+		    #print('Seccion Final', seccionFinal)
+                    #for var, par in self.fc.items(seccionFinal):
+                    #    listaPar.append(par)
+                    #print('ListaPar', listaPar)
+                    
+		    listaPar = [parametros[1] for parametros in self.fc.items(seccionFinal)]
+		    print(listaPar)
+
+		    ip_telefono, \
                     puerto_telefono, \
                     puerto_adb_forward, \
                     ip_demonio_zmq, \
@@ -52,7 +62,7 @@ class enviarZMQ():
                     servSock = 'tcp://{0}:{1}'.format(ip_demonio_zmq, puerto_demonio_zmq)
                     try:
                         self.socket.connect(servSock)
-                        print('Conexion Satisfactoria con el servidor {0}'.format(servSock))
+                        #print('Conexion Satisfactoria con el servidor {0}'.format(servSock))
                     except:
                         print('Ocurrio un Error al momento de conectar al Socket Server {0}'.format(servSock))
 
@@ -109,6 +119,7 @@ class consultaM():
         return documento
 
 app = enviarZMQ()
+app.zmqCConectar()
 
 def buscarContactosListas(objetoUsuarioIdPasado):
     '''Este metodo busca dentro de la base de datos mongo
@@ -591,5 +602,5 @@ def validaSms(num, msg):
         devuelve = False
     return devuelve
 
-bottle.debug(True)
+#bottle.debug(True)
 bottle.run(host='0.0.0.0', port=80, server=GeventWebSocketServer, reloader = True)
