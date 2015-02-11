@@ -49,7 +49,7 @@ class enviarZMQ():
                     #for var, par in self.fc.items(seccionFinal):
                     #    listaPar.append(par)
                     #print('ListaPar', listaPar)
-                    
+
 		    listaPar = [parametros[1] for parametros in self.fc.items(seccionFinal)]
 		    print(listaPar)
 
@@ -550,6 +550,14 @@ def grid():
     listaFinal = [f.values() for f in doc]
 
     return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
+
+@route('/my_ip')
+def show_ip():
+    ip = bottle.request.environ.get('REMOTE_ADDR')
+    # or ip = request.get('REMOTE_ADDR')
+    # or ip = request['REMOTE_ADDR']
+    print(ip)
+    return template("Your IP is: {{ip}}", ip=ip)
 
 def componerContactosListas(contactos, listas):
     '''Obtener solo los numeros de telefonos de las selecciones
