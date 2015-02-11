@@ -552,9 +552,12 @@ def grid():
     return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
 
 @bottle.post('/mensaje')
-def add_stock():
+def webService():
     postdata = bottle.request.body.read()
     print(postdata)
+    numero, mensaje = postdata.split(',')
+    #Probar desde el Terminal en Linux
+    #curl -x 10.121.612:8080 POST --data '04263002966, Hola' http://foxcarlos.no-ip.biz/mensaje
 
 @route('/my_ip')
 def show_ip():
