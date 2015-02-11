@@ -551,6 +551,11 @@ def grid():
 
     return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
 
+@bottle.post('/mensaje')
+def add_stock():
+    postdata = bottle.request.body.read()
+    print(postdata)
+
 @route('/my_ip')
 def show_ip():
     ip = bottle.request.environ.get('REMOTE_ADDR')
