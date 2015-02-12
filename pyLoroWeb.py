@@ -552,6 +552,7 @@ def grid():
 
     return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
 
+"""
 @bottle.route('/mensaje')
 def mensaje():
     return '''
@@ -561,6 +562,8 @@ def mensaje():
             <input value="Enviar Sms" type="submit" />
         </form>
     '''
+"""
+
 @bottle.post('/mensaje')
 def webService():
     #bottle.response.content_type = 'application/json'
