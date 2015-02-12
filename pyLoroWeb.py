@@ -586,7 +586,7 @@ def webService():
 
     #Probar desde el Terminal en Linux
     #curl -x 10.121.612:8080 POST --data '04263002966, Hola' http://foxcarlos.no-ip.biz/mensaje
-    return template({{0}}, msg)
+    return template('{{0}}', msg=msg)
 
 
 @route('/my_ip')
