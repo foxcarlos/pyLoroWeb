@@ -568,7 +568,7 @@ def webService():
 
     l = []
     #print([for k in bottle.request.forms])
-    for f in bottle.request.POST:
+    for f in sorted(bottle.request.POST, reverse=True):
         print(bottle.request.POST.get(f))
         #print(f)
         l.append(bottle.request.forms.get(f))
