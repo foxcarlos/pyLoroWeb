@@ -1,5 +1,6 @@
 __author__ = 'cgarcia'
 
+import json
 import zmq
 import time
 import os
@@ -551,11 +552,24 @@ def grid():
 
     return bottle.template('grid1', {'grid':listaFinal, 'cabecera':camposMostrar})
 
+@bottle.route('/mensaje')
+def mensaje():
+    return '''
+        <form action="/mensaje" method="post" enctype='application/json'>
+            Username: <input name="username" type="text" />
+            Password: <input name="password" type="password" />
+            <input value="Login" type="submit" />
+        </form>
+    '''
 @bottle.post('/mensaje')
 def webService():
-    postdata = bottle.request.body.read()
+    bottle.response.content_type = 'application/json'
+    postdata = bottle.request.body.readline()
+    print(bottle.response.json())
     print(postdata)
-    numero, mensaje = postdata.split(',')
+    #print(bottle.request.headers.keys())
+    #print(entity)
+    #numero, mensaje = postdata.split(',')
     #Probar desde el Terminal en Linux
     #curl -x 10.121.612:8080 POST --data '04263002966, Hola' http://foxcarlos.no-ip.biz/mensaje
 
