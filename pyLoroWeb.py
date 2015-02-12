@@ -567,10 +567,12 @@ def webService():
     postdata = bottle.request.body.readline()
 
     l = []
-    for f in bottle.request.forms:
-        print(bottle.request.forms.get(f))
+    #print([for k in bottle.request.forms])
+    for f in bottle.request.POST:
+        print(bottle.request.POST.get(f))
+        #print(f)
         l.append(bottle.request.forms.get(f))
-    print(l)
+    #print(l)
     numero, mensaje = l
     if validaSms(numero, mensaje.strip()):
         devuelve = app.enviar(numero, mensaje)
