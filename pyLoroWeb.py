@@ -555,17 +555,32 @@ def grid():
 @bottle.route('/mensaje')
 def mensaje():
     return '''
-        <form action="/mensaje" method="post" enctype='application/json'>
-            Username: <input name="username" type="text" />
-            Password: <input name="password" type="password" />
-            <input value="Login" type="submit" />
+        <form action="/mensaje" method="post"'>
+            Numero: <input name="numero" type="text" />
+            Mensaje: <input name="mensaje" type="text" />
+            <input value="Enviar Sms" type="submit" />
         </form>
     '''
 @bottle.post('/mensaje')
 def webService():
-    bottle.response.content_type = 'application/json'
+    #bottle.response.content_type = 'application/json'
     postdata = bottle.request.body.readline()
-    print(bottle.response.json())
+
+    l = []
+    for f in bottle.request.forms:
+        print(bottle.request.forms.get(f))
+        l.append(bottle.request.forms.get(f))
+    print(l)
+    numero, mensaje = l
+    if validaSms(numero, mensaje.strip()):
+        devuelve = app.enviar(numero, mensaje)
+        if devuelve:
+            cabecera = 'Felicidades ...'
+            msg = 'Mensaje enviado con exito'.format(numero)
+        else:
+            cabecera = 'Lo Siento ...!'
+            msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+
     print(postdata)
     #print(bottle.request.headers.keys())
     #print(entity)
