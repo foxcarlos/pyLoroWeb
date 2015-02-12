@@ -566,6 +566,18 @@ def mensaje():
 
 @bottle.post('/mensaje')
 def webService():
+    '''
+    Para el caso de que sea via Desktop
+    import urllib2
+    import urllib
+
+    url = 'http://foxcarlos.no-ip.biz/mensaje'
+    data = urllib.urlencode({'numero' : '04263002966', 'mensaje'  : 'Hola'})
+    req = urllib2.Request(url, data)
+    response = urllib2.urlopen(req)
+    response.read()
+    '''
+
     #postdata = bottle.request.body.readline()
 
     l = []
