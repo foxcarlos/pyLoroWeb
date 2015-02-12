@@ -566,17 +566,15 @@ def mensaje():
 
 @bottle.post('/mensaje')
 def webService():
-    #bottle.response.content_type = 'application/json'
-    postdata = bottle.request.body.readline()
+    #postdata = bottle.request.body.readline()
 
     l = []
-    #print([for k in bottle.request.forms])
     for f in sorted(bottle.request.POST, reverse=True):
         print(bottle.request.POST.get(f))
-        #print(f)
         l.append(bottle.request.forms.get(f))
-    #print(l)
+
     numero, mensaje = l
+    print(l)
     if validaSms(numero, mensaje.strip()):
         devuelve = app.enviar(numero, mensaje)
         if devuelve:
@@ -586,12 +584,10 @@ def webService():
             cabecera = 'Lo Siento ...!'
             msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
 
-    print(postdata)
-    #print(bottle.request.headers.keys())
-    #print(entity)
-    #numero, mensaje = postdata.split(',')
     #Probar desde el Terminal en Linux
     #curl -x 10.121.612:8080 POST --data '04263002966, Hola' http://foxcarlos.no-ip.biz/mensaje
+    return template({{0}}, msg)
+
 
 @route('/my_ip')
 def show_ip():
