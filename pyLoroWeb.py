@@ -576,6 +576,9 @@ def webService():
     req = urllib2.Request(url, data)
     response = urllib2.urlopen(req)
     response.read()
+
+    Probar desde el Terminal en Linux
+    curl -F "numero=04263002966" -F "mensaje=Hola" http://foxcarlos.no-ip.biz/mensaje
     '''
 
     #postdata = bottle.request.body.readline()
@@ -595,9 +598,6 @@ def webService():
         else:
             cabecera = 'Lo Siento ...!'
             msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-
-    #Probar desde el Terminal en Linux
-    #curl -x 10.121.612:8080 POST --data '04263002966, Hola' http://foxcarlos.no-ip.biz/mensaje
     return template('{{msg}}', msg=msg)
 
 
