@@ -594,10 +594,12 @@ def webService():
         devuelve = app.enviar(numero, mensaje)
         if devuelve:
             cabecera = 'Felicidades ...'
-            msg = 'Mensaje enviado con exito'.format(numero)
+            #msg = 'Mensaje enviado con exito'.format(numero)
+            msg = 1
         else:
             cabecera = 'Lo Siento ...!'
-            msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+            #msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
+            msg = 0
     return template('{{msg}}', msg=msg)
 
 
