@@ -588,9 +588,10 @@ def webService():
         print(bottle.request.POST.get(f))
         l.append(bottle.request.forms.get(f))
 
+    msg = 0
     numero, mensaje = l
     print(l)
-    if validaSms(numero, mensaje.strip()):
+    if validaSms(numero.strip(), mensaje.strip()):
         devuelve = app.enviar(numero, mensaje)
         if devuelve:
             cabecera = 'Felicidades ...'
