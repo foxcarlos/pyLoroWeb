@@ -38,23 +38,23 @@ class enviarZMQ():
         if self.fc.has_section(seccionDemonio):
             print(self.fc.items(seccionDemonio))
             veces = 1
-	    for demonios in self.fc.items(seccionDemonio):
-		#print('demonios', demonios)
-		print(veces)
-		veces = veces + 1
+            for demonios in self.fc.items(seccionDemonio):
+                #print('demonios', demonios)
+                print(veces)
+                veces = veces + 1
                 seccion, archivo = demonios
                 seccionFinal = seccion.upper()
                 if self.fc.has_section(seccionFinal):
                     #listaPar = []
-		    #print('Seccion Final', seccionFinal)
+                    #print('Seccion Final', seccionFinal)
                     #for var, par in self.fc.items(seccionFinal):
                     #    listaPar.append(par)
                     #print('ListaPar', listaPar)
 
-		    listaPar = [parametros[1] for parametros in self.fc.items(seccionFinal)]
-		    print(listaPar)
+                    listaPar = [parametros[1] for parametros in self.fc.items(seccionFinal)]
+                    print(listaPar)
 
-		    ip_telefono, \
+                    ip_telefono, \
                     puerto_telefono, \
                     puerto_adb_forward, \
                     ip_demonio_zmq, \
