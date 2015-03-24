@@ -593,6 +593,8 @@ def webService():
     print(l)
     if validaSms(numero.strip(), mensaje.strip()):
         devuelve = app.enviar(numero, mensaje)
+        print(devuelve)
+
         if devuelve:
             cabecera = 'Felicidades ...'
             #msg = 'Mensaje enviado con exito'.format(numero)
@@ -665,4 +667,4 @@ def validaSms(num, msg):
 
 
 #bottle.debug(True)
-bottle.run(host='0.0.0.0', port=80, server=GeventWebSocketServer, reloader = True)
+bottle.run(host='10.121.6.12', port=8085, server=GeventWebSocketServer, reloader = True)
