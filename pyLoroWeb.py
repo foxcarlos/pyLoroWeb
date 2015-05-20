@@ -657,7 +657,6 @@ def componerContactosListas(contactos, listas):
 
 def validaSms(num, msg):
     devuelve = True
-    print(num)
     if not num:
         devuelve = False
     elif not msg:
@@ -666,6 +665,12 @@ def validaSms(num, msg):
         devuelve = False
     elif num[:4] not in ['0426', '0416', '0414', '0424', '0412']:
         devuelve = False
+
+    #Esta Opcion es temporal para poder enviar yo Mensajes Internacionales
+    usuario = bottle.request.get_cookie("account")
+    if usuario == 'foxcarlos':
+        devuelve = True
+
     return devuelve
 
 
