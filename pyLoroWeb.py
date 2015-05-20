@@ -335,7 +335,9 @@ def smsEnviarp():
                     else:
                         cabecera = 'Lo Siento ...!'
                         msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
-
+                else:
+                    cabecera = 'Lo Siento ...!'
+                    msg = 'No se pudo enviar el SMS al numero:{0}'.format(numero)
     return bottle.template('mensaje_exito', {'cabecera':cabecera, 'mensaje':msg, 'pagina':'/smsenviar'})
 
 @bottle.route('/contactoNuevo')
@@ -655,6 +657,7 @@ def componerContactosListas(contactos, listas):
 
 def validaSms(num, msg):
     devuelve = True
+    print(num)
     if not num:
         devuelve = False
     elif not msg:
