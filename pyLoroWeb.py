@@ -225,7 +225,7 @@ def static(filename):
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('grid1')
+    return bottle.template('cuerpo')
 
 @bottle.route('/llamados')
 def llamados():
@@ -675,4 +675,4 @@ def validaSms(num, msg):
 
 
 #bottle.debug(True)
-bottle.run(host='10.121.6.12', port=80, server=GeventWebSocketServer, reloader = True)
+bottle.run(host='0.0.0.0', port=8086, server=GeventWebSocketServer, reloader = True)

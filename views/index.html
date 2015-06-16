@@ -5,7 +5,7 @@
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>pyLoroWeb SMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link href="/static/bootstrap-3.1.1-dist/css/bootstrap.icon-large.min.css" rel="stylesheet">
     <link href="/static/font-awesome-4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,15 @@
 			.panel-body .table {margin-bottom: 0px; }
 	</style>
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-   <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            $("#cuerpo").load('/prueba');
+        }
+        
+    </script>
+
 </head>
 <body>
 <div class="container">
@@ -58,7 +66,7 @@
                                 </tr>
                            <tr>
                                <td>
-                                   <span class="fa fa-edit"></span><a href="#"> Modificar Usuario</a>
+                                   <span class="fa fa-edit"></span><a href="/prueba2"> Modificar Usuario</a>
                                </td>
                            </tr>
                            <tr>
@@ -148,13 +156,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-md-9">
-            <div class="well">
-                <h1>
-                    PyLoroWeb SMS</h1>
-                Sistema de envio de Mensajes de Texto
-            </div>
+        <!--Aqui se inserta el cuerpo -->
+        <div id="cuerpo">
         </div>
+        <!--Fin de Cuerpo del m ensaje-->
     </div>
 </div>
 <script type="text/javascript">
