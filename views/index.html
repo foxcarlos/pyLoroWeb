@@ -1,168 +1,256 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>pyLoroWeb SMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="/static/bootstrap-3.1.1-dist/css/bootstrap.icon-large.min.css" rel="stylesheet">
-    <link href="/static/font-awesome-4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
-    <style type="text/css">
-        body{margin-top:50px;}
-			.glyphicon { margin-right:10px; }
-			.panel-body { padding:0px; }
-			.panel-body table tr td { padding-left: 15px }
-			.panel-body .table {margin-bottom: 0px; }
-	</style>
-	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
+<html>
+  <head>
+    <title>Pyloroweb SMS</title>
+    <meta name="viewport" content="width=device-width">
 
-    <script type="text/javascript">
+
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+             $('#menuPrincipal').load('/cargarMenuPrincipal');
+             document.getElementById('vinculoEnviarSMS').href="/smsenviar";
+              /** work when all HTML loaded except images and DOM is ready **/
+                // your code
+        })
+
         window.onload = function(){
-            $("#cuerpo").load('/prueba');
-        }
-        
-    </script>
+            alert('Hola')
+            document.getElementById('aprendeMas').href="/smsenviar";
 
-</head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3 col-md-3">
-            <div class="panel-group" id="accordion">
-<!--  -->
-		  			<div class="panel panel-default">
-            		<div class="panel-heading">
-            			<h4 class="panel-title">
-               			<a data-toggle="collapse" data-parent="#accordion"><span class="glyphicon glyphicon-home">
-                  		</span><a href="/">Inicio</a></a>
-               		</h4>
-            		</div>
-            	</div>           
-<!--  -->
-		  			<div class="panel panel-default">
-            		<div class="panel-heading">
-            			<h4 class="panel-title">
-               			<a data-toggle="collapse" data-parent="#accordion" href="#login"><span class="glyphicon glyphicon-user">
-                  		</span>Login</a> <span class="label label-warning">({{get('usuario', '')}})</span>
-               		</h4>
-            		</div>
-            
-            		<div id="login" class="panel-collapse collapse"> <!-- in -->
-            			<div class="panel-body">
-            				<table class="table">
-            					<tr>
-               					<td>
-                  					<span class="glyphicon glyphicon-log-in"></span><a href="/login">Iniciar Sesion</a>
-                  				</td>
-               				</tr>
-                           <tr>
-                               <td>
-                                   <span class="glyphicon glyphicon-plus"></span><a href="/registro">Crear Usuario Nuevo</a>
-                               </td>
-                                </tr>
-                           <tr>
-                               <td>
-                                   <span class="fa fa-edit"></span><a href="/prueba2"> Modificar Usuario</a>
-                               </td>
-                           </tr>
-                           <tr>
-                               <td>
-                                   <span class="glyphicon glyphicon-trash text-danger"></span><a href="#" class="text-danger">Eliminar Usuario</a>
-                               </td>
-                           </tr>
-                           <tr>
-                               <td>
-                                   <span class="glyphicon glyphicon-eye-open"></span><a href="#">Cambiar Clave</a>
-                               </td>
-                           </tr>
-									<tr>
-               					<td>
-                  					<span class="glyphicon glyphicon-off"></span><a href="/salir">Cerrar Sesion</a>
-                  				</td>
-               				</tr>
-<!--                                 <tr>
-                                    <td>
-                                        <a href="#">Notificaciones</a> <span class="label label-info">5</span>
-                                    </td>
-                                </tr>
- -->
-               				               				
-            				</table>
-            			</div>
-            		</div>
-        			</div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#sms"><span class="glyphicon glyphicon-comment">
-                            </span>SMS</a>
-                        </h4>
-                    </div>
-                    <div id="sms" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-envelope"></span><a href="/smsenviar">Enviar SMS</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-calendar"></span><a href="#">Planificar SMS</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="glyphicon glyphicon-inbox"></span><a href="#prueba">Borradores</a>
-                                        <span class="badge">42</span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#libreta"><span class="glyphicon glyphicon-book">
-                            </span>Libreta</a>
-                        </h4>
-                    </div>
-                    <div id="libreta" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                       <span class="glyphicon glyphicon-phone"></span><a href="/contactoNuevo">Contactos</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="fa fa-group"></span><a href="/grupoNuevo"> Grupos</a>
-                                    </td>
-                                </tr>
-<!--                                 <tr>
-                                    <td>
-                                        <a href="#">Otras 2</a><span class="label label-success">$ 320</span>
-                                    </td>
-                                </tr> -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            //Le asigno una funcion al evento submit del formulario
+            //document.getElementById("buscarCarnet").onsubmit = submitDelForm;
+            //alert('onload')
+
+            //Le asigno una funcion al evento click del boton
+            //document.getElementById("formImprimirDelante").action="/delante";
+            //document.getElementById("formImprimirDelante").method="POST";
+            //document.getElementById("BotonDelante").type="submit";
+            //document.getElementById("BotonDelante").onsubmit = clicBotonDelante;
+
+            //Le asigno una funcion al evento click del boton
+            //document.getElementById("BotonDetras").onclick = clicBotonDetras;
+
+            //Le asigno una funcion la image donde va la foto
+            //document.getElementById("foto").onclick = clicEnFoto;
+
+            //Inicializar los campos segun lo que se le pase desde python
+            //actualizarCampos();
+
+            //Evento que se ejecuta cuando selecciono un archivo de la foto
+            //document.getElementById("archivoSeleccionado").onchange = clicEnSeleccionArchivo;
+	    }
+
+        function submitDelForm(){
+            /*Este Metodo permite validar
+            que un usuario no le de
+            clic en el boton buscar sin
+            tener ningun parametro de busqueda */
+
+            var nficha = document.getElementById('ficha').value;
+            var ncedula = document.getElementById('cedula').value;
+
+            if (nficha.length == 0 && ncedula == 0){
+                alert('Ficha o Cedula debe contener datos');
+                return false;
+            }
+            else{
+                return true;
+            }
+         }
+
+        function clicBotonModalCerrar(){
+            //alert('Hola');
+        }
+
+        function clicEnSeleccionArchivo(){
+            var rutaImg = document.getElementById("archivoSeleccionado").value;
+            var fic = rutaImg.split('\\');
+            nombreArchivo = fic[fic.length-1];
+        }
+
+        function clicEnFoto(){
+            $("#editarFoto").modal('show');
+        }
+
+        function actualizarCampos(){
+            document.getElementById("foto").src="{{get('foto', '/static/file/img/placeholder-100x100.gif')}}"
+            document.getElementById('ficha').value="{{get('ficha', '')}}"
+            document.getElementById('ficha2').value="{{get('ficha', '')}}"
+            document.getElementById('cedula').value="{{get('cedula', '')}}"
+            document.getElementById('cedula2').value="{{get('cedula', '')}}"
+            document.getElementById('nombre2').value="{{get('nombre', '')}}"
+            document.getElementById('apellido').value="{{get('apellido', '')}}"
+            document.getElementById('cargo').value="{{get('cargo', '')}}"
+            document.getElementById('departamento').value="{{get('departamento', '')}}"
+        }
+
+        function clicBotonDelante(){
+            var nficha = document.getElementById('ficha2').value;
+                if (nficha.length == 0 || nficha == '00000'){
+                    alert('Ficha y Cedula debe contener datos')
+                    var enlace3 = document.getElementById('BotonDelante').href='/empleados'
+                }
+                else{
+                var enlaceNuevo = "/delante/"+nficha
+
+                    //Abre el enlace en una nueva pagina
+                var enlace2 = document.getElementById('BotonDelante').target="_blank"
+
+                //Cambia el Enlace a la nueva ficha
+                var enlace3 = document.getElementById('BotonDelante').href=enlaceNuevo
+            }
+        }
+
+        function clicBotonDetras(){
+            var nficha = document.getElementById('ficha2').value;
+                if (nficha.length == 0 || nficha == '00000'){
+                    alert('Ficha y Cedula debe contener datos')
+                    var enlace3 = document.getElementById('BotonDetras').href='/empleados'
+                }
+                else{
+                var enlaceNuevo = "/detras/"+nficha
+
+                    //Abre el enlace en una nueva pagina
+                var enlace2 = document.getElementById('BotonDetras').target="_blank"
+
+                //Cambia el Enlace a la nueva ficha
+                var enlace3 = document.getElementById('BotonDetras').href=enlaceNuevo
+            }
+        }
+	</script>
+
+	<!-- Cambiarle el Color a la cabecera del Panel a ROJO -->
+	<style type="text/css">
+		.panel-default > .panel-heading {
+		color: #FFFFFF;
+  		background-color: #AF1515;
+  		border-color: #AF1515;
+		}
+
+		.modal-content > .modal-header {
+		color: #FFFFFF;
+  		background-color: #AF1515;
+  		border-color: #AF1515;
+		}
+	</style>
+
+  </head>
+
+  <body>
+<!-- Comienza El Marco del Menu-->
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">pyLoroWeb SMS</a>
+        </div>
+        <!-- Comienza La Barra de navegacion-->
+        <div class="navbar-collapse collapse">
+          <!-- Aqui Comienza el Menu-->
+          <div id="menuPrincipal">
+            <!--Este menu se carga desde javascript -->
+          </div>
+          <!-- Aqui Termina el Menu-->
+
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
             </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Iniciar Sesion</button>
+          </form>
         </div>
-        <!--Aqui se inserta el cuerpo -->
-        <div id="cuerpo">
-        </div>
-        <!--Fin de Cuerpo del m ensaje-->
+        <!-- Aqui Termina la Barra de Navegacion como tal-->
+        <!--/.navbar-collapse -->
+      </div>
     </div>
-</div>
-<script type="text/javascript">
-</script>
-</body>
+    <!-- Termina el Marco del Menu-->
+
+    <!-- Comienza carrusel-->
+    <div id="miCarrusel" class="carousel slide" data-ride="carousel" data-interval="3000">
+      <!-- indicadores de elementos -->
+      <ol class="carousel-indicators">
+        <li data-target="#miCarrusel" data-slide-to="0"></li>
+        <li data-target="#miCarrusel" data-slide-to="1" class="active"></li>
+        <li data-target="#miCarrusel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <!-- Carrusel elementos (items) -->
+        <div class="item">
+            <!--<img src="http://lorempixel.com/800/600/animals" alt>-->
+          <div class="carousel-caption">
+            <h4>Primera etiqueta de miniatura de imagen (thumbnail)</h4>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          </div>
+        </div>
+        <div class="item">
+            <!--<img src="http://lorempixel.com/1200/780/sports" alt>-->
+          <div class="carousel-caption">
+            <h4>Segunda etiqueta de miniatura de imagen (thumbnail)</h4>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          </div>
+        </div>
+        <div class="item active">
+            <!--<img src="http://lorempixel.com/1200/780/technics" alt>-->
+          <div class="carousel-caption">
+            <h4>Tercera etiqueta de miniatura de imagen (thumbnail)</h4>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          </div>
+        </div>
+      </div>
+      <!-- cierre carousel-inner-->
+      <!-- Carrusel navegación -->
+      <a class="left carousel-control" href="#miCarrusel" role="button" data-slide="prev">      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>      <span class="sr-only">Anterior</span>    </a><a class="right carousel-control" href="#miCarrusel" role="button" data-slide="next">      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>      <span class="sr-only">Siguiente</span>    </a>
+    </div>
+    <!-- cierre miCarrusel-->
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>PyLoro SMS</h1>
+        <p>PyLoro SMS es una herramienta Web que te permite gestionar de manera facil el envio de Mensjes de Texto SMS a moviles en Venezuela, ahora puedes gestionar tus contactos, grupos o enviar directamente un SMS con tan solo escribir el numero de telefono.
+        Promociona tu negocio, eventos, fiestas, reunión, cumpleaños y otras actividades de manera rápida y efectiva.</p>
+        <p><a id="aprendeMas" href="#" class="btn btn-primary btn-lg">Aprende mas &raquo;</a></p>
+      </div>
+    </div>
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-3">
+          <h2>Envias SMS</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
+        </div>
+        <div class="col-lg-3">
+          <h2>Contactos</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
+        </div>
+        <div class="col-lg-3">
+          <h2>Grupos</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
+        </div>
+        <div class="col-lg-3">
+          <h2>Desarrolladores</h2>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
+        </div>
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+    </div>
+    <!-- /container -->
+  </body>
+
 </html>

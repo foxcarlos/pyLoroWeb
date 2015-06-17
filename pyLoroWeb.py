@@ -223,9 +223,9 @@ def congreso():
 def static(filename):
     return bottle.static_file(filename, root='static/')
 
-@bottle.route('/prueba')
+@bottle.route('/cargarMenuPrincipal')
 def prueba():
-    return bottle.template('cuerpo')
+    return bottle.template('menuPrincipal.html')
 
 @bottle.route('/llamados')
 def llamados():
