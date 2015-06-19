@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title> Prueba </title>
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('button').click(function(){
+                $('ol').append('<li><a href="#">Dynamic list item</a></li>');
+                });
+
+                $('li').live('click', function(){
+                    alert( $(this).text() );
+                    $(this).text('hola');
+                return false;
+                });
+            });
+        </script>
+
+	</head>
+	<body>
+		<ol>
+		  <li>
+		    <a href="#">un item de la lista</a>
+		  </li>
+		</ol>
+		<button>añadir otro item a la lista</button>
+	</body>
+</html>

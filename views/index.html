@@ -12,15 +12,21 @@
 
 	<script type="text/javascript">
         $(document).ready(function() {
-             $('#menuPrincipal').load('/cargarMenuPrincipal');
-             document.getElementById('vinculoEnviarSMS').href="/smsenviar";
-              /** work when all HTML loaded except images and DOM is ready **/
-                // your code
-        })
+            //$('#menuPrincipal').load('/cargarMenuPrincipal #mostrar');
+            $('ol').append('<li><a href="#">Dynamic list item</a></li>');
+             //$('#cuerpo').load('/cuerpoPrincipal #mostrar');
+             //document.getElementById('vinculoEnviarSMS').href="/smsenviar";
+             //var referencia = $('#mostrar .vinculoEnviarSMS').href;
+             //alert(referencia)
+            }
 
         window.onload = function(){
-            alert('Hola')
-            document.getElementById('aprendeMas').href="/smsenviar";
+            alert('window.onload')
+            $('vinculoEnviarSMS').live('click', function(){
+                alert( 'entro' );
+                return false;
+            });
+            //document.getElementById("vinculoEnviarSMS").onclick = clicEnviarSMS;
 
             //Le asigno una funcion al evento submit del formulario
             //document.getElementById("buscarCarnet").onsubmit = submitDelForm;
@@ -44,6 +50,11 @@
             //Evento que se ejecuta cuando selecciono un archivo de la foto
             //document.getElementById("archivoSeleccionado").onchange = clicEnSeleccionArchivo;
 	    }
+
+        function clicEnviarSMS(){
+            alert('click en Enviar SMS');
+            //var enlace3 = document.getElementById('BotonDelante').href='/empleados';
+        }
 
         function submitDelForm(){
             /*Este Metodo permite validar
@@ -89,22 +100,6 @@
             document.getElementById('departamento').value="{{get('departamento', '')}}"
         }
 
-        function clicBotonDelante(){
-            var nficha = document.getElementById('ficha2').value;
-                if (nficha.length == 0 || nficha == '00000'){
-                    alert('Ficha y Cedula debe contener datos')
-                    var enlace3 = document.getElementById('BotonDelante').href='/empleados'
-                }
-                else{
-                var enlaceNuevo = "/delante/"+nficha
-
-                    //Abre el enlace en una nueva pagina
-                var enlace2 = document.getElementById('BotonDelante').target="_blank"
-
-                //Cambia el Enlace a la nueva ficha
-                var enlace3 = document.getElementById('BotonDelante').href=enlaceNuevo
-            }
-        }
 
         function clicBotonDetras(){
             var nficha = document.getElementById('ficha2').value;
@@ -213,44 +208,13 @@
     </div>
     <!-- cierre miCarrusel-->
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>PyLoro SMS</h1>
-        <p>PyLoro SMS es una herramienta Web que te permite gestionar de manera facil el envio de Mensjes de Texto SMS a moviles en Venezuela, ahora puedes gestionar tus contactos, grupos o enviar directamente un SMS con tan solo escribir el numero de telefono.
-        Promociona tu negocio, eventos, fiestas, reunión, cumpleaños y otras actividades de manera rápida y efectiva.</p>
-        <p><a id="aprendeMas" href="#" class="btn btn-primary btn-lg">Aprende mas &raquo;</a></p>
-      </div>
+    <div id="cuerpo">
+        <ol>
+        <li>
+            <a href="#">un item de la lista</a>
+        </li>
+        </ol>
     </div>
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-lg-3">
-          <h2>Envias SMS</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
-        </div>
-        <div class="col-lg-3">
-          <h2>Contactos</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
-        </div>
-        <div class="col-lg-3">
-          <h2>Grupos</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
-        </div>
-        <div class="col-lg-3">
-          <h2>Desarrolladores</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
-          <p><a class="btn btn-default" href="#">Ver detalle &raquo;</a></p>
-        </div>
-      </div>
-      <hr>
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
-    </div>
-    <!-- /container -->
   </body>
 
 </html>

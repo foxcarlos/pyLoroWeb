@@ -213,6 +213,10 @@ def validaLogin(usuario, clave):
         bottle.response.set_cookie("account", '')
     return accesoPermitido
 
+@bottle.route('/prueba')
+def prueb3a():
+    return bottle.template('prueba.html')
+
 @bottle.route('/congreso')
 def congreso():
     #return bottle.template('congreso.html')
@@ -226,6 +230,10 @@ def static(filename):
 @bottle.route('/cargarMenuPrincipal')
 def prueba():
     return bottle.template('menuPrincipal.html')
+
+@bottle.route('/cuerpoPrincipal')
+def cuerpoPrincipal():
+    return bottle.template('cuerpoPrincipal.html')
 
 @bottle.route('/llamados')
 def llamados():
