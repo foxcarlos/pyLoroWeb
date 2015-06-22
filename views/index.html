@@ -13,18 +13,28 @@
 	<script type="text/javascript">
         $(document).ready(function() {
             $('#menuPrincipal').load('/cargarMenuPrincipal #mostrar');
-             //$('#cuerpo').load('/cuerpoPrincipal #mostrar');
-             //document.getElementById('vinculoEnviarSMS').href="/smsenviar";
-             //var referencia = $('#mostrar .vinculoEnviarSMS').href;
-             alert('entro');
+            $('#cuerpo').load('/cuerpoPrincipal #mostrar');
+
+            var miusuario =  "{{get('usuario', '')}}"
+            alert(miusuario)
+            if (miusuario){
+                alert(miusuario)}
+            else{
+                alert('esta vacio');
+            }
+
+            $('#divInicioSesion').load('/cargarInicioSesion #mostrarInicioSesion');
+
+            //document.getElementById('vinculoEnviarSMS').href="/smsenviar";
+            //var referencia = $('#mostrar .vinculoEnviarSMS').href;
+            //alert('entro');
+
+            $("#menuPrincipal").on("click", "a", function() {
+            // manejar el evento
+            alert($(this).text()); // apunta al <a> que ha generado el evento
+                });
             });
 
-        $(document).ready(function() {
-            alert("Hola");
-        });
-            window.onload = function(){
-            alert('Hola')
-            //document.getElementById("vinculoEnviarSMS").onclick = clicEnviarSMS;
 
             //Le asigno una funcion al evento submit del formulario
             //document.getElementById("buscarCarnet").onsubmit = submitDelForm;
@@ -47,7 +57,6 @@
 
             //Evento que se ejecuta cuando selecciono un archivo de la foto
             //document.getElementById("archivoSeleccionado").onchange = clicEnSeleccionArchivo;
-	    })
 
         function clicEnviarSMS(){
             alert('click en Enviar SMS');
@@ -135,7 +144,7 @@
   </head>
 
   <body>
-<!-- Comienza El Marco del Menu-->
+    <!-- Comienza El Marco del Menu-->
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -146,27 +155,19 @@
         </div>
         <!-- Comienza La Barra de navegacion-->
         <div class="navbar-collapse collapse">
-          <!-- Aqui Comienza el Menu-->
-          <div id="menuPrincipal">
-            <!--Este menu se carga desde javascript -->
-          </div>
-          <!-- Aqui Termina el Menu-->
+            <!-- Aqui Comienza el Menu-->
+            <div id="menuPrincipal">
+                <!--Este menu se carga desde javascript -->
+            </div>
+            <!-- Aqui Termina el Menu-->
 
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Iniciar Sesion</button>
-          </form>
-        </div>
-        <!-- Aqui Termina la Barra de Navegacion como tal-->
-        <!--/.navbar-collapse -->
+            <!--Form de inicio de sesion -->
+            <div id="divInicioSesion">
+                <!--se carga con jQuery -->
+            </div><!--Termina el Form de inicio de sesion -->
+        </div> <!-- Aqui Termina la Barra de Navegacion como tal.navbar-collapse -->
       </div>
-    </div>
-    <!-- Termina el Marco del Menu-->
+    </div><!-- Termina el Marco del Menu-->
 
     <!-- Comienza carrusel-->
     <div id="miCarrusel" class="carousel slide" data-ride="carousel" data-interval="3000">

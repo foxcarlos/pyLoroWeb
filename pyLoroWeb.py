@@ -235,6 +235,12 @@ def prueba():
 def cuerpoPrincipal():
     return bottle.template('cuerpoPrincipal.html')
 
+@bottle.route('/cargarInicioSesion')
+def inicioSesion():
+    username = bottle.request.get_cookie("account")
+
+    return bottle.template('frmInicioSesion.html')
+
 @bottle.route('/llamados')
 def llamados():
     return bottle.template('llamados.html')
