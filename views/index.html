@@ -12,20 +12,18 @@
 
 	<script type="text/javascript">
         $(document).ready(function() {
-            //$('#menuPrincipal').load('/cargarMenuPrincipal #mostrar');
-            $('ol').append('<li><a href="#">Dynamic list item</a></li>');
+            $('#menuPrincipal').load('/cargarMenuPrincipal #mostrar');
              //$('#cuerpo').load('/cuerpoPrincipal #mostrar');
              //document.getElementById('vinculoEnviarSMS').href="/smsenviar";
              //var referencia = $('#mostrar .vinculoEnviarSMS').href;
-             //alert(referencia)
-            }
-
-        window.onload = function(){
-            alert('window.onload')
-            $('vinculoEnviarSMS').live('click', function(){
-                alert( 'entro' );
-                return false;
+             alert('entro');
             });
+
+        $(document).ready(function() {
+            alert("Hola");
+        });
+            window.onload = function(){
+            alert('Hola')
             //document.getElementById("vinculoEnviarSMS").onclick = clicEnviarSMS;
 
             //Le asigno una funcion al evento submit del formulario
@@ -49,7 +47,7 @@
 
             //Evento que se ejecuta cuando selecciono un archivo de la foto
             //document.getElementById("archivoSeleccionado").onchange = clicEnSeleccionArchivo;
-	    }
+	    })
 
         function clicEnviarSMS(){
             alert('click en Enviar SMS');
