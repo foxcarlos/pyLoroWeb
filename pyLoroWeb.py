@@ -239,7 +239,7 @@ def cuerpoPrincipal():
 def inicioSesion():
     username = bottle.request.get_cookie("account")
 
-    return bottle.template('frmInicioSesion.html')
+    return bottle.template('frmInicioSesion2.html')
 
 @bottle.route('/llamados')
 def llamados():
