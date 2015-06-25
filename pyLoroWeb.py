@@ -264,7 +264,7 @@ def index():
     username = bottle.request.get_cookie("account")
 
     print('usuario',username)
-    return bottle.template('index', {'usuario':username})
+    return bottle.template('index2', {'usuario':username})
 
 @bottle.route('/login')
 def login():
