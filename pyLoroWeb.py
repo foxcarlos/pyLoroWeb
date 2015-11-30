@@ -14,6 +14,7 @@ from os.path import join, dirname
 from bottle import route, static_file, template
 import datetime
 import re
+import requests
 
 class enviarZMQ():
     def __init__(self):
@@ -328,8 +329,9 @@ def smsEnviarp():
         else:
             for numero in listasNumeros:
                 if validaSms(numero, mensaje.strip()):
-                    devuelve = app.enviar(numero, mensaje)
-                    if devuelve:
+                    devuelve = requests.post("http://10.121.0.110:9091/mensaje", data = {'var1':mensaje, 'var2':numero})
+                    #devuelve = app.enviar(numero, mensaje)
+                    if devuelve.text:
                         cabecera = 'Felicidades ...'
                         msg = 'Mensaje enviado con exito'.format(numero)
                     else:
@@ -675,4 +677,4 @@ def validaSms(num, msg):
 
 
 #bottle.debug(True)
-bottle.run(host='10.121.6.12', port=80, server=GeventWebSocketServer, reloader = True)
+bottle.run(host='0.0.0.0', port=8086, server=GeventWebSocketServer, reloader = True)
