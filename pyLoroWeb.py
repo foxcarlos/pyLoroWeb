@@ -226,7 +226,7 @@ def static(filename):
 
 @bottle.route('/prueba')
 def prueba():
-    return bottle.template('grid1')
+    return bottle.template('cuerpo')
 
 @bottle.route('/llamados')
 def llamados():
